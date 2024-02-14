@@ -28,7 +28,7 @@
 #'
 #' @export
 removeAsset <- function(project, asset, staging) {
-    chosen <- dump_request(staging, "remove_asset", list(project=project, asset=asset))
+    chosen <- dump_request(staging, "delete_asset", list(project=project, asset=asset))
     wait_response(staging, chosen)
     invisible(NULL)
 }

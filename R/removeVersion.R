@@ -29,7 +29,7 @@
 #'
 #' @export
 removeVersion <- function(project, asset, version, staging) {
-    chosen <- dump_request(staging, "remove_version", list(project=project, asset=asset, version=version))
+    chosen <- dump_request(staging, "delete_version", list(project=project, asset=asset, version=version))
     wait_response(staging, chosen)
     invisible(NULL)
 }

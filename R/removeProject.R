@@ -27,7 +27,7 @@
 #'
 #' @export
 removeProject <- function(project, staging) {
-    chosen <- dump_request(registry, "remove_project", list(project=project))
+    chosen <- dump_request(staging, "delete_project", list(project=project))
     wait_response(staging, chosen)
     invisible(NULL)
 }
