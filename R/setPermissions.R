@@ -41,8 +41,6 @@
 #' )
 #' fetchPermissions("test", registry=info$registry)
 #'
-#' stopGobbler(info, keep.dir=TRUE)
-#'
 #' @export
 setPermissions <- function(project, registry, staging, owners=NULL, uploaders=NULL, append=TRUE) {
     perms <- list()

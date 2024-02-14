@@ -12,7 +12,8 @@
 #' @examples
 #' info <- startGobbler()
 #' checkHealth(info$staging)
-#' stopGobbler(info, keep.dir=TRUE)
+#' 
+#' stopGobbler()
 #' checkHealth(info$staging, timeout=1)
 #'
 #' @export

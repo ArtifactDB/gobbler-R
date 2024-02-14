@@ -63,8 +63,6 @@ res <- uploadDirectory(
     staging=info$staging)
 res
 
-stopGobbler(info, keep.dir=TRUE)
-
 }
 \seealso{
 \code{\link{versionPath}}, to obtain the path to a versioned asset's contents inside the registry.

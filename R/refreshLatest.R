@@ -30,8 +30,6 @@
 #' refreshLatest("test", "simple", info$staging)
 #' fetchLatest("test", "simple", registry=info$registry)
 #'
-#' stopGobbler(info)
-#'
 #' @export
 #' @importFrom jsonlite fromJSON
 refreshLatest <- function(project, asset, staging) {

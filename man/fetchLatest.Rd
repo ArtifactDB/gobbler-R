@@ -26,7 +26,6 @@ info <- startGobbler()
 src <- allocateUploadDirectory(info$staging)
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
-stopGobbler(info, keep.dir=TRUE)
 
 # Obtaining the latest version of this asset.
 fetchLatest("test", "simple", registry=info$registry)

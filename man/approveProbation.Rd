@@ -35,7 +35,6 @@ fetchSummary("test", "probation", "v1", registry=info$registry)
 approveProbation("test", "probation", "v1", staging=info$staging)
 fetchSummary("test", "probation", "v1", registry=info$registry)
 
-stopGobbler(info)
 }
 \seealso{
 \code{\link{rejectProbation}}, to reject the probational upload.

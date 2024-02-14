@@ -57,8 +57,6 @@ setPermissions("test",
 )
 fetchPermissions("test", registry=info$registry)
 
-stopGobbler(info, keep.dir=TRUE)
-
 }
 \seealso{
 \code{\link{fetchPermissions}}, to fetch the permissions.

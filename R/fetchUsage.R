@@ -16,7 +16,6 @@
 #' write(file=file.path(src, "foo"), "BAR")
 #' write(file=file.path(src, "whee"), "stuff")
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' stopGobbler(info, keep.dir=TRUE)
 #'
 #' # Obtaining the project usage.
 #' fetchUsage("test", registry=info$registry)

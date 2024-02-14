@@ -36,7 +36,6 @@ dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 write(file=file.path(src, "whee2"), "more-stuff")
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-stopGobbler(info, keep.dir=TRUE)
 
 # List files, with or without a prefix.
 listFiles("test", "simple", "v1", registry=info$registry)

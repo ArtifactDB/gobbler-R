@@ -36,8 +36,6 @@ fetchLatest("test", "simple", registry=info$registry)
 refreshLatest("test", "simple", info$staging)
 fetchLatest("test", "simple", registry=info$registry)
 
-stopGobbler(info)
-
 }
 \seealso{
 \code{\link{fetchLatest}}, to get the latest version without recomputing it.

@@ -26,8 +26,6 @@
 #' removeAsset("test", "simple", staging=info$staging)
 #' listAssets("test", registry=info$registry)
 #'
-#' stopGobbler(info)
-#'
 #' @export
 removeAsset <- function(project, asset, staging) {
     chosen <- dump_request(staging, "remove_asset", list(project=project, asset=asset))

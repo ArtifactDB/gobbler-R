@@ -20,7 +20,8 @@ Check that the Gobbler is still active and monitoring the staging directory.
 \examples{
 info <- startGobbler()
 checkHealth(info$staging)
-stopGobbler(info, keep.dir=TRUE)
+
+stopGobbler()
 checkHealth(info$staging, timeout=1)
 
 }

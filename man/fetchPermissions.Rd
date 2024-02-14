@@ -41,7 +41,6 @@ src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging,
     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
-stopGobbler(info, keep.dir=TRUE)
 
 # Fetching the permissions.
 fetchPermissions("test", registry=info$registry)

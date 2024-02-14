@@ -35,7 +35,6 @@ fetchUsage("test", registry=info$registry)
 refreshUsage("test", staging=info$staging)
 fetchUsage("test", registry=info$registry)
 
-stopGobbler(info, keep.dir=TRUE)
 }
 \seealso{
 \code{\link{fetchUsage}}, to get the usage without recomputing it.

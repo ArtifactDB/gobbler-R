@@ -32,8 +32,6 @@ listAssets("test", registry=info$registry)
 removeAsset("test", "simple", staging=info$staging)
 listAssets("test", registry=info$registry)
 
-stopGobbler(info)
-
 }
 \seealso{
 \code{\link{removeProject}} and \code{\link{removeVersion}}, to remove projects and versions respectively.

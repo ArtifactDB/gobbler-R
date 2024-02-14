@@ -16,7 +16,6 @@
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #' res <- uploadDirectory("test", "more-simple", "v1", src, staging=info$staging)
 #' res <- uploadDirectory("test", "even-more-simple", "v1", src, staging=info$staging)
-#' stopGobbler(info, keep.dir=TRUE)
 #'
 #' # Listing available assets:
 #' listAssets("test", registry=info$registry)

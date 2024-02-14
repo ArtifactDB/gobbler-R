@@ -1,28 +1,31 @@
 #' Start and stop a Gobbler service
 #'
-#' This is intended for examples and tests.
+#' This sets up a single Gobbler service for the entire R session, is intended for examples and tests.
 #' Real Gobbler deployments should operate outside of R.
 #'
 #' @param staging String containing a path to a staging directory.
+#' Ignored if the service is already running.
 #' @param registry String containing a path to a registry.
-#' @param info List created by \code{startGobbler}.
-#' @param keep.dir Logical scalar indicating whether the staging directory and regisry should be retained.
+#' Ignored if the service is already running.
 #'
-#' @return \code{startGobbler} starts a Gobbler service and returns a list including the locations of the staging directory and registry. 
+#' @return For \code{startGobbler}, a list indicating whether a new service was set up, plus the locations of the staging directory and registry. 
 #'
-#' \code{stopGobbler} stops the Gobbler service, deletes the relevant directories if \code{keep.dir=FALSE}, and returns \code{NULL} invisibly.
+#' For \code{stopGobbler}, any existing service is shut down, and \code{NULL} is invisibly returned.
 #'
 #' @seealso
 #' \url{https://github.com/ArtifactDB/gobbler}, for source code and binaries to build and run a Gobbler service.
 #' 
 #' @examples
-#' info <- startGobbler()
-#' stopGobbler(info)
+#' startGobbler()
 #' 
 #' @export
-startGobbler <- function(staging = tempfile(), registry = tempfile()) {
-    dir.create(staging, showWarnings=FALSE)
-    dir.create(registry, showWarnings=FALSE)
+startGobbler <- function(staging=tempfile(), registry=tempfile()) {
+    if (!is.null(running$active)) {
+        return(list(new=FALSE, staging=running$staging, registry=running$registry))
+    }
+
+    dir.create(staging)
+    dir.create(registry)
     cache <- tools::R_user_dir("gobbler", "cache")
 
     sinfo <- Sys.info()
@@ -58,16 +61,34 @@ startGobbler <- function(staging = tempfile(), registry = tempfile()) {
     self <- sinfo["login"]
     script <- system.file("scripts", "deploy.sh", package="gobbler", mustWork=TRUE)
     pid <- system2(script, c(exe, staging, registry, self), stdout=TRUE) 
-    list(process=pid, staging = staging, registry = registry)
+
+    process <- new.env()
+    process$pid <- pid
+    reg.finalizer(process, kill_gobbler, onexit=TRUE)
+
+    running$active <- process
+    running$staging <- staging 
+    running$registry <- registry
+    list(new=TRUE, staging=staging, registry=registry)
 }
+
+kill_gobbler <- function(process) {
+    if (!is.null(process$pid)) {
+        system2("kill", c("-9", process$pid))
+    }
+}
+
+running <- new.env()
 
 #' @export
 #' @rdname startGobbler
-stopGobbler <- function(info, keep.dir=FALSE) {
-    system2("kill", c("-9", info$process))
-    if (!keep.dir) {
-        unlink(info$staging, recursive=TRUE) 
-        unlink(info$registry, recursive=TRUE) 
+stopGobbler <- function() {
+    if (!is.null(running$active)) {
+        kill_gobbler(running$active)
+        running$active$pid <- NULL
+        running$active <- NULL
+        running$staging <- NULL
+        running$registry <- NULL
     }
     invisible(NULL)
 }

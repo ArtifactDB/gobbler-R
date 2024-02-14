@@ -25,8 +25,6 @@
 #' removeProject("test", staging=info$staging)
 #' listProjects("test", registry=info$registry)
 #'
-#' stopGobbler(info)
-#'
 #' @export
 removeProject <- function(project, staging) {
     chosen <- dump_request(registry, "remove_project", list(project=project))

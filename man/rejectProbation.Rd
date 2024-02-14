@@ -35,8 +35,6 @@ listVersions("test", "probation", registry=info$registry)
 rejectProbation("test", "probation", "v1", staging=info$staging)
 listVersions("test", "probation", registry=info$registry)
 
-stopGobbler(info)
-
 }
 \seealso{
 \code{\link{approveProbation}}, to approve the probational upload.

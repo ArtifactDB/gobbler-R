@@ -29,8 +29,6 @@
 #' rejectProbation("test", "probation", "v1", staging=info$staging)
 #' listVersions("test", "probation", registry=info$registry)
 #' 
-#' stopGobbler(info)
-#' 
 #' @export
 rejectProbation <- function(project, asset, version, staging) {
     chosen <- dump_request(staging, "reject_probation", list(project=project, asset=asset, version=version))

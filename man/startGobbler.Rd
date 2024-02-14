@@ -7,29 +7,26 @@
 \usage{
 startGobbler(staging = tempfile(), registry = tempfile())
 
-stopGobbler(info, keep.dir = FALSE)
+stopGobbler()
 }
 \arguments{
-\item{staging}{String containing a path to a staging directory.}
+\item{staging}{String containing a path to a staging directory.
+Ignored if the service is already running.}
 
-\item{registry}{String containing a path to a registry.}
-
-\item{info}{List created by \code{startGobbler}.}
-
-\item{keep.dir}{Logical scalar indicating whether the staging directory and regisry should be retained.}
+\item{registry}{String containing a path to a registry.
+Ignored if the service is already running.}
 }
 \value{
-\code{startGobbler} starts a Gobbler service and returns a list including the locations of the staging directory and registry. 
+For \code{startGobbler}, a list indicating whether a new service was set up, plus the locations of the staging directory and registry. 
 
-\code{stopGobbler} stops the Gobbler service, deletes the relevant directories if \code{keep.dir=FALSE}, and returns \code{NULL} invisibly.
+For \code{stopGobbler}, any existing service is shut down, and \code{NULL} is invisibly returned.
 }
 \description{
-This is intended for examples and tests.
+This sets up a single Gobbler service for the entire R session, is intended for examples and tests.
 Real Gobbler deployments should operate outside of R.
 }
 \examples{
-info <- startGobbler()
-stopGobbler(info)
+startGobbler()
 
 }
 \seealso{

@@ -29,7 +29,6 @@
 #' refreshUsage("test", staging=info$staging)
 #' fetchUsage("test", registry=info$registry)
 #'
-#' stopGobbler(info, keep.dir=TRUE)
 #' @export
 #' @importFrom jsonlite fromJSON
 refreshUsage <- function(project, staging) {

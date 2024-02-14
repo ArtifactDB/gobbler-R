@@ -34,7 +34,6 @@ info <- startGobbler()
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-stopGobbler(info, keep.dir=TRUE)
 
 # Obtain a summary for this version.
 fetchSummary("test", "simple", "v1", registry=info$registry)

@@ -29,7 +29,6 @@
 #' approveProbation("test", "probation", "v1", staging=info$staging)
 #' fetchSummary("test", "probation", "v1", registry=info$registry)
 #' 
-#' stopGobbler(info)
 #' @export
 approveProbation <- function(project, asset, version, staging) {
     chosen <- dump_request(staging, "approve_probation", list(project=project, asset=asset, version=version))
