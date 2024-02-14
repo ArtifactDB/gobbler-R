@@ -23,24 +23,19 @@ Pretty much as it says: approve a probational upload of a version of a project's
 This removes the \code{on_probation} tag from the uploaded version.
 }
 \examples{
-if (interactive()) {
-    # Mocking up a versioned asset.
-    init <- startUpload(
-        project="test-R", 
-        asset="probation-approve", 
-        version="v1", 
-        files=character(0),
-        probation=TRUE
-    )
-    completeUpload(init) 
+info <- startGobbler()
 
-    # Approving the probation:
-    approveProbation("test-R", "probation-approve", "v1")
+# Mocking up an upload. 
+src <- allocateUploadDirectory(info$staging)
+write(file=file.path(src, "foo"), "BAR")
+res <- uploadDirectory("test", "probation", "v1", src, staging=info$staging, probation=TRUE)
+fetchSummary("test", "probation", "v1", registry=info$registry)
 
-    # Just cleaning up after we're done.
-    removeProjectAsset("test-R", "probation-approve")
-}
+# After approval, the probation status disappears.
+approveProbation("test", "probation", "v1", staging=info$staging)
+fetchSummary("test", "probation", "v1", registry=info$registry)
 
+stopGobbler(info)
 }
 \seealso{
 \code{\link{rejectProbation}}, to reject the probational upload.

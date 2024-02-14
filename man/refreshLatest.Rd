@@ -21,9 +21,22 @@ Recompute the latest version of a project's asset.
 This is useful on rare occasions where multiple simultaneous uploads cause the latest version to be slightly out of sync.
 }
 \examples{
-if (interactive()) {
-    refreshLatest("test-R", "basic")
-}
+info <- startGobbler()
+
+# Mocking up an upload. 
+src <- allocateUploadDirectory(info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+
+# Delete the ..latest file.
+unlink(file.path(info$registry, "test", "simple", "..latest")) 
+fetchLatest("test", "simple", registry=info$registry)
+
+# Recomputing it:
+refreshLatest("test", "simple", info$staging)
+fetchLatest("test", "simple", registry=info$registry)
+
+stopGobbler(info)
 
 }
 \seealso{

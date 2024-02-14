@@ -21,7 +21,7 @@ allocateUploadDirectory <- function(staging) {
     # Ensure that we create a unique path inside the staging
     # directory that is actually owned by the current user.
     while (TRUE) {
-        tmp <- file.path(tmpdir=staging, pattern="upload-")
+        tmp <- tempfile(tmpdir=staging, pattern="upload-")
         dir.create(tmp, showWarnings=FALSE)
         if (file.info(tmp)$uname %in% usernames) {
             return(tmp)

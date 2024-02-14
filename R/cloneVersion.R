@@ -30,18 +30,25 @@
 #' \code{\link{uploadDirectory}}, to prepare an upload based on the directory contents.
 #'
 #' @examples
-#' tmp <- tempfile()
-#' out <- cloneVersion("test-R", "basic", "v1", destination=tmp)
-#' list.files(tmp, recursive=TRUE)
-#' Sys.readlink(file.path(tmp, "foo", "bar.txt"))
+#' # Mocking up an upload. 
+#' info <- startGobbler()
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' stopGobbler(info, keep.dir=TRUE)
+#'
+#' # Creating a clone.
+#' dest <- tempfile()
+#' out <- cloneVersion("test", "simple", "v1", dest, registry=info$registry)
+#' list.files(dest, recursive=TRUE)
+#' Sys.readlink(file.path(dest, "FOO"))
+#' readLines(file.path(dest, "FOO"))
 #'
 #' # Files should be replaced rather than modified via the symlink:
-#' existing <- file.path(tmp, "foo", "bar.txt")
+#' existing <- file.path(dest, "FOO")
 #' unlink(existing) # Deleting the symlink...
 #' write(file=existing, "YAY") # ... and writing a replacement file.
 #'
-#' # Symlinks are converted to upload links:
-#' prepareDirectoryUpload(tmp)
 #' @export
 cloneVersion <- function(project, asset, version, destination, registry, ...) {
     target <- file.path(registry, project, asset, version)

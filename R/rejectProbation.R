@@ -17,20 +17,19 @@
 #' 
 #' @author Aaron Lun
 #' @examples
-#' if (interactive()) {
-#'     # Mocking up a versioned asset.
-#'     init <- startUpload(
-#'         project="test-R", 
-#'         asset="probation-reject", 
-#'         version="v1", 
-#'         files=character(0),
-#'         probation=TRUE
-#'     )
-#'     completeUpload(init) 
+#' info <- startGobbler()
 #'
-#'     # Rejecting the probation:
-#'     rejectProbation("test-R", "probation-reject", "v1")
-#' }
+#' # Mocking up an upload. 
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "probation", "v1", src, staging=info$staging, probation=TRUE)
+#' listVersions("test", "probation", registry=info$registry)
+#'
+#' # After rejection, the version disppears.
+#' rejectProbation("test", "probation", "v1", staging=info$staging)
+#' listVersions("test", "probation", registry=info$registry)
+#' 
+#' stopGobbler(info)
 #' 
 #' @export
 rejectProbation <- function(project, asset, version, staging) {

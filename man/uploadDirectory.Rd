@@ -50,11 +50,20 @@ the generated names for the project and version respectively.
 Upload a directory as a new versioned asset of a project in the registry.
 }
 \examples{
-if (interactive()) {
-    dir <- allocateUploadDirectory()
-    writeLines(file.path(dir, "YAY"), LETTERS)
-    uploadDirectory("test-R", "new-upload", "v1", dir)
-}
+info <- startGobbler()
+
+src <- allocateUploadDirectory(info$staging)
+write(file=file.path(src, "foo"), "BAR")
+res <- uploadDirectory(
+    project=NULL, 
+    prefix="TEST", 
+    asset="simple", 
+    version=NULL, 
+    dir=src, 
+    staging=info$staging)
+res
+
+stopGobbler(info, keep.dir=TRUE)
 
 }
 \seealso{

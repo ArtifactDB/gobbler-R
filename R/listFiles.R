@@ -16,12 +16,24 @@
 #' @return Character vector of relative paths of files associated with the versioned asset.
 #'
 #' @examples
-#' listFiles("test-R", "basic", "v1")
+#' # Mocking up an upload. 
+#' info <- startGobbler()
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' dir.create(file.path(src, "whee"))
+#' write(file=file.path(src, "whee", "blah"), "stuff")
+#' write(file=file.path(src, "whee2"), "more-stuff")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' stopGobbler(info, keep.dir=TRUE)
+#'
+#' # List files, with or without a prefix.
+#' listFiles("test", "simple", "v1", registry=info$registry)
+#' listFiles("test", "simple", "v1", registry=info$registry, prefix="whee")
+#' listFiles("test", "simple", "v1", registry=info$registry, prefix="whee/")
 #' 
 #' @export
-#' @importFrom aws.s3 get_bucket
 listFiles <- function(project, asset, version, registry, prefix=NULL, include..=TRUE) {
-    target <- file.path(project, asset, version)
+    target <- file.path(registry, project, asset, version)
 
     filter <- NULL
     if (!is.null(prefix)) {

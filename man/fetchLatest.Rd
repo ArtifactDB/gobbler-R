@@ -14,13 +14,22 @@ fetchLatest(project, asset, registry)
 \item{registry}{String containing a path to the registry.}
 }
 \value{
-String containing the latest version of the project.
+String containing the latest version of the asset. 
+This may also be \code{NULL} if the asset has no (non-probational) versions.
 }
 \description{
 Fetch the latest version of a project's asset.
 }
 \examples{
-fetchLatest("test-R", "basic")
+# Mocking up an upload. 
+info <- startGobbler()
+src <- allocateUploadDirectory(info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+stopGobbler(info, keep.dir=TRUE)
+
+# Obtaining the latest version of this asset.
+fetchLatest("test", "simple", registry=info$registry)
 
 }
 \seealso{

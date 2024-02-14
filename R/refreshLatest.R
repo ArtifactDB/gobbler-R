@@ -15,9 +15,22 @@
 #' \code{\link{fetchLatest}}, to get the latest version without recomputing it.
 #' 
 #' @examples
-#' if (interactive()) {
-#'     refreshLatest("test-R", "basic")
-#' }
+#' info <- startGobbler()
+#'
+#' # Mocking up an upload. 
+#' src <- allocateUploadDirectory(info$staging)
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+#' 
+#' # Delete the ..latest file.
+#' unlink(file.path(info$registry, "test", "simple", "..latest")) 
+#' fetchLatest("test", "simple", registry=info$registry)
+#'
+#' # Recomputing it:
+#' refreshLatest("test", "simple", info$staging)
+#' fetchLatest("test", "simple", registry=info$registry)
+#'
+#' stopGobbler(info)
 #'
 #' @export
 #' @importFrom jsonlite fromJSON

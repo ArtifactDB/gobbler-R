@@ -35,7 +35,16 @@ If not provided, defaults to \code{FALSE}.
 Fetch the permissions for a project.
 }
 \examples{
-fetchPermissions("test-R")
+# Mocking up an upload. 
+info <- startGobbler()
+src <- allocateUploadDirectory(info$staging)
+write(file=file.path(src, "foo"), "BAR")
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging,
+    uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
+stopGobbler(info, keep.dir=TRUE)
+
+# Fetching the permissions.
+fetchPermissions("test", registry=info$registry)
 
 }
 \seealso{

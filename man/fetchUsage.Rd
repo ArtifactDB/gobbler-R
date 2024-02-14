@@ -18,7 +18,16 @@ Numeric scalar specifying the quota usage for the project, in bytes.
 Fetch the quota usage for a project.
 }
 \examples{
-fetchUsage("test-R")
+# Mocking up an upload. 
+info <- startGobbler()
+src <- allocateUploadDirectory(info$staging)
+write(file=file.path(src, "foo"), "BAR")
+write(file=file.path(src, "whee"), "stuff")
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+stopGobbler(info, keep.dir=TRUE)
+
+# Obtaining the project usage.
+fetchUsage("test", registry=info$registry)
 
 }
 \seealso{

@@ -6,12 +6,21 @@
 #' @param asset String containing the asset name.
 #' @param registry String containing a path to the registry.
 #'
-#' @return String containing the latest version of the project.
+#' @return String containing the latest version of the asset. 
+#' This may also be \code{NULL} if the asset has no (non-probational) versions.
 #'
 #' @author Aaron Lun
 #'
 #' @examples
-#' fetchLatest("test-R", "basic")
+#' # Mocking up an upload. 
+#' info <- startGobbler()
+#' src <- allocateUploadDirectory(info$staging)
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+#' stopGobbler(info, keep.dir=TRUE)
+#'
+#' # Obtaining the latest version of this asset.
+#' fetchLatest("test", "simple", registry=info$registry)
 #'
 #' @seealso
 #' \code{\link{refreshLatest}}, to refresh the latest version.
@@ -19,6 +28,11 @@
 #' @export
 #' @importFrom jsonlite fromJSON
 fetchLatest <- function(project, asset, registry) {
-    vers <- fromJSON(file.path(registry, project, asset, "..latest"), simplifyVector=FALSE)
-    vers$version
+    proposed <- file.path(registry, project, asset, "..latest")
+    if (!file.exists(proposed)) {
+        NULL
+    } else {
+        vers <- fromJSON(proposed, simplifyVector=FALSE)
+        vers$version
+    }
 }

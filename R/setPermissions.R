@@ -21,16 +21,27 @@
 #' @return \code{NULL} is invisibly returned upon successful setting of the permissions.
 #'
 #' @examples
-#' if (interactive()) {
-#'     # Creating a project for demonstration purposes.
-#'     createProject("test-R-perms", owners="LTLA")
+#' info <- startGobbler()
 #'
-#'     # Setting extra permissions on this project.
-#'     setPermissions("test-R-perms",
-#'         owners="jkanche", 
-#'         uploaders=list(list(id="lawremi", until=Sys.time() + 1000))
-#'     )
-#' }
+#' # Mocking up an upload. 
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' fetchPermissions("test", registry=info$registry)
+#'
+#' # Setting them to something else.
+#' setPermissions("test", 
+#'     owners=c("mum", "dad"), 
+#'     uploaders=list(
+#'         list(id='brother1', asset='ps5', until=Sys.time() + 100000),
+#'         list(id='brother2', asset='harry_potter', version='goblet_of_fire')
+#'     ),
+#'     staging=info$staging,
+#'     registry=info$registry
+#' )
+#' fetchPermissions("test", registry=info$registry)
+#'
+#' stopGobbler(info, keep.dir=TRUE)
 #'
 #' @export
 setPermissions <- function(project, registry, staging, owners=NULL, uploaders=NULL, append=TRUE) {

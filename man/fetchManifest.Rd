@@ -30,7 +30,17 @@ This contains the strings \code{project}, \code{asset}, \code{version} and \code
 Fetch the manifest for a version of an asset of a project.
 }
 \examples{
-fetchManifest("test-R", "basic", "v1")
+# Mocking up an upload. 
+info <- startGobbler()
+src <- allocateUploadDirectory(info$staging)
+write(file=file.path(src, "foo"), "BAR")
+dir.create(file.path(src, "whee"))
+write(file=file.path(src, "whee", "blah"), "stuff")
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+stopGobbler(info, keep.dir=TRUE)
+
+# Obtaining the manifest for this version.
+fetchManifest("test", "simple", "v1", registry=info$registry)
 
 }
 \author{

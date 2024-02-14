@@ -16,12 +16,20 @@
 #' }
 #' 
 #' @examples
-#' fetchSummary("test-R", "basic", "v1")
+#' # Mocking up an upload. 
+#' info <- startGobbler()
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' stopGobbler(info, keep.dir=TRUE)
+#'
+#' # Obtain a summary for this version.
+#' fetchSummary("test", "simple", "v1", registry=info$registry)
 #' 
 #' @export
 fetchSummary <- function(project, asset, version, registry) {
     out <- fromJSON(file.path(registry, project, asset, version, "..summary"), simplifyVector=FALSE)
-    out$upload_start <- .cast_datetime(out$upload_start)
-    out$upload_finish <- .cast_datetime(out$upload_finish)
+    out$upload_start <- cast_datetime(out$upload_start)
+    out$upload_finish <- cast_datetime(out$upload_finish)
     out
 }

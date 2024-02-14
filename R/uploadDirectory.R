@@ -24,11 +24,20 @@
 #'
 #' @author Aaron Lun
 #' @examples
-#' if (interactive()) {
-#'     dir <- allocateUploadDirectory()
-#'     writeLines(file.path(dir, "YAY"), LETTERS)
-#'     uploadDirectory("test-R", "new-upload", "v1", dir)
-#' }
+#' info <- startGobbler()
+#'
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory(
+#'     project=NULL, 
+#'     prefix="TEST", 
+#'     asset="simple", 
+#'     version=NULL, 
+#'     dir=src, 
+#'     staging=info$staging)
+#' res
+#'
+#' stopGobbler(info, keep.dir=TRUE)
 #'
 #' @seealso
 #' \code{\link{versionPath}}, to obtain the path to a versioned asset's contents inside the registry.
@@ -67,7 +76,7 @@ uploadDirectory <- function(project, asset, version, dir, staging, prefix=NULL, 
         permissions$owners <- as.list(owners)
     }
     if (!is.null(uploaders)) {
-        permissions$uploaders <- uploaders
+        permissions$uploaders <- sanitize_uploaders(uploaders)
     }
     if (length(permissions)) {
         req$permissions <- permissions

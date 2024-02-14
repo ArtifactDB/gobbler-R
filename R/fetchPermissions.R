@@ -30,7 +30,16 @@
 #' \code{\link{setPermissions}}, to set the permissions.
 #'
 #' @examples
-#' fetchPermissions("test-R")
+#' # Mocking up an upload. 
+#' info <- startGobbler()
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging,
+#'     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
+#' stopGobbler(info, keep.dir=TRUE)
+#'
+#' # Fetching the permissions.
+#' fetchPermissions("test", registry=info$registry)
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
@@ -41,7 +50,7 @@ fetchPermissions <- function(project, registry) {
     for (i in seq_along(perms$uploaders)) {
         current <- perms$uploaders[[i]]
         if ("until" %in% names(current)) {
-            perms$uploaders[[i]]$until <- .cast_datetime(current$until)
+            perms$uploaders[[i]]$until <- cast_datetime(current$until)
         }
     }
 

@@ -4,10 +4,12 @@
 \alias{checkHealth}
 \title{Check the Gobbler's health}
 \usage{
-checkHealth(staging)
+checkHealth(staging, timeout = 10)
 }
 \arguments{
 \item{staging}{String containing the path to the staging directory.}
+
+\item{timeout}{Integer specifying the number of seconds to wait for a response.}
 }
 \value{
 Logical scalar indicating whether the Gobbler responded within 10 seconds.
@@ -16,9 +18,10 @@ Logical scalar indicating whether the Gobbler responded within 10 seconds.
 Check that the Gobbler is still active and monitoring the staging directory.
 }
 \examples{
-if (interactive()) {
-    refreshUsage("test-R")
-}
+info <- startGobbler()
+checkHealth(info$staging)
+stopGobbler(info, keep.dir=TRUE)
+checkHealth(info$staging, timeout=1)
 
 }
 \author{

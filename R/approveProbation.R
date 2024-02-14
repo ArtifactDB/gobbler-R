@@ -17,24 +17,19 @@
 #' 
 #' @author Aaron Lun
 #' @examples
-#' if (interactive()) {
-#'     # Mocking up a versioned asset.
-#'     init <- startUpload(
-#'         project="test-R", 
-#'         asset="probation-approve", 
-#'         version="v1", 
-#'         files=character(0),
-#'         probation=TRUE
-#'     )
-#'     completeUpload(init) 
+#' info <- startGobbler()
 #'
-#'     # Approving the probation:
-#'     approveProbation("test-R", "probation-approve", "v1")
+#' # Mocking up an upload. 
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "probation", "v1", src, staging=info$staging, probation=TRUE)
+#' fetchSummary("test", "probation", "v1", registry=info$registry)
+#'
+#' # After approval, the probation status disappears.
+#' approveProbation("test", "probation", "v1", staging=info$staging)
+#' fetchSummary("test", "probation", "v1", registry=info$registry)
 #' 
-#'     # Just cleaning up after we're done.
-#'     removeProjectAsset("test-R", "probation-approve")
-#' }
-#' 
+#' stopGobbler(info)
 #' @export
 approveProbation <- function(project, asset, version, staging) {
     chosen <- dump_request(staging, "approve_probation", list(project=project, asset=asset, version=version))
