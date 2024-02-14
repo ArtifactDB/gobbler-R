@@ -53,8 +53,16 @@ uploadDirectory <- function(project, asset, version, dir, staging, prefix=NULL, 
             src <- file.path(dir, p)
             dest <- file.path(new.dir, p)
             dir.create(dirname(dest), showWarnings=FALSE)
-            if (!file.link(src, dest) && !file.copy(src, dest)) {
-                stop("failed to link or copy '", p, "' to the staging directory")
+
+            src.link <- Sys.readlink(src)
+            if (src.link == "" || !startsWith(src, "/")) { # i.e., not a link to an absolute path.
+                if (!file.link(src, dest) && !file.copy(src, dest)) {
+                    stop("failed to link or copy '", p, "' to the staging directory")
+                }
+            } else {
+                if (!file.symlink(src.link, dest)) {
+                    stop("failed to create a symlink for '", p, "' in the staging directory")
+                }
             }
         }
         dir <- new.dir
