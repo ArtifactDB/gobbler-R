@@ -1,6 +1,6 @@
 #' List all projects
 #'
-#' List all projects in the gypsum backent.
+#' List all projects in the registry.
 #'
 #' @param registry String containing a path to the registry.
 #'
@@ -14,6 +14,6 @@
 #' }
 #' 
 #' @export
-listProjects <- function(registry=registryPath()) {
+listProjects <- function(registry) {
     list.files(registry)
 }

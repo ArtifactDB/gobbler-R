@@ -43,7 +43,7 @@
 #' # Symlinks are converted to upload links:
 #' prepareDirectoryUpload(tmp)
 #' @export
-cloneVersion <- function(project, asset, version, destination, registry=registryPath(), ...) {
+cloneVersion <- function(project, asset, version, destination, registry, ...) {
     target <- file.path(registry, project, asset, version)
     listing <- fetchManifest(project, asset, version, registry=registry)
     dir.create(destination, showWarnings=FALSE)

@@ -20,7 +20,7 @@
 #' 
 #' @export
 #' @importFrom aws.s3 get_bucket
-listFiles <- function(project, asset, version, prefix=NULL, include..=TRUE, registry=registryPath()) {
+listFiles <- function(project, asset, version, registry, prefix=NULL, include..=TRUE) {
     target <- file.path(project, asset, version)
 
     filter <- NULL

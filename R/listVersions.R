@@ -15,6 +15,6 @@
 #' 
 #' @export
 #' @importFrom aws.s3 get_bucket
-listVersions <- function(project, asset, registry=registryPath()) {
+listVersions <- function(project, asset, registry) {
     list.files(file.path(registry, project, asset))
 }

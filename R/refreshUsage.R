@@ -19,7 +19,7 @@
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-refreshUsage <- function(project, staging=stagingPath()) {
+refreshUsage <- function(project, staging) {
     chosen <- dump_request(staging, "refresh_usage", list(project=project))
     resp <- wait_response(staging, chosen)
     invisible(resp$total)

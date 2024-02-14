@@ -19,7 +19,7 @@
 #' fetchSummary("test-R", "basic", "v1")
 #' 
 #' @export
-fetchSummary <- function(project, asset, version, registry=registryPath()) {
+fetchSummary <- function(project, asset, version, registry) {
     out <- fromJSON(file.path(registry, project, asset, version, "..summary"), simplifyVector=FALSE)
     out$upload_start <- .cast_datetime(out$upload_start)
     out$upload_finish <- .cast_datetime(out$upload_finish)

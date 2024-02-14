@@ -8,11 +8,11 @@
 #' @return List containing the permissions for this project.
 #' This has the following elements:
 #' \itemize{
-#' \item \code{owners}, a character vector containing the GitHub users or organizations that are owners of this project.
+#' \item \code{owners}, a character vector containing the user IDs of owners of this project.
 #' \item \code{uploaders}, a list of lists specifying the users or organizations who are authorzied to upload to this project.
 #' Each entry is a list with the following fields:
 #' \itemize{
-#' \item \code{id}, a string containing the GitHub user or organization that is authorized to upload.
+#' \item \code{id}, a string containing a user ID that is authorized to upload.
 #' \item (optional) \code{asset}, a string containing the name of the asset that the uploader is allowed to upload to.
 #' If not provided, there is no restriction on the uploaded asset name.
 #' \item (optional) \code{version}, a string containing the name of the version that the uploader is allowed to upload to.
@@ -34,7 +34,7 @@
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchPermissions <- function(project, registry=registryPath()) {
+fetchPermissions <- function(project, registry) {
     perms <- fromJSON(file.path(registry, project, "..permissions"), simplifyVector=FALSE)
 
     # Converting everything to POSIX dates.

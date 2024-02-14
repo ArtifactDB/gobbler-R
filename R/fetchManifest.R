@@ -24,6 +24,6 @@
 #' 
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchManifest <- function(project, asset, version, registry=registryPath()) {
+fetchManifest <- function(project, asset, version, registry) {
     fromJSON(file.path(registry, project, asset, version, "..manifest"), simplifyVector=FALSE)
 }

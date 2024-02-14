@@ -18,7 +18,7 @@
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchLatest <- function(project, asset, registry=registryPath()) {
+fetchLatest <- function(project, asset, registry) {
     vers <- fromJSON(file.path(registry, project, asset, "..latest"), simplifyVector=FALSE)
     vers$version
 }

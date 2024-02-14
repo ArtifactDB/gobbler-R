@@ -36,8 +36,7 @@
 #' }
 #' 
 #' @export
-#' @import httr2
-approveProbation <- function(project, asset, version, staging=stagingPath()) {
+approveProbation <- function(project, asset, version, staging) {
     chosen <- dump_request(staging, "approve_probation", list(project=project, asset=asset, version=version))
     wait_response(staging, chosen)
     invisible(NULL)

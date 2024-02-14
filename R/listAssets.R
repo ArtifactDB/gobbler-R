@@ -13,6 +13,6 @@
 #' listAssets("test-R")
 #' 
 #' @export
-listAssets <- function(project, registry=registryPath()) {
+listAssets <- function(project, registry) {
     list.files(file.path(registry, project))
 }

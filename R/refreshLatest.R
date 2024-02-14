@@ -21,7 +21,7 @@
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-refreshLatest <- function(project, asset, staging=stagingPath()) {
+refreshLatest <- function(project, asset, staging) {
     chosen <- dump_request(staging, "refresh_latest", list(project=project, asset=asset))
     resp <- wait_response(staging, chosen)
     invisible(resp$version)

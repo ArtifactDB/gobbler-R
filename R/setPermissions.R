@@ -3,7 +3,7 @@
 #' Set the owner and uploader permissions for a project.
 #'
 #' @param project String containing the project name.
-#' @param owners Character vector containing the GitHub users or organizations that are owners of this project.
+#' @param owners Character vector containing the user IDs for owners of this project.
 #' If \code{NULL}, no change is made to the existing owners of the project.
 #' @param uploaders List specifying the authorized uploaders for this project.
 #' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
@@ -33,7 +33,7 @@
 #' }
 #'
 #' @export
-setPermissions <- function(project, owners=NULL, uploaders=NULL, append=TRUE, registry=registryPath(), staging=stagingPath()) {
+setPermissions <- function(project, registry, staging, owners=NULL, uploaders=NULL, append=TRUE) {
     perms <- list()
     if (append) {
         old.perms <- fetchPermissions(project, registry=registry)

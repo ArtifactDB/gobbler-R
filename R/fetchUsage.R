@@ -17,7 +17,7 @@
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchUsage <- function(project, registry=registryPath()) {
+fetchUsage <- function(project, registry) {
     out <- fromJSON(file.path(registry, project, "..usage"), simplifyVector=FALSE)
     out$total
 }
