@@ -3,7 +3,7 @@ title: Managing files with the Gobbler
 author:
 - name: Aaron Lun
   email: infinite.monkeys.with.keyboards@gmail.com
-package: gypsum
+package: gobbler
 date: "Revised: February 15, 2024"
 output:
   BiocStyle::html_document
