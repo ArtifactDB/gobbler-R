@@ -41,7 +41,7 @@
 #' @seealso
 #' \code{\link{versionPath}}, to obtain the path to a versioned asset's contents inside the registry.
 #'
-#' \code{\link{listManifest}}, to obtain the manifest of the versioned asset's contents.
+#' \code{\link{fetchManifest}}, to obtain the manifest of the versioned asset's contents.
 #'
 #' @export
 uploadDirectory <- function(project, asset, version, directory, staging, prefix=NULL, probation=FALSE, owners=NULL, uploaders=NULL) {

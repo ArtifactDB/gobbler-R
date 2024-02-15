@@ -19,6 +19,7 @@
 #' startGobbler()
 #' 
 #' @export
+#' @importFrom utils download.file
 startGobbler <- function(staging=tempfile(), registry=tempfile()) {
     if (!is.null(running$active)) {
         return(list(new=FALSE, staging=running$staging, registry=running$registry))

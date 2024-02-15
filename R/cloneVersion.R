@@ -25,7 +25,7 @@
 #' @author Aaron Lun
 #'
 #' @seealso
-#' \code{\link{createUploadDirectory}}, to obtain a possible value for \code{destination}.
+#' \code{\link{allocateUploadDirectory}}, to obtain a possible value for \code{destination}.
 #' 
 #' \code{\link{uploadDirectory}}, to prepare an upload based on the directory contents.
 #'
@@ -51,7 +51,7 @@
 #' write(file=existing, "YAY") # ... and writing a replacement file.
 #'
 #' @export
-cloneVersion <- function(project, asset, version, destination, registry, ...) {
+cloneVersion <- function(project, asset, version, destination, registry) {
     target <- file.path(registry, project, asset, version)
     listing <- fetchManifest(project, asset, version, registry=registry)
     dir.create(destination, showWarnings=FALSE)

@@ -4,7 +4,7 @@
 \alias{cloneVersion}
 \title{Clone a version's directory structure}
 \usage{
-cloneVersion(project, asset, version, destination, registry, ...)
+cloneVersion(project, asset, version, destination, registry)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -58,7 +58,7 @@ write(file=existing, "YAY") # ... and writing a replacement file.
 
 }
 \seealso{
-\code{\link{createUploadDirectory}}, to obtain a possible value for \code{destination}.
+\code{\link{allocateUploadDirectory}}, to obtain a possible value for \code{destination}.
 
 \code{\link{uploadDirectory}}, to prepare an upload based on the directory contents.
 }
