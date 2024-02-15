@@ -7,7 +7,7 @@
 #' @param asset String containing the asset name.
 #' @param version String containing the version name.
 #' This may be \code{NULL} to generate a new version name based on an incrementing series.
-#' @param dir String containing the path to a directory to be uploaded.
+#' @param directory String containing the path to a directory to be uploaded.
 #' This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.
 #' @param prefix String containing the project name prefix.
 #' This is used to derive a project name based on an incrementing series.
@@ -33,7 +33,7 @@
 #'     prefix="TEST", 
 #'     asset="simple", 
 #'     version=NULL, 
-#'     dir=src, 
+#'     directory=src, 
 #'     staging=info$staging)
 #' res
 #'
@@ -43,14 +43,13 @@
 #' \code{\link{listManifest}}, to obtain the manifest of the versioned asset's contents.
 #'
 #' @export
-uploadDirectory <- function(project, asset, version, dir, staging, prefix=NULL, probation=FALSE, owners=NULL, uploaders=NULL) {
-    dir <- normalizePath(dir)
+uploadDirectory <- function(project, asset, version, directory, staging, prefix=NULL, probation=FALSE, owners=NULL, uploaders=NULL) {
+    directory <- normalizePath(directory)
     staging <- normalizePath(staging)
-
-    if (!startsWith(dir, paste0(staging, "/"))) {
+    if (dirname(directory) != staging) {
         new.dir <- allocateUploadDirectory(staging) 
-        for (p in list.files(dir, recursive=TRUE)) {
-            src <- file.path(dir, p)
+        for (p in list.files(directory, recursive=TRUE)) {
+            src <- file.path(directory, p)
             dest <- file.path(new.dir, p)
             dir.create(dirname(dest), showWarnings=FALSE)
 
@@ -65,11 +64,11 @@ uploadDirectory <- function(project, asset, version, dir, staging, prefix=NULL, 
                 }
             }
         }
-        dir <- new.dir
+        directory <- new.dir
     }
 
     req <- list(
-        `source` = dir,
+        `source` = basename(directory),
         asset = asset,
         on_probation = probation
     )

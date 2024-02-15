@@ -8,7 +8,7 @@ uploadDirectory(
   project,
   asset,
   version,
-  dir,
+  directory,
   staging,
   prefix = NULL,
   probation = FALSE,
@@ -25,7 +25,7 @@ This may be \code{NULL}, in which case \code{prefix} should be provided.}
 \item{version}{String containing the version name.
 This may be \code{NULL} to generate a new version name based on an incrementing series.}
 
-\item{dir}{String containing the path to a directory to be uploaded.
+\item{directory}{String containing the path to a directory to be uploaded.
 This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.}
 
 \item{staging}{String containing the path to the staging directory.}
@@ -59,7 +59,7 @@ res <- uploadDirectory(
     prefix="TEST", 
     asset="simple", 
     version=NULL, 
-    dir=src, 
+    directory=src, 
     staging=info$staging)
 res
 

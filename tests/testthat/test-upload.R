@@ -17,7 +17,7 @@ test_that("upload works as expected for regular files", {
         project="test-upload", 
         asset="jennifer", 
         version="1", 
-        dir=tmp,
+        directory=tmp,
         staging=info$staging
     )
     expect_identical(init$project, "test-upload")
@@ -33,7 +33,7 @@ test_that("upload works as expected for regular files", {
         project="test-upload", 
         asset="jennifer", 
         version="2", 
-        dir=tmp,
+        directory=tmp,
         staging=info$staging
     )
 
@@ -51,7 +51,7 @@ test_that("upload works as expected for links", {
         project="test-more-upload", 
         asset="natalie", 
         version="1", 
-        dir=dest,
+        directory=dest,
         staging=info$staging
     )
 
@@ -68,7 +68,7 @@ test_that("upload works as expected for project/version series", {
         prefix="UPLOAD",
         asset="versioning", 
         version=NULL, 
-        dir=tmp,
+        directory=tmp,
         staging=info$staging
     )
     expect_true(startsWith(init$project, "UPLOAD"))
@@ -85,7 +85,7 @@ test_that("upload works as expected for direct allocations", {
         project="test-upload", 
         asset="jennifer", 
         version="3", 
-        dir=dir,
+        directory=dir,
         staging=info$staging
     )
     expect_identical(init$project, "test-upload")
@@ -100,7 +100,7 @@ test_that("upload works as expected for complex permissions", {
         project="test-upload-perms",
         asset="annabelle", 
         version=NULL, 
-        dir=tmp,
+        directory=tmp,
         owners=c("LTLA", "jkanche"),
         uploaders=list(list(id="lawremi"), list(id="PeteHaitch", until=Sys.time() + 100)),
         staging=info$staging
