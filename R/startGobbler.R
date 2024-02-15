@@ -27,7 +27,10 @@ startGobbler <- function(staging=tempfile(), registry=tempfile()) {
 
     dir.create(staging)
     dir.create(registry)
-    cache <- tools::R_user_dir("gobbler", "cache")
+
+    # This should really be the cache directory, but our HPC deployment does
+    # naughty things with mounting .cache, so we'll just use data instead. 
+    cache <- tools::R_user_dir("gobbler", "data")
 
     sinfo <- Sys.info()
     sysname <- sinfo["sysname"]
@@ -53,15 +56,23 @@ startGobbler <- function(staging=tempfile(), registry=tempfile()) {
     if (!file.exists(exe)) {
         url <- paste0("https://github.com/ArtifactDB/gobbler/releases/download/latest/", desired)
         tmp <- tempfile()
-        download.file(url, tmp)
+        if (download.file(url, tmp)) {
+            stop("failed to download the Gobbler binary")
+        }
         Sys.chmod(tmp, "0755")
-        dir.create(cache, showWarnings=FALSE)
-        file.rename(tmp, exe)
+
+        # Using a write-and-rename paradigm to provide some atomicity. Note
+        # that renaming doesn't work across different filesystems so in that
+        # case we just fall back to copying.
+        dir.create(cache, recursive=TRUE, showWarnings=FALSE)
+        if (!file.rename(tmp, exe) && !file.copy(tmp, exe)) { 
+            stop("cannot transfer file from '", tmp, "' to '", exe, "'")
+        }
     }
 
-    self <- sinfo["login"]
+    self <- sinfo["user"]
     script <- system.file("scripts", "deploy.sh", package="gobbler", mustWork=TRUE)
-    pid <- system2(script, c(exe, staging, registry, self), stdout=TRUE) 
+    pid <- system2(script, c(shQuote(exe), shQuote(staging), shQuote(registry), shQuote(self)), stdout=TRUE) 
 
     process <- new.env()
     process$pid <- pid
