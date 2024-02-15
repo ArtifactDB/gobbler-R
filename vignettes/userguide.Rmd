@@ -1,0 +1,273 @@
+---
+title: Managing files with the Gobbler
+author:
+- name: Aaron Lun
+  email: infinite.monkeys.with.keyboards@gmail.com
+package: gypsum
+date: "Revised: February 15, 2024"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Managing files with the Gobbler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE}
+library(BiocStyle)
+self <- Githubpkg("ArtifactDB/gobbler-R", "gobbler");
+knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
+```
+
+# Introduction
+
+The `r self` package implements an R client for the [service of the same name](https://github.com/ArtifactDB/gobbler).
+This allows Bioconductor packages to easily store and read data on a managed registry in a shared filesystem. 
+It also provides mechanisms for project maintainers to easily manage upload authorizations and third-party contributions.
+Readers are referred to [Gobbler documentation](https://github.com/ArtifactDB/gobbler?tab=readme-ov-file#gobbling-data-on-shared-filesystems) for a description of the concepts;
+this guide will strictly focus on the usage of the `r self` package.
+
+# Demonstration setup
+
+The rest of this vignette assumes that a Gobbler service is actually running on a shared filesystem,
+with known locations for the staging directory and registry.
+For demonstration purposes, we'll set up a test instance of the service with some temporary paths for the staging directory and registry.
+Real applications should run the service outside of R, e.g., via `systemctl`.
+
+```{r}
+library(gobbler)
+info <- startGobbler()
+STAGING <- info$staging
+REGISTRY <- info$registry
+```
+
+We'll also upload a new project to the registry, just for demonstration purposes.
+
+```{r, results="hide"}
+src <- allocateUploadDirectory(STAGING)
+write(file=file.path(src, "foo"), "BAR")
+dir.create(file.path(src, "whee"))
+write(file=file.path(src, "whee", "blah"), "stuff")
+write(file=file.path(src, "whee2"), "more-stuff")
+uploadDirectory("test", "simple", "v1", src, staging=STAGING)
+```
+
+# Reading files
+
+`r self` provides several convenience methods for examining the Gobbler registry:
+
+```{r}
+listAssets("test", registry=REGISTRY)
+listVersions("test", "simple", registry=REGISTRY)
+listFiles("test", "simple", "v1", registry=REGISTRY)
+versionPath("test", "simple", "v1", registry=REGISTRY)
+```
+
+We can fetch the summaries and manifests for each version of a project's assets.
+
+```{r}
+fetchManifest("test", "simple", "v1", registry=REGISTRY)
+fetchSummary("test", "simple", "v1", registry=REGISTRY)
+```
+
+We can get the latest version of an asset:
+
+```{r}
+fetchLatest("test", "simple", registry=REGISTRY)
+```
+
+# Uploading files
+
+## Basic usage
+
+To demonstrate, let's say we have some files that we wish to upload to the registry.
+We allocate a subdirectory in the staging directory and we put our files into it.
+
+```{r}
+# Not strictly necessary to use allocateUploadDirectory here, but it avoids an
+# extra link/copy step in uploadDirectory, so we might as well use it. 
+tmp <- allocateUploadDirectory(STAGING)
+
+write(file=file.path(tmp, "foo"), letters)
+write(file=file.path(tmp, "bar"), LETTERS)
+write(file=file.path(tmp, "whee"), 1:10)
+```
+
+Then we run `uploadDirectory()` with the specified parameters.
+
+```{r}
+init <- uploadDirectory(
+    project="new_project",
+    asset="new_asset",
+    version="new_version",
+    directory=tmp,
+    staging=STAGING
+)
+
+# Check that it was actually uploaded to the registry:
+fetchManifest("new_project", "new_asset", "new_version", registry=REGISTRY)
+```
+
+Users can set `project=NULL` to allow the Gobbler to assign names based on auto-incrementing series with a specified `prefix=`.
+The same also applies with `version=NULL` if no previous versions are present for the asset.
+
+```{r}
+init <- uploadDirectory(
+    project=NULL,
+    prefix="PROJECT",
+    asset="new_asset",
+    version=NULL,
+    directory=tmp,
+    staging=STAGING
+)
+
+# Auto-assigned names:
+init
+```
+
+## Link generation
+
+More advanced developers can improve efficiency by explicitly deduplicating files in their upload directories.
+This is achieved by creating symbolic links to existing files in the Gobbler registry.
+The Gobbler will automatically recognize symbolic links in the upload directory that target files in the registry,
+and avoid creating extra copies of those files.
+The Gobbler will also automatically attempt to deduplicate files that are the same across consecutive versions of the same asset,
+based on the file size and MD5 checksums.
+
+This capability is particularly useful when creating new versions of existing assets.
+Only the modified files need to be uploaded, while the rest of the files can be linked to their counterparts in the previous version.
+In fact, this pattern is so common that it can be expedited via `cloneVersion()`:
+
+```{r}
+dest <- allocateUploadDirectory(STAGING)
+cloneVersion("test", "simple", "v1", destination=dest, registry=REGISTRY)
+
+# Do some modifications in 'dest' to create a new version, e.g., add a file.
+# However, users should treat symlink targets as read-only - so if you want to
+# modify a file, instead delete the symlink and replace it with a new file.
+write(file=file.path(dest, "BFFs"), c("Aaron", "Jayaram"))
+```
+
+Then we can just pass this directory back to `uploadDirectory()`:
+
+```{r}
+init <- uploadDirectory(
+    project="test",
+    asset="links",
+    version="whee",
+    directory=dest,
+    staging=STAGING
+)
+
+# Automatically converts the cloned files into links.
+mann <- fetchManifest("test", "links", "whee", registry=REGISTRY)
+mann[["foo"]]$link
+```
+
+```{r, echo=FALSE}
+stopifnot(!is.null(mann[["foo"]]$link))
+```
+
+# Changing permissions
+
+Upload authorization is determined by each project's permissions, which are controlled by project owners.
+Both uploaders and owners are identified based on their user IDs (UIDs):
+
+```{r}
+fetchPermissions("test", REGISTRY)
+```
+
+Owners can add more uploaders (or owners) via the `setPermissions()` function.
+Uploaders can be scoped to individual assets or versions, and an expiry date may be attached to each authorization:
+
+```{r}
+setPermissions(
+    "test", 
+    uploaders=list(
+        list(
+            id="jkanche", 
+            until=Sys.time() + 24 * 60 * 60,
+            asset="jays-happy-fun-time",
+            version="1"
+        )
+    ),
+    staging=STAGING,
+    registry=REGISTRY    
+)
+
+fetchPermissions("test", REGISTRY)
+```
+
+# Probational uploads
+
+Uploads can be defined as "probational" whereby they must be approved by the project owners before they are considered complete.
+Alternatively, an owner may reject an upload, which deletes all the uploaded files from the backend.
+This provides a mechanism for storing files that may or may not be useful without committing to long-term immutability.
+To demonstrate, let's perform a probational upload:
+
+```{r}
+tmp <- allocateUploadDirectory(STAGING)
+write(file=file.path(tmp, "stuff"), 1:10)
+
+init <- uploadDirectory(
+    project="test",
+    asset="probational",
+    version="thingy",
+    directory=tmp,
+    staging=STAGING,
+    probation=TRUE
+)
+
+# Summary has the on_probation=TRUE flag.
+fetchSummary("test", "probational", "thingy", REGISTRY)
+```
+
+We can then approve (or reject) the probational status.
+This either clears the `on_probation=` flag or it deletes the version from the registry.
+
+```{r}
+approveProbation("test", "probational", "thingy", STAGING)
+
+# Flag is gone!
+fetchSummary("test", "probational", "thingy", REGISTRY)
+```
+
+```{r, echo=FALSE}
+summ <- fetchSummary("test", "probational", "thingy", REGISTRY)
+stopifnot(is.null(summ$on_probation))
+```
+
+Unless specified otherwise, all `uploaders` in the permissions are considered to be "untrusted", and any uploads from such untrusted users are considered probational.
+This allows project maintainers to manage third-party contributions that may need several rounds of revision before approval.
+An uploader can be trusted by setting `trusted=TRUE` in `setPermissions()`.
+
+# Inspecting the quota
+
+Currently, [**gypsum**](https://github.com/ArtifactDB/gypsum-worker)-like storage quotas are not yet enforced by the Gobbler.
+Nonetheless, the Gobbler keeps track of the current disk usage of the project:
+
+```{r}
+fetchUsage("test", REGISTRY)
+```
+
+# Administration
+
+Administrators of the Gobbler service can manually refresh the latest version for an asset and the disk usage for a project.
+This is required on very rare occasions where there are simultaneous uploads to the same project.
+
+```{r}
+refreshLatest("test", "simple", STAGING)
+refreshUsage("test", STAGING)
+```
+
+Administrators may also delete projects, assets or versions, though this should be done sparingly as it violates the Gobbler's expectations of immutability.
+
+```{r}
+removeProject("test", STAGING)
+```
+
+# Session information {-}
+
+```{r}
+sessionInfo()
+```
