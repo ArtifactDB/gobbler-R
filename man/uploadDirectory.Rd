@@ -54,6 +54,7 @@ info <- startGobbler()
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
+
 res <- uploadDirectory(
     project=NULL, 
     prefix="TEST", 

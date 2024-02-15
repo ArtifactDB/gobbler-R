@@ -9,12 +9,14 @@
 #' @return Character vector of project names.
 #'
 #' @examples
-#' # Mocking up an upload. 
 #' info <- startGobbler()
+#'
+#' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' res <- uploadDirectory("more-tests", "simple", "v1", src, staging=info$staging)
-#' res <- uploadDirectory("even-more-tests", "simple", "v1", src, staging=info$staging)
+#' for (proj in c("test", "more-tests", "even-more-tests")) {
+#'     removeProject(proj, info$staging) # clean out any existing entry
+#'     uploadDirectory(proj, "simple", "v1", src, staging=info$staging)
+#' }
 #'
 #' # Listing out the projects.
 #' listProjects(info$registry)

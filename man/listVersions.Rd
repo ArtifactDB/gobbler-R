@@ -20,11 +20,14 @@ Character vector of versions.
 List all versions of a project asset.
 }
 \examples{
-# Mocking up an upload. 
 info <- startGobbler()
+
+# Mocking up a few uploads.
 src <- allocateUploadDirectory(info$staging)
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+removeAsset("test", "simple", info$staging) # clean out existing entries
+for (v in c("v1", "v2")) {
+    uploadDirectory("test", "simple", v, src, staging=info$staging)
+}
 
 # Listing the versions of the asset:
 listVersions("test", "simple", registry=info$registry)

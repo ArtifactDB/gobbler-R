@@ -16,13 +16,15 @@
 #' @return Character vector of relative paths of files associated with the versioned asset.
 #'
 #' @examples
-#' # Mocking up an upload. 
 #' info <- startGobbler()
+#'
+#' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' dir.create(file.path(src, "whee"))
 #' write(file=file.path(src, "whee", "blah"), "stuff")
 #' write(file=file.path(src, "whee2"), "more-stuff")
+#' removeAsset("test", "simple", info$staging) # clean out any existing entry
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #'
 #' # List files, with or without a prefix.

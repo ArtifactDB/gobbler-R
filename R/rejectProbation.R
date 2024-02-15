@@ -22,7 +22,9 @@
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "probation", "v1", src, staging=info$staging, probation=TRUE)
+#' removeAsset("test", "probation", info$staging) # clean out any existing entry
+#' res <- uploadDirectory("test", "probation", "v1", src, 
+#'     staging=info$staging, probation=TRUE)
 #' listVersions("test", "probation", registry=info$registry)
 #'
 #' # After rejection, the version disppears.

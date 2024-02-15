@@ -35,10 +35,12 @@ If not provided, defaults to \code{FALSE}.
 Fetch the permissions for a project.
 }
 \examples{
-# Mocking up an upload. 
 info <- startGobbler()
+
+# Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
+removeProject("test", info$staging) # clean out any existing entry
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging,
     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
 

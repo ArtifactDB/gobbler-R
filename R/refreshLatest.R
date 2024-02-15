@@ -17,10 +17,12 @@
 #' @examples
 #' info <- startGobbler()
 #'
-#' # Mocking up an upload. 
+#' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+#' removeAsset("test", "simple", info$staging) # clean out existing entries
+#' for (v in c("v1", "v2")) {
+#'     uploadDirectory("test", "simple", v, src, staging=info$staging)
+#' }
 #' 
 #' # Delete the ..latest file.
 #' unlink(file.path(info$registry, "test", "simple", "..latest")) 

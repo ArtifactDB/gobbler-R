@@ -42,6 +42,7 @@ info <- startGobbler()
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
+removeProject("test", info$staging) # cleaning out any existing entry 
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 fetchPermissions("test", registry=info$registry)
 

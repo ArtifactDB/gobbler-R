@@ -22,14 +22,8 @@ String containing a path to a versioned asset in the registry.
 Obtain the path to the directory containing a versioned asset in the registry.
 }
 \examples{
-# Mocking up an upload. 
-info <- startGobbler()
-src <- allocateUploadDirectory(info$staging)
-write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-
-# Obtaining the path.
-versionPath("test", "simple", "v1", registry=info$registry)
+registry <- tempfile()
+versionPath("test", "simple", "v1", registry=registry)
 
 }
 \author{

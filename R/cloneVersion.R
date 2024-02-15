@@ -30,21 +30,23 @@
 #' \code{\link{uploadDirectory}}, to prepare an upload based on the directory contents.
 #'
 #' @examples
-#' # Mocking up an upload. 
 #' info <- startGobbler()
+#' 
+#' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
+#' removeAsset("test", "simple", info$staging) # clean out any existing entry
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #'
 #' # Creating a clone.
 #' dest <- tempfile()
 #' out <- cloneVersion("test", "simple", "v1", dest, registry=info$registry)
 #' list.files(dest, recursive=TRUE)
-#' Sys.readlink(file.path(dest, "FOO"))
-#' readLines(file.path(dest, "FOO"))
+#' Sys.readlink(file.path(dest, "foo"))
+#' readLines(file.path(dest, "foo"))
 #'
 #' # Files should be replaced rather than modified via the symlink:
-#' existing <- file.path(dest, "FOO")
+#' existing <- file.path(dest, "foo")
 #' unlink(existing) # Deleting the symlink...
 #' write(file=existing, "YAY") # ... and writing a replacement file.
 #'

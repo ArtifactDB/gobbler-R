@@ -22,10 +22,12 @@ Remove an asset of the project from the registry.
 \examples{
 info <- startGobbler()
 
-# Mocking up an upload. 
-src <- allocateUploadDirectory(info$staging)
-write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+# Mocking up an asset if it doesn't already exist.
+if (!file.exists(file.path(info$registry, "test", "simple"))) {
+    src <- allocateUploadDirectory(info$staging)
+    write(file=file.path(src, "foo"), "BAR")
+    res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+}
 listAssets("test", registry=info$registry)
 
 # Removing the asset.

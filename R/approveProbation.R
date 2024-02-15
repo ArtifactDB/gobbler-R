@@ -22,7 +22,9 @@
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "probation", "v1", src, staging=info$staging, probation=TRUE)
+#' removeAsset("test", "probation", info$staging) # clean out any existing entry
+#' res <- uploadDirectory("test", "probation", "v1", src, 
+#'     staging=info$staging, probation=TRUE)
 #' fetchSummary("test", "probation", "v1", registry=info$registry)
 #'
 #' # After approval, the probation status disappears.

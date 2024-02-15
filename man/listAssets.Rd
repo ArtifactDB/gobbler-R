@@ -18,12 +18,14 @@ Character vector of asset names.
 List all assets in a project.
 }
 \examples{
-# Mocking up an upload. 
 info <- startGobbler()
+
+# Mocking up a few uploads.
 src <- allocateUploadDirectory(info$staging)
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-res <- uploadDirectory("test", "more-simple", "v1", src, staging=info$staging)
-res <- uploadDirectory("test", "even-more-simple", "v1", src, staging=info$staging)
+removeProject("test", info$staging) # clean out existing entries
+for (ass in c("simple", "more-simple", "even-more-simple")) {
+    uploadDirectory("test", ass, "v1", src, staging=info$staging)
+}
 
 # Listing available assets:
 listAssets("test", registry=info$registry)

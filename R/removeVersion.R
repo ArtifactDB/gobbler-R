@@ -17,15 +17,17 @@
 #' @examples
 #' info <- startGobbler()
 #'
-#' # Mocking up an upload. 
-#' src <- allocateUploadDirectory(info$staging)
-#' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' # Mocking up a version if it doesn't already exist.
+#' if (!file.exists(versionPath(info$registry, "test", "simple", "v1"))) {
+#'     src <- allocateUploadDirectory(info$staging)
+#'     write(file=file.path(src, "foo"), "BAR")
+#'     res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' }
 #' listVersions("test", "simple", registry=info$registry)
 #'
 #' # Removing the version.
 #' removeVersion("test", "simple", "v1", staging=info$staging)
-#' listProjects("test", "simple", registry=info$registry)
+#' listVersions("test", "simple", registry=info$registry)
 #'
 #' @export
 removeVersion <- function(project, asset, version, staging) {
