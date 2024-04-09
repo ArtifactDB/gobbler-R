@@ -60,6 +60,11 @@ wait_response <- function(staging, request_name, error=TRUE, timeout=10) {
         Sys.sleep(0.2)
     }
 
+    # If we have a response, we clean out the request file to declutter the
+    # staging directory. This also reduces the chance for conflicts in the
+    # temporary files, which become more likely as we run out of names.
+    unlink(file.path(staging, request_name))
+
     if (!error) {
         return(TRUE)
     }
