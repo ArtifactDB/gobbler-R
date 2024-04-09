@@ -2,7 +2,8 @@
 # library(testthat); library(gobbler); source("test-probation.R")
 
 info <- startGobbler()
-removeAsset("test", "probation", staging=info$staging)
+removeProject("test", staging=info$staging)
+createProject("test", staging=info$staging)
                                                                                              
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)

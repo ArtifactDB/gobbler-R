@@ -31,12 +31,10 @@
 #'
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
 #'
-#' # Mocking up an upload. 
-#' src <- allocateUploadDirectory(info$staging)
-#' write(file=file.path(src, "foo"), "BAR")
-#' removeProject("test", info$staging) # clean out any existing entry
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging,
+#' # Mocking up a project.upload. 
+#' createProject("test", info$staging,
 #'     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
 #'
 #' # Fetching the permissions.

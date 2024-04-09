@@ -3,10 +3,7 @@
 
 info <- startGobbler()
 removeProject("test-perms", staging=info$staging)
-
-src <- allocateUploadDirectory(info$staging)
-write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test-perms", "simple", "v1", src, staging=info$staging, owners="LTLA")
+createProject("test-perms", staging=info$staging, owners="LTLA")
 
 test_that("permission setting works as expected", {
     until <- round(Sys.time() + 1000000)

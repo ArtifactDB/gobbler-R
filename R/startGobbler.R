@@ -54,7 +54,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile()) {
     desired <- sprintf("gobbler-%s-%s", os, arch)
     exe <- file.path(cache, desired)
     if (!file.exists(exe)) {
-        url <- paste0("https://github.com/ArtifactDB/gobbler/releases/download/latest/", desired)
+        url <- paste0("https://github.com/ArtifactDB/gobbler/releases/download/0.2.0/", desired)
         tmp <- tempfile()
         if (download.file(url, tmp)) {
             stop("failed to download the Gobbler binary")

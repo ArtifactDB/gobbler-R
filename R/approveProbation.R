@@ -18,11 +18,12 @@
 #' @author Aaron Lun
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # to start with a clean slate.
+#' createProject("test", info$staging)
 #'
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' removeAsset("test", "probation", info$staging) # clean out any existing entry
 #' res <- uploadDirectory("test", "probation", "v1", src, 
 #'     staging=info$staging, probation=TRUE)
 #' fetchSummary("test", "probation", "v1", registry=info$registry)

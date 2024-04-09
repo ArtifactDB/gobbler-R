@@ -12,18 +12,17 @@
 #' @seealso
 #' \code{\link{removeAsset}} and \code{\link{removeVersion}}, to remove assets and versions respectively.
 #'
+#' \code{\link{createProject}}, to create a project.
+#'
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
 #'
-#' # Mocking a project if it doesn't already exist.
-#' if (file.exists(file.path(info$registry, "test"))) {
-#'     src <- allocateUploadDirectory(info$staging)
-#'     write(file=file.path(src, "foo"), "BAR")
-#'     res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' }
+#' # Mocking up a project so we have something to delete.
+#' createProject("test", info$staging)
 #' listProjects(registry=info$registry)
 #'
-#' # Removing the asset.
+#' # Removing the project.
 #' removeProject("test", staging=info$staging)
 #' listProjects(registry=info$registry)
 #'

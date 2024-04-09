@@ -2,7 +2,8 @@
 # library(testthat); library(gobbler); source("test-cloneVersion.R")
 
 info <- startGobbler()
-removeAsset("test", "clone", staging=info$staging)
+removeProject("test", staging=info$staging)
+createProject("test", staging=info$staging)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")

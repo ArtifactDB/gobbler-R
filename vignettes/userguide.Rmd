@@ -41,6 +41,16 @@ STAGING <- info$staging
 REGISTRY <- info$registry
 ```
 
+As we're the administrators of this instance, we can just create a new project outselves:
+
+```{r, echo=FALSE}
+removeProject("test", staging=info$staging)
+```
+
+```{r}
+createProject("test", staging=info$staging)
+```
+
 We'll also upload a new project to the registry, just for demonstration purposes.
 
 ```{r, results="hide"}
@@ -96,8 +106,8 @@ write(file=file.path(tmp, "whee"), 1:10)
 Then we run `uploadDirectory()` with the specified parameters.
 
 ```{r}
-init <- uploadDirectory(
-    project="new_project",
+uploadDirectory(
+    project="test",
     asset="new_asset",
     version="new_version",
     directory=tmp,
@@ -105,24 +115,7 @@ init <- uploadDirectory(
 )
 
 # Check that it was actually uploaded to the registry:
-fetchManifest("new_project", "new_asset", "new_version", registry=REGISTRY)
-```
-
-Users can set `project=NULL` to allow the Gobbler to assign names based on auto-incrementing series with a specified `prefix=`.
-The same also applies with `version=NULL` if no previous versions are present for the asset.
-
-```{r}
-init <- uploadDirectory(
-    project=NULL,
-    prefix="PROJECT",
-    asset="new_asset",
-    version=NULL,
-    directory=tmp,
-    staging=STAGING
-)
-
-# Auto-assigned names:
-init
+fetchManifest("test", "new_asset", "new_version", registry=REGISTRY)
 ```
 
 ## Link generation
@@ -251,6 +244,17 @@ fetchUsage("test", REGISTRY)
 ```
 
 # Administration
+
+Administrators are responsible for creating new projects with the relevant permissions.
+Authorized users can then upload new versions/assets via `uploadDirectory()` to this project.
+
+```{r}
+createProject("another-project", 
+    STAGING, 
+    owners="LTLA", 
+    uploaders=list(list(id="jkanche"))
+)
+```
 
 Administrators of the Gobbler service can manually refresh the latest version for an asset and the disk usage for a project.
 This is required on very rare occasions where there are simultaneous uploads to the same project.

@@ -21,10 +21,11 @@ List all versions of a project asset.
 }
 \examples{
 info <- startGobbler()
+removeProject("test", info$staging) # start from a clean slate.
+createProject("test", info$staging) 
 
 # Mocking up a few uploads.
 src <- allocateUploadDirectory(info$staging)
-removeAsset("test", "simple", info$staging) # clean out existing entries
 for (v in c("v1", "v2")) {
     uploadDirectory("test", "simple", v, src, staging=info$staging)
 }

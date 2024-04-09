@@ -4,42 +4,21 @@
 \alias{uploadDirectory}
 \title{Upload a directory's contents}
 \usage{
-uploadDirectory(
-  project,
-  asset,
-  version,
-  directory,
-  staging,
-  prefix = NULL,
-  probation = FALSE,
-  owners = NULL,
-  uploaders = NULL
-)
+uploadDirectory(project, asset, version, directory, staging, probation = FALSE)
 }
 \arguments{
-\item{project}{String containing the project name.
-This may be \code{NULL}, in which case \code{prefix} should be provided.}
+\item{project}{String containing an existing project name.}
 
-\item{asset}{String containing the asset name.}
+\item{asset}{String containing a new or existing asset name.}
 
-\item{version}{String containing the version name.
-This may be \code{NULL} to generate a new version name based on an incrementing series.}
+\item{version}{String containing a new or existing version name.}
 
 \item{directory}{String containing the path to a directory to be uploaded.
 This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.}
 
 \item{staging}{String containing the path to the staging directory.}
 
-\item{prefix}{String containing the project name prefix.
-This is used to derive a project name based on an incrementing series.}
-
 \item{probation}{Logical scalar indicating whether to upload a probational version.}
-
-\item{owners}{Character vector containing the user IDs for owners of this project.
-This defaults to the current user.}
-
-\item{uploaders}{List specifying the authorized uploaders for this project.
-See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format.}
 }
 \value{
 List containing \code{project} and \code{version},
@@ -51,21 +30,24 @@ Upload a directory as a new versioned asset of a project in the registry.
 }
 \examples{
 info <- startGobbler()
+removeProject("test", info$staging) # start with a clean slate.
+createProject("test", info$staging)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 
 res <- uploadDirectory(
-    project=NULL, 
-    prefix="TEST", 
+    project="test", 
     asset="simple", 
-    version=NULL, 
+    version="v1", 
     directory=src, 
     staging=info$staging)
 res
 
 }
 \seealso{
+\code{\link{createProject}}, to create a new project for uploads.
+
 \code{\link{versionPath}}, to obtain the path to a versioned asset's contents inside the registry.
 
 \code{\link{fetchManifest}}, to obtain the manifest of the versioned asset's contents.

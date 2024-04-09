@@ -14,12 +14,13 @@
 #'
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
+#' createProject("test", info$staging)
 #'
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' write(file=file.path(src, "whee"), "stuff")
-#' removeProject("test", info$staging) # clean out existing entries
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #'
 #' # Messing with the project usage:

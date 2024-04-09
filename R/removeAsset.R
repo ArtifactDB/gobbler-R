@@ -15,13 +15,13 @@
 #'
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
+#' createProject("test", info$staging)
 #'
-#' # Mocking up an asset if it doesn't already exist.
-#' if (!file.exists(file.path(info$registry, "test", "simple"))) {
-#'     src <- allocateUploadDirectory(info$staging)
-#'     write(file=file.path(src, "foo"), "BAR")
-#'     res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' }
+#' # Mocking up an asset so we have something to remove.
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #' listAssets("test", registry=info$registry)
 #'
 #' # Removing the asset.

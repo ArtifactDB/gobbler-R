@@ -3,6 +3,7 @@
 
 info <- startGobbler()
 removeProject("test-usage", info$staging)
+createProject("test-usage", info$staging)
                                                                           
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)

@@ -17,13 +17,14 @@ List all projects in the registry.
 }
 \examples{
 info <- startGobbler()
-
-# Mocking up a few uploads.
-src <- allocateUploadDirectory(info$staging)
-for (proj in c("test", "more-tests", "even-more-tests")) {
-    removeProject(proj, info$staging) # clean out any existing entry
-    uploadDirectory(proj, "simple", "v1", src, staging=info$staging)
-}
+removeProject("test", info$staging) # clean out any existing entries
+removeProject("more-test", info$staging)
+removeProject("even-more-test", info$staging)
+   
+# Now mocking up the creation of some projects.
+createProject("test", info$staging)
+createProject("more-test", info$staging)
+createProject("even-more-test", info$staging)
 
 # Listing out the projects.
 listProjects(info$registry)

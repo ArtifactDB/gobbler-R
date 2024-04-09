@@ -2,7 +2,9 @@
 # library(testthat); library(gobbler); source("test-remove.R")
 
 info <- startGobbler()
-removeAsset("test-R-remove", "sacrifice", staging=info$staging)
+removeProject("test-R-remove", staging=info$staging)
+createProject("test-R-remove", staging=info$staging)
+
 src <- allocateUploadDirectory(info$staging)
 res <- uploadDirectory("test-R-remove", "sacrifice", "v1", src, staging=info$staging)
 Sys.sleep(1.1) # force timestamps to be different for next versions.

@@ -11,10 +11,11 @@
 #'
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
+#' createProject("test", info$staging)
 #'
 #' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
-#' removeProject("test", info$staging) # clean out existing entries
 #' for (ass in c("simple", "more-simple", "even-more-simple")) {
 #'     uploadDirectory("test", ass, "v1", src, staging=info$staging)
 #' }

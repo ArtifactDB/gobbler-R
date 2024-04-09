@@ -2,7 +2,8 @@
 # library(testthat); library(gobbler); source("test-latest.R")
 
 info <- startGobbler()
-removeAsset("test", "latest", staging=info$staging)
+removeProject("test", staging=info$staging)
+createProject("test", staging=info$staging)
 
 src <- allocateUploadDirectory(info$staging)
 res <- uploadDirectory("test", "latest", "v1", src, staging=info$staging)

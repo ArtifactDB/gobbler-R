@@ -22,10 +22,11 @@ Fetch the latest version of a project's asset.
 }
 \examples{
 info <- startGobbler()
+removeProject("test", info$staging) # start with a clean slate.
+createProject("test", info$staging) 
 
 # Mocking up a few uploads.
 src <- allocateUploadDirectory(info$staging)
-removeAsset("test", "simple", info$staging) # clean out existing entries
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
 

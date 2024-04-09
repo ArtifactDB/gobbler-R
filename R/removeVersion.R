@@ -16,13 +16,13 @@
 #'
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
+#' createProject("test", info$staging)
 #'
 #' # Mocking up a version if it doesn't already exist.
-#' if (!file.exists(versionPath(info$registry, "test", "simple", "v1"))) {
-#'     src <- allocateUploadDirectory(info$staging)
-#'     write(file=file.path(src, "foo"), "BAR")
-#'     res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' }
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #' listVersions("test", "simple", registry=info$registry)
 #'
 #' # Removing the version.

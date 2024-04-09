@@ -38,11 +38,12 @@ Set the owner and uploader permissions for a project.
 }
 \examples{
 info <- startGobbler()
+removeProject("test", info$staging) # start with a clean slate.
+createProject("test", info$staging)
 
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-removeProject("test", info$staging) # cleaning out any existing entry 
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 fetchPermissions("test", registry=info$registry)
 
@@ -61,6 +62,8 @@ fetchPermissions("test", registry=info$registry)
 }
 \seealso{
 \code{\link{fetchPermissions}}, to fetch the permissions.
+
+\code{\link{createProject}}, to set permissions during project creation.
 }
 \author{
 Aaron Lun

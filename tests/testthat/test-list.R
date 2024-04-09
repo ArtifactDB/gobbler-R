@@ -2,9 +2,10 @@
 # library(testthat); library(gobbler); source("test-list.R")
 
 info <- startGobbler()
-removeAsset("test", "list", staging=info$staging)
-removeAsset("test", "more-list", staging=info$staging)
+removeProject("test", staging=info$staging)
 removeProject("more-list-test", staging=info$staging)
+createProject("test", staging=info$staging)
+createProject("more-list-test", staging=info$staging)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
@@ -14,8 +15,8 @@ write(file=file.path(src, "whee2"), LETTERS)
 
 res <- uploadDirectory("test", "list", "v1", src, staging=info$staging)
 res <- uploadDirectory("test", "list", "v2", src, staging=info$staging)
-res <- uploadDirectory("test", "more-list", version=NULL, src, staging=info$staging)
-res <- uploadDirectory("more-list-test", "list", version=NULL, src, staging=info$staging)
+res <- uploadDirectory("test", "more-list", version="foo", src, staging=info$staging)
+res <- uploadDirectory("more-list-test", "list", version="bar", src, staging=info$staging)
 
 test_that("listVersions works as expected", {
     versions <- listVersions("test", "list", registry=info$registry)

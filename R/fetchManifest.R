@@ -21,13 +21,14 @@
 #' 
 #' @examples
 #' info <- startGobbler()
+#' removeProject("test", info$staging) # start with a clean slate.
+#' createProject("test", info$staging)
 #'
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' dir.create(file.path(src, "whee"))
 #' write(file=file.path(src, "whee", "blah"), "stuff")
-#' removeAsset("test", "simple", info$staging) # clean out any existing entry
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
 #'
 #' # Obtaining the manifest for this version.
