@@ -51,10 +51,13 @@ startGobbler <- function(staging=tempfile(), registry=tempfile()) {
         stop("unsupported architecture '", sysmachine, "'")
     }
 
-    desired <- sprintf("gobbler-%s-%s", os, arch)
+    version <- "0.2.0"
+    binary <- sprintf("gobbler-%s-%s", os, arch)
+    desired <- paste0(binary, "-", version)
     exe <- file.path(cache, desired)
+
     if (!file.exists(exe)) {
-        url <- paste0("https://github.com/ArtifactDB/gobbler/releases/download/0.2.0/", desired)
+        url <- paste0("https://github.com/ArtifactDB/gobbler/releases/download/", version,  "/", binary)
         tmp <- tempfile()
         if (download.file(url, tmp)) {
             stop("failed to download the Gobbler binary")
