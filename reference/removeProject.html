@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -81,7 +81,8 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="removeAsset.html">removeAsset</a></code> and <code><a href="removeVersion.html">removeVersion</a></code>, to remove assets and versions respectively.</p></div>
+    <div class="dont-index"><p><code><a href="removeAsset.html">removeAsset</a></code> and <code><a href="removeVersion.html">removeVersion</a></code>, to remove assets and versions respectively.</p>
+<p><code><a href="createProject.html">createProject</a></code>, to create a project.</p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -91,20 +92,17 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="startGobbler.html">startGobbler</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">removeProject</span><span class="op">(</span><span class="st">"test"</span>, <span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span> <span class="co"># start with a clean slate.</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Mocking a project if it doesn't already exist.</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span>, <span class="st">"test"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">src</span> <span class="op">&lt;-</span> <span class="fu"><a href="allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">src</span>, <span class="st">"foo"</span><span class="op">)</span>, <span class="st">"BAR"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, <span class="va">src</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># Mocking up a project so we have something to delete.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="createProject.html">createProject</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="listProjects.html">listProjects</a></span><span class="op">(</span>registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "even-more-tests" "more-tests"      "test"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "even-more-test" "more-test"      "test"          </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Removing the asset.</span></span></span>
+<span class="r-in"><span><span class="co"># Removing the project.</span></span></span>
 <span class="r-in"><span><span class="fu">removeProject</span><span class="op">(</span><span class="st">"test"</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="listProjects.html">listProjects</a></span><span class="op">(</span>registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "even-more-tests" "more-tests"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "even-more-test" "more-test"     </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

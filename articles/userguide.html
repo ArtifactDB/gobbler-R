@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -117,9 +117,13 @@ of R, e.g., via <code>systemctl</code>.</p>
 <span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/startGobbler.html">startGobbler</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">STAGING</span> <span class="op">&lt;-</span> <span class="va">info</span><span class="op">$</span><span class="va">staging</span></span>
 <span><span class="va">REGISTRY</span> <span class="op">&lt;-</span> <span class="va">info</span><span class="op">$</span><span class="va">registry</span></span></code></pre></div>
+<p>As we’re the administrators of this instance, we can just create a
+new project outselves:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/createProject.html">createProject</a></span><span class="op">(</span><span class="st">"test"</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></code></pre></div>
 <p>We’ll also upload a new project to the registry, just for
 demonstration purposes.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">src</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">STAGING</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">src</span>, <span class="st">"foo"</span><span class="op">)</span>, <span class="st">"BAR"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">src</span>, <span class="st">"whee"</span><span class="op">)</span><span class="op">)</span></span>
@@ -132,21 +136,21 @@ demonstration purposes.</p>
 </h2>
 <p><em><a href="https://github.com/ArtifactDB/gobbler-R" class="external-link">gobbler</a></em> provides
 several convenience methods for examining the Gobbler registry:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/listAssets.html">listAssets</a></span><span class="op">(</span><span class="st">"test"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "simple"</span></span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/listVersions.html">listVersions</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "v1"</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/listFiles.html">listFiles</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "..manifest" "..summary"  "foo"        "whee/blah"  "whee2"</span></span></code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/versionPath.html">versionPath</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpU1q5FG/file45e4490b5fb/test/simple/v1"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/RtmpqE0VF1/file45550db8704/test/simple/v1"</span></span></code></pre>
 <p>We can fetch the summaries and manifests for each version of a
 project’s assets.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchManifest.html">fetchManifest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $foo</span></span>
 <span><span class="co">## $foo$size</span></span>
@@ -170,18 +174,18 @@ project’s assets.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## $whee2$md5sum</span></span>
 <span><span class="co">## [1] "aeed28071296d9424ea4b7eee861386c"</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchSummary.html">fetchSummary</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $upload_user_id</span></span>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-02-16 07:18:31 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-09 18:20:26 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-02-16 07:18:31 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-09 18:20:26 UTC"</span></span></code></pre>
 <p>We can get the latest version of an asset:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchLatest.html">fetchLatest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "v1"</span></span></code></pre>
 </div>
@@ -194,7 +198,7 @@ project’s assets.</p>
 <p>To demonstrate, let’s say we have some files that we wish to upload
 to the registry. We allocate a subdirectory in the staging directory and
 we put our files into it.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Not strictly necessary to use allocateUploadDirectory here, but it avoids an</span></span>
 <span><span class="co"># extra link/copy step in uploadDirectory, so we might as well use it. </span></span>
 <span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">STAGING</span><span class="op">)</span></span>
@@ -204,17 +208,19 @@ we put our files into it.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"whee"</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p>Then we run <code><a href="../reference/uploadDirectory.html">uploadDirectory()</a></code> with the specified
 parameters.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">init</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span></span>
-<span>    project<span class="op">=</span><span class="st">"new_project"</span>,</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span></span>
+<span>    project<span class="op">=</span><span class="st">"test"</span>,</span>
 <span>    asset<span class="op">=</span><span class="st">"new_asset"</span>,</span>
 <span>    version<span class="op">=</span><span class="st">"new_version"</span>,</span>
 <span>    directory<span class="op">=</span><span class="va">tmp</span>,</span>
 <span>    staging<span class="op">=</span><span class="va">STAGING</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Check that it was actually uploaded to the registry:</span></span>
-<span><span class="fu"><a href="../reference/fetchManifest.html">fetchManifest</a></span><span class="op">(</span><span class="st">"new_project"</span>, <span class="st">"new_asset"</span>, <span class="st">"new_version"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $status</span></span>
+<span><span class="co">## [1] "SUCCESS"</span></span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check that it was actually uploaded to the registry:</span></span>
+<span><span class="fu"><a href="../reference/fetchManifest.html">fetchManifest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"new_asset"</span>, <span class="st">"new_version"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $bar</span></span>
 <span><span class="co">## $bar$size</span></span>
 <span><span class="co">## [1] 52</span></span>
@@ -237,31 +243,6 @@ parameters.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## $whee$md5sum</span></span>
 <span><span class="co">## [1] "c34bcea9f2263deb3379103c9f10c130"</span></span></code></pre>
-<p>Users can set <code>project=NULL</code> to allow the Gobbler to
-assign names based on auto-incrementing series with a specified
-<code>prefix=</code>. The same also applies with
-<code>version=NULL</code> if no previous versions are present for the
-asset.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">init</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span></span>
-<span>    project<span class="op">=</span><span class="cn">NULL</span>,</span>
-<span>    prefix<span class="op">=</span><span class="st">"PROJECT"</span>,</span>
-<span>    asset<span class="op">=</span><span class="st">"new_asset"</span>,</span>
-<span>    version<span class="op">=</span><span class="cn">NULL</span>,</span>
-<span>    directory<span class="op">=</span><span class="va">tmp</span>,</span>
-<span>    staging<span class="op">=</span><span class="va">STAGING</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Auto-assigned names:</span></span>
-<span><span class="va">init</span></span></code></pre></div>
-<pre><code><span><span class="co">## $project</span></span>
-<span><span class="co">## [1] "PROJECT1"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $status</span></span>
-<span><span class="co">## [1] "SUCCESS"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $version</span></span>
-<span><span class="co">## [1] "1"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="link-generation">Link generation<a class="anchor" aria-label="anchor" href="#link-generation"></a>
@@ -279,7 +260,7 @@ existing assets. Only the modified files need to be uploaded, while the
 rest of the files can be linked to their counterparts in the previous
 version. In fact, this pattern is so common that it can be expedited via
 <code><a href="../reference/cloneVersion.html">cloneVersion()</a></code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dest</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">STAGING</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/cloneVersion.html">cloneVersion</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, destination<span class="op">=</span><span class="va">dest</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span>
 <span></span>
@@ -289,7 +270,7 @@ version. In fact, this pattern is so common that it can be expedited via
 <span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dest</span>, <span class="st">"BFFs"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Aaron"</span>, <span class="st">"Jayaram"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Then we can just pass this directory back to
 <code><a href="../reference/uploadDirectory.html">uploadDirectory()</a></code>:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">init</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span></span>
 <span>    project<span class="op">=</span><span class="st">"test"</span>,</span>
 <span>    asset<span class="op">=</span><span class="st">"links"</span>,</span>
@@ -320,7 +301,7 @@ version. In fact, this pattern is so common that it can be expedited via
 <p>Upload authorization is determined by each project’s permissions,
 which are controlled by project owners. Both uploaders and owners are
 identified based on their user IDs (UIDs):</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchPermissions.html">fetchPermissions</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $owners</span></span>
 <span><span class="co">## $owners[[1]]</span></span>
@@ -333,7 +314,7 @@ identified based on their user IDs (UIDs):</p>
 <code><a href="../reference/setPermissions.html">setPermissions()</a></code> function. Uploaders can be scoped to
 individual assets or versions, and an expiry date may be attached to
 each authorization:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/setPermissions.html">setPermissions</a></span><span class="op">(</span></span>
 <span>    <span class="st">"test"</span>, </span>
 <span>    uploaders<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -366,7 +347,7 @@ each authorization:</p>
 <span><span class="co">## [1] "1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $uploaders[[1]]$until</span></span>
-<span><span class="co">## [1] "2024-02-17 07:18:32 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-10 18:20:28 UTC"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="probational-uploads">Probational uploads<a class="anchor" aria-label="anchor" href="#probational-uploads"></a>
@@ -377,7 +358,7 @@ Alternatively, an owner may reject an upload, which deletes all the
 uploaded files from the backend. This provides a mechanism for storing
 files that may or may not be useful without committing to long-term
 immutability. To demonstrate, let’s perform a probational upload:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">STAGING</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"stuff"</span><span class="op">)</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span></span>
@@ -396,17 +377,17 @@ immutability. To demonstrate, let’s perform a probational upload:</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-02-16 07:18:33 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-09 18:20:28 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-02-16 07:18:33 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-09 18:20:28 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $on_probation</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre>
 <p>We can then approve (or reject) the probational status. This either
 clears the <code>on_probation=</code> flag or it deletes the version
 from the registry.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/approveProbation.html">approveProbation</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"probational"</span>, <span class="st">"thingy"</span>, <span class="va">STAGING</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Flag is gone!</span></span>
@@ -415,10 +396,10 @@ from the registry.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-02-16 07:18:33 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-09 18:20:28 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-02-16 07:18:33 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-09 18:20:28 UTC"</span></span></code></pre>
 <p>Unless specified otherwise, all <code>uploaders</code> in the
 permissions are considered to be “untrusted”, and any uploads from such
 untrusted users are considered probational. This allows project
@@ -432,34 +413,43 @@ setting <code>trusted=TRUE</code> in <code><a href="../reference/setPermissions.
 <p>Currently, <a href="https://github.com/ArtifactDB/gypsum-worker" class="external-link"><strong>gypsum</strong></a>-like
 storage quotas are not yet enforced by the Gobbler. Nonetheless, the
 Gobbler keeps track of the current disk usage of the project:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchUsage.html">fetchUsage</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 56</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 181</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="administration">Administration<a class="anchor" aria-label="anchor" href="#administration"></a>
 </h2>
+<p>Administrators are responsible for creating new projects with the
+relevant permissions. Authorized users can then upload new
+versions/assets via <code><a href="../reference/uploadDirectory.html">uploadDirectory()</a></code> to this project.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/createProject.html">createProject</a></span><span class="op">(</span><span class="st">"another-project"</span>, </span>
+<span>    <span class="va">STAGING</span>, </span>
+<span>    owners<span class="op">=</span><span class="st">"LTLA"</span>, </span>
+<span>    uploaders<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>id<span class="op">=</span><span class="st">"jkanche"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Administrators of the Gobbler service can manually refresh the latest
 version for an asset and the disk usage for a project. This is required
 on very rare occasions where there are simultaneous uploads to the same
 project.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/refreshLatest.html">refreshLatest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="va">STAGING</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/refreshUsage.html">refreshUsage</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">STAGING</span><span class="op">)</span></span></code></pre></div>
 <p>Administrators may also delete projects, assets or versions, though
 this should be done sparingly as it violates the Gobbler’s expectations
 of immutability.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/removeProject.html">removeProject</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">STAGING</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2024-02-07 r85873)</span></span>
+<pre><code><span><span class="co">## R Under development (unstable) (2024-04-03 r86327)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">## Running under: Ubuntu 22.04.3 LTS</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
@@ -480,21 +470,20 @@ of immutability.</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] gobbler_0.1.0    BiocStyle_2.31.0</span></span>
+<span><span class="co">## [1] gobbler_0.1.1    BiocStyle_2.31.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##  [1] vctrs_0.6.5         cli_3.6.2           knitr_1.45         </span></span>
-<span><span class="co">##  [4] rlang_1.1.3         xfun_0.42           stringi_1.8.3      </span></span>
-<span><span class="co">##  [7] purrr_1.0.2         textshaping_0.3.7   jsonlite_1.8.8     </span></span>
-<span><span class="co">## [10] glue_1.7.0          htmltools_0.5.7     ragg_1.2.7         </span></span>
-<span><span class="co">## [13] sass_0.4.8          rmarkdown_2.25      evaluate_0.23      </span></span>
-<span><span class="co">## [16] jquerylib_0.1.4     fastmap_1.1.1       yaml_2.3.8         </span></span>
-<span><span class="co">## [19] lifecycle_1.0.4     memoise_2.0.1       bookdown_0.37      </span></span>
-<span><span class="co">## [22] BiocManager_1.30.22 stringr_1.5.1       compiler_4.4.0     </span></span>
-<span><span class="co">## [25] fs_1.6.3            systemfonts_1.0.5   digest_0.6.34      </span></span>
-<span><span class="co">## [28] R6_2.5.1            magrittr_2.0.3      bslib_0.6.1        </span></span>
-<span><span class="co">## [31] tools_4.4.0         pkgdown_2.0.7       cachem_1.0.8       </span></span>
-<span><span class="co">## [34] desc_1.4.3</span></span></code></pre>
+<span><span class="co">##  [1] vctrs_0.6.5         cli_3.6.2           knitr_1.46         </span></span>
+<span><span class="co">##  [4] rlang_1.1.3         xfun_0.43           purrr_1.0.2        </span></span>
+<span><span class="co">##  [7] textshaping_0.3.7   jsonlite_1.8.8      htmltools_0.5.8.1  </span></span>
+<span><span class="co">## [10] ragg_1.3.0          sass_0.4.9          rmarkdown_2.26     </span></span>
+<span><span class="co">## [13] evaluate_0.23       jquerylib_0.1.4     fastmap_1.1.1      </span></span>
+<span><span class="co">## [16] yaml_2.3.8          lifecycle_1.0.4     memoise_2.0.1      </span></span>
+<span><span class="co">## [19] bookdown_0.38       BiocManager_1.30.22 compiler_4.5.0     </span></span>
+<span><span class="co">## [22] fs_1.6.3            systemfonts_1.0.6   digest_0.6.35      </span></span>
+<span><span class="co">## [25] R6_2.5.1            magrittr_2.0.3      bslib_0.7.0        </span></span>
+<span><span class="co">## [28] tools_4.5.0         pkgdown_2.0.7       cachem_1.0.8       </span></span>
+<span><span class="co">## [31] desc_1.4.3</span></span></code></pre>
 </div>
   </div>
 

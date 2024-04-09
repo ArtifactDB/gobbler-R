@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
@@ -60,33 +60,21 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">uploadDirectory</span><span class="op">(</span></span>
-<span>  <span class="va">project</span>,</span>
-<span>  <span class="va">asset</span>,</span>
-<span>  <span class="va">version</span>,</span>
-<span>  <span class="va">directory</span>,</span>
-<span>  <span class="va">staging</span>,</span>
-<span>  prefix <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  probation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  owners <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  uploaders <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">uploadDirectory</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">version</span>, <span class="va">directory</span>, <span class="va">staging</span>, probation <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>project</dt>
-<dd><p>String containing the project name.
-This may be <code>NULL</code>, in which case <code>prefix</code> should be provided.</p></dd>
+<dd><p>String containing an existing project name.</p></dd>
 
 
 <dt>asset</dt>
-<dd><p>String containing the asset name.</p></dd>
+<dd><p>String containing a new or existing asset name.</p></dd>
 
 
 <dt>version</dt>
-<dd><p>String containing the version name.
-This may be <code>NULL</code> to generate a new version name based on an incrementing series.</p></dd>
+<dd><p>String containing a new or existing version name.</p></dd>
 
 
 <dt>directory</dt>
@@ -98,23 +86,8 @@ This should be inside <code>staging</code> for best performance, see <code><a hr
 <dd><p>String containing the path to the staging directory.</p></dd>
 
 
-<dt>prefix</dt>
-<dd><p>String containing the project name prefix.
-This is used to derive a project name based on an incrementing series.</p></dd>
-
-
 <dt>probation</dt>
 <dd><p>Logical scalar indicating whether to upload a probational version.</p></dd>
-
-
-<dt>owners</dt>
-<dd><p>Character vector containing the user IDs for owners of this project.
-This defaults to the current user.</p></dd>
-
-
-<dt>uploaders</dt>
-<dd><p>List specifying the authorized uploaders for this project.
-See the <code>uploaders</code> field in the <code><a href="fetchPermissions.html">fetchPermissions</a></code> return value for the expected format.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -127,7 +100,8 @@ the generated names for the project and version respectively.
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="versionPath.html">versionPath</a></code>, to obtain the path to a versioned asset's contents inside the registry.</p>
+    <div class="dont-index"><p><code><a href="createProject.html">createProject</a></code>, to create a new project for uploads.</p>
+<p><code><a href="versionPath.html">versionPath</a></code>, to obtain the path to a versioned asset's contents inside the registry.</p>
 <p><code><a href="fetchManifest.html">fetchManifest</a></code>, to obtain the manifest of the versioned asset's contents.</p></div>
     </div>
     <div id="author">
@@ -138,26 +112,21 @@ the generated names for the project and version respectively.
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="startGobbler.html">startGobbler</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="removeProject.html">removeProject</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span> <span class="co"># start with a clean slate.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="createProject.html">createProject</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">src</span> <span class="op">&lt;-</span> <span class="fu"><a href="allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">src</span>, <span class="st">"foo"</span><span class="op">)</span>, <span class="st">"BAR"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">uploadDirectory</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    project<span class="op">=</span><span class="cn">NULL</span>, </span></span>
-<span class="r-in"><span>    prefix<span class="op">=</span><span class="st">"TEST"</span>, </span></span>
+<span class="r-in"><span>    project<span class="op">=</span><span class="st">"test"</span>, </span></span>
 <span class="r-in"><span>    asset<span class="op">=</span><span class="st">"simple"</span>, </span></span>
-<span class="r-in"><span>    version<span class="op">=</span><span class="cn">NULL</span>, </span></span>
+<span class="r-in"><span>    version<span class="op">=</span><span class="st">"v1"</span>, </span></span>
 <span class="r-in"><span>    directory<span class="op">=</span><span class="va">src</span>, </span></span>
 <span class="r-in"><span>    staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $project</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TEST1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $status</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SUCCESS"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
