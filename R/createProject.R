@@ -2,7 +2,7 @@
 #'
 #' Create a new project in the registry.
 #'
-#' @param project String containing the project to remove.
+#' @param project String containing the name of the project to create.
 #' @param owners Character vector containing the user IDs for owners of this project.
 #' This defaults to the current user.
 #' @param uploaders List specifying the authorized uploaders for this project.

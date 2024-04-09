@@ -7,7 +7,7 @@
 createProject(project, staging, owners = NULL, uploaders = NULL)
 }
 \arguments{
-\item{project}{String containing the project to remove.}
+\item{project}{String containing the name of the project to create.}
 
 \item{staging}{String containing the path to the staging directory.}
 

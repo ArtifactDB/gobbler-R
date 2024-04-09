@@ -29,6 +29,10 @@ Real Gobbler deployments should operate outside of R.
 }
 \examples{
 startGobbler()
+startGobbler() # repeated calls just re-use the same instance.
+
+stopGobbler()
+startGobbler() # reinitializes a new instance.
 
 }
 \seealso{

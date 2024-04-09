@@ -18,6 +18,10 @@
 #' 
 #' @examples
 #' startGobbler()
+#' startGobbler() # repeated calls just re-use the same instance.
+#'
+#' stopGobbler()
+#' startGobbler() # reinitializes a new instance.
 #' 
 #' @export
 #' @importFrom utils download.file
