@@ -7,6 +7,7 @@
 #' Ignored if the service is already running.
 #' @param registry String containing a path to a registry.
 #' Ignored if the service is already running.
+#' @param wait Integer specifying the number of seconds to wait for service initialization.
 #'
 #' @return For \code{startGobbler}, a list indicating whether a new service was set up, plus the locations of the staging directory and registry. 
 #'
@@ -20,7 +21,7 @@
 #' 
 #' @export
 #' @importFrom utils download.file
-startGobbler <- function(staging=tempfile(), registry=tempfile()) {
+startGobbler <- function(staging=tempfile(), registry=tempfile(), wait = 1) {
     if (!is.null(running$active)) {
         return(list(new=FALSE, staging=running$staging, registry=running$registry))
     }
@@ -76,6 +77,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile()) {
     self <- sinfo["user"]
     script <- system.file("scripts", "deploy.sh", package="gobbler", mustWork=TRUE)
     pid <- system2(script, c(shQuote(exe), shQuote(staging), shQuote(registry), shQuote(self)), stdout=TRUE) 
+    Sys.sleep(wait)
 
     process <- new.env()
     process$pid <- pid

@@ -5,7 +5,7 @@
 \alias{stopGobbler}
 \title{Start and stop a Gobbler service}
 \usage{
-startGobbler(staging = tempfile(), registry = tempfile())
+startGobbler(staging = tempfile(), registry = tempfile(), wait = 1)
 
 stopGobbler()
 }
@@ -15,6 +15,8 @@ Ignored if the service is already running.}
 
 \item{registry}{String containing a path to a registry.
 Ignored if the service is already running.}
+
+\item{wait}{Integer specifying the number of seconds to wait for service initialization.}
 }
 \value{
 For \code{startGobbler}, a list indicating whether a new service was set up, plus the locations of the staging directory and registry. 
