@@ -65,7 +65,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
         stop("unsupported architecture '", sysmachine, "'")
     }
 
-    version <- "0.2.0"
+    version <- "0.3.0"
     binary <- sprintf("gobbler-%s-%s", os, arch)
     desired <- paste0(binary, "-", version)
     exe <- file.path(cache, desired)
