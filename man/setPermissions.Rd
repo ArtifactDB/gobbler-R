@@ -8,6 +8,7 @@ setPermissions(
   project,
   registry,
   staging,
+  url,
   owners = NULL,
   uploaders = NULL,
   append = TRUE
@@ -18,7 +19,9 @@ setPermissions(
 
 \item{registry}{String containing a path to the registry.}
 
-\item{staging}{String containing a path to the staging directory.}
+\item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 
 \item{owners}{Character vector containing the user IDs for owners of this project.
 If \code{NULL}, no change is made to the existing owners of the project.}
@@ -38,13 +41,13 @@ Set the owner and uploader permissions for a project.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 fetchPermissions("test", registry=info$registry)
 
 # Setting them to something else.
@@ -55,6 +58,7 @@ setPermissions("test",
         list(id='brother2', asset='harry_potter', version='goblet_of_fire')
     ),
     staging=info$staging,
+    url=info$url,
     registry=info$registry
 )
 fetchPermissions("test", registry=info$registry)

@@ -31,10 +31,10 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start with a clean slate.
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #'
 #' # Mocking up a project.upload. 
-#' createProject("test", info$staging,
+#' createProject("test", info$staging, url=info$url,
 #'     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
 #'
 #' # Fetching the permissions.

@@ -11,7 +11,7 @@
 #' @param append Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project.
 #' If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.
 #' @param registry String containing a path to the registry.
-#' @param staging String containing a path to the staging directory.
+#' @inheritParams createProject
 #'
 #' @author Aaron Lun
 #'
@@ -24,13 +24,13 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start with a clean slate.
-#' createProject("test", info$staging)
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' # Setting them to something else.
@@ -41,12 +41,13 @@
 #'         list(id='brother2', asset='harry_potter', version='goblet_of_fire')
 #'     ),
 #'     staging=info$staging,
+#'     url=info$url,
 #'     registry=info$registry
 #' )
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' @export
-setPermissions <- function(project, registry, staging, owners=NULL, uploaders=NULL, append=TRUE) {
+setPermissions <- function(project, registry, staging, url, owners=NULL, uploaders=NULL, append=TRUE) {
     perms <- list()
     if (append) {
         old.perms <- fetchPermissions(project, registry=registry)
@@ -69,7 +70,6 @@ setPermissions <- function(project, registry, staging, owners=NULL, uploaders=NU
         perms$uploaders <- sanitize_uploaders(perms$uploaders)
     }
 
-    chosen <- dump_request(staging, "set_permissions", list(project=project, permissions=perms))
-    wait_response(staging, chosen)
+    dump_request(staging, url, "set_permissions", list(project=project, permissions=perms))
     invisible(NULL)
 }

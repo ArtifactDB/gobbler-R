@@ -3,7 +3,7 @@
 #' Remove a project from the registry.
 #'
 #' @param project String containing the project to remove.
-#' @param staging String containing the path to the staging directory. 
+#' @inheritParams createProject
 #'
 #' @return \code{NULL} is invisibly returned if the project was successfully removed. 
 #'
@@ -16,19 +16,18 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start with a clean slate.
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #'
 #' # Mocking up a project so we have something to delete.
-#' createProject("test", info$staging)
+#' createProject("test", info$staging, url=info$url)
 #' listProjects(registry=info$registry)
 #'
 #' # Removing the project.
-#' removeProject("test", staging=info$staging)
+#' removeProject("test", staging=info$staging, url=info$url)
 #' listProjects(registry=info$registry)
 #'
 #' @export
-removeProject <- function(project, staging) {
-    chosen <- dump_request(staging, "delete_project", list(project=project))
-    wait_response(staging, chosen)
+removeProject <- function(project, staging, url) {
+    dump_request(staging, url, "delete_project", list(project=project))
     invisible(NULL)
 }

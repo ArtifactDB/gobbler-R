@@ -13,13 +13,13 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start with a clean slate.
-#' createProject("test", info$staging) 
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
+#' createProject("test", info$staging, url=info$url) 
 #'
 #' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
-#' res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging)
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+#' res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging, url=info$url)
 #'
 #' # Obtaining the latest version of this asset.
 #' fetchLatest("test", "simple", registry=info$registry)

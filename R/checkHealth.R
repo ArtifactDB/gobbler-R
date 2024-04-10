@@ -2,22 +2,22 @@
 #'
 #' Check that the Gobbler is still active and monitoring the staging directory.
 #' 
-#' @param staging String containing the path to the staging directory.
-#' @param timeout Integer specifying the number of seconds to wait for a response.
+#' @inheritParams createProject
 #'
-#' @return Logical scalar indicating whether the Gobbler responded within 10 seconds. 
+#' @return Logical scalar indicating whether the Gobbler is active.
 #'
 #' @author Aaron Lun
 #'
 #' @examples
 #' info <- startGobbler()
-#' checkHealth(info$staging)
+#' checkHealth(info$staging, info$url)
 #' 
 #' stopGobbler()
-#' checkHealth(info$staging, timeout=1)
+#' checkHealth(info$staging, info$url)
 #'
 #' @export
-checkHealth <- function(staging, timeout=10) {
-    chosen <- dump_request(staging, "health_check", NULL)
-    wait_response(staging, chosen, error=FALSE, timeout=timeout)
+#' @import methods
+checkHealth <- function(staging, url) {
+    out <- try(dump_request(staging, url, "health_check", NULL), silent=TRUE)
+    !is(out, "try-error")
 }

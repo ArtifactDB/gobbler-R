@@ -2,12 +2,12 @@
 # library(testthat); library(gobbler); source("test-upload.R")
 
 info <- startGobbler()
-removeProject("test-upload", staging=info$staging)
-removeProject("test-more-upload", staging=info$staging)
-removeProject("test-upload-perms", staging=info$staging)
-createProject("test-upload", staging=info$staging)
-createProject("test-more-upload", staging=info$staging)
-createProject("test-upload-perms", staging=info$staging)
+removeProject("test-upload", staging=info$staging, url=info$url)
+removeProject("test-more-upload", staging=info$staging, url=info$url)
+removeProject("test-upload-perms", staging=info$staging, url=info$url)
+createProject("test-upload", staging=info$staging, url=info$url)
+createProject("test-more-upload", staging=info$staging, url=info$url)
+createProject("test-upload-perms", staging=info$staging, url=info$url)
 
 tmp <- tempfile()
 dir.create(tmp)
@@ -21,7 +21,8 @@ test_that("upload works as expected for regular files", {
         asset="jennifer", 
         version="1", 
         directory=tmp,
-        staging=info$staging
+        staging=info$staging, 
+        url=info$url
     )
 
     # Checking that the files were, in fact, correctly uploaded.
@@ -35,7 +36,8 @@ test_that("upload works as expected for regular files", {
         asset="jennifer", 
         version="2", 
         directory=tmp,
-        staging=info$staging
+        staging=info$staging,
+        url=info$url
     )
 
     man <- fetchManifest("test-upload", "jennifer", "2", registry=info$registry)
@@ -53,7 +55,8 @@ test_that("upload works as expected for links", {
         asset="natalie", 
         version="1", 
         directory=dest,
-        staging=info$staging
+        staging=info$staging,
+        url=info$url
     )
 
     man <- fetchManifest("test-more-upload", "natalie", "1", registry=info$registry)
@@ -74,7 +77,8 @@ test_that("upload works as expected for new versions", {
         asset="jennifer", 
         version="3", 
         directory=dir,
-        staging=info$staging
+        staging=info$staging,
+        url=info$url
     )
 
     man <- fetchManifest("test-upload", "jennifer", "1", registry=info$registry)

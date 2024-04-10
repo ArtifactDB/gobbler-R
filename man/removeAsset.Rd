@@ -4,14 +4,16 @@
 \alias{removeAsset}
 \title{Remove an asset of a project}
 \usage{
-removeAsset(project, asset, staging)
+removeAsset(project, asset, staging, url)
 }
 \arguments{
 \item{project}{String containing the project to remove.}
 
 \item{asset}{String containing the asset to remove.}
 
-\item{staging}{String containing the path to a staging directory.}
+\item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
 \code{NULL} is invisibly returned if the asset was successfully removed.
@@ -21,17 +23,17 @@ Remove an asset of the project from the registry.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up an asset so we have something to remove.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 listAssets("test", registry=info$registry)
 
 # Removing the asset.
-removeAsset("test", "simple", staging=info$staging)
+removeAsset("test", "simple", staging=info$staging, url=info$url)
 listAssets("test", registry=info$registry)
 
 }

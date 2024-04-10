@@ -29,50 +29,24 @@ sanitize_uploaders <- function(uploaders) {
 }
 
 #' @importFrom jsonlite toJSON
-dump_request <- function(staging, action, payload) {
+#' @import httr2
+dump_request <- function(staging, url, action, payload) {
     if (is.null(payload)) {
         as_str <- character(0)
     } else {
         as_str <- toJSON(payload, auto_unbox=TRUE) 
     }
 
-    temp <- tempfile(tmpdir=staging, pattern=".")
-    write(file=temp, x=as_str)
-
     actual <- tempfile(tmpdir=staging, pattern=paste0("request-", action, "-"))
-    file.rename(temp, actual)
-    basename(actual)
-}
+    write(file=actual, x=as_str)
+    on.exit(unlink(actual), add=TRUE, after=FALSE) # cleaning up the file once the request is done.
 
-#' @importFrom jsonlite fromJSON
-wait_response <- function(staging, request_name, error=TRUE, timeout=10) {
-    target <- file.path(staging, "responses", request_name)
+    wait <- getOption("gobbler_request_wait", 0.1)
+    Sys.sleep(wait) # some leeway to allow network drives to sync.
 
-    start <- Sys.time()
-    while (!file.exists(target)) {
-        if (Sys.time() - start > timeout) {
-            if (error) {
-                stop("timed out waiting for a response to '", request_name, "'")
-            } else {
-                return(FALSE)
-            }
-        }
-        Sys.sleep(0.2)
-    }
-
-    # If we have a response, we clean out the request file to declutter the
-    # staging directory. This also reduces the chance for conflicts in the
-    # temporary files, which become more likely as we run out of names.
-    unlink(file.path(staging, request_name))
-
-    if (!error) {
-        return(TRUE)
-    }
-
-    output <- fromJSON(target, simplifyVector=FALSE)
-    if (output$status == "FAILED") {
-        stop(output$reason)
-    }
-
-    output
+    req <- request(paste0(url, "/new/", basename(actual)))
+    req <- req_method(req, "POST")
+    req <- req_error(req, body = function(res) resp_body_json(res)$reason)
+    res <- req_perform(req)
+    resp_body_json(res)
 }

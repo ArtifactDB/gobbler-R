@@ -4,12 +4,14 @@
 \alias{refreshUsage}
 \title{Refresh the quota usage}
 \usage{
-refreshUsage(project, staging)
+refreshUsage(project, staging, url)
 }
 \arguments{
 \item{project}{String containing the project name.}
 
 \item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
 Numeric scalar specifying the total quota usage of this project, in bytes.
@@ -20,21 +22,21 @@ This is useful on rare occasions where multiple simultaneous uploads cause the u
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 write(file=file.path(src, "whee"), "stuff")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 
 # Messing with the project usage:
 write(file=file.path(info$registry, "test", "..usage"), '{ "total": 0 }')
 fetchUsage("test", registry=info$registry)
 
 # Fixing the project usage.
-refreshUsage("test", staging=info$staging)
+refreshUsage("test", staging=info$staging, url=info$url)
 fetchUsage("test", registry=info$registry)
 
 }

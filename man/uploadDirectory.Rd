@@ -4,7 +4,15 @@
 \alias{uploadDirectory}
 \title{Upload a directory's contents}
 \usage{
-uploadDirectory(project, asset, version, directory, staging, probation = FALSE)
+uploadDirectory(
+  project,
+  asset,
+  version,
+  directory,
+  staging,
+  url,
+  probation = FALSE
+)
 }
 \arguments{
 \item{project}{String containing an existing project name.}
@@ -18,20 +26,20 @@ This should be inside \code{staging} for best performance, see \code{\link{alloc
 
 \item{staging}{String containing the path to the staging directory.}
 
+\item{url}{String containing the URL of the gobbler REST API.}
+
 \item{probation}{Logical scalar indicating whether to upload a probational version.}
 }
 \value{
-List containing \code{project} and \code{version},
-the generated names for the project and version respectively.
-(If these were explicitly provided in the arguments, the same values are returned verbatim.)
+On success, \code{NULL} is invisibly returned.
 }
 \description{
 Upload a directory as a new versioned asset of a project in the registry.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
@@ -41,7 +49,9 @@ res <- uploadDirectory(
     asset="simple", 
     version="v1", 
     directory=src, 
-    staging=info$staging)
+    staging=info$staging,
+    url=info$url
+)
 res
 
 }

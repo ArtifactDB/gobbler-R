@@ -4,12 +4,14 @@
 \alias{removeProject}
 \title{Remove a project}
 \usage{
-removeProject(project, staging)
+removeProject(project, staging, url)
 }
 \arguments{
 \item{project}{String containing the project to remove.}
 
 \item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
 \code{NULL} is invisibly returned if the project was successfully removed.
@@ -19,14 +21,14 @@ Remove a project from the registry.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
 
 # Mocking up a project so we have something to delete.
-createProject("test", info$staging)
+createProject("test", info$staging, url=info$url)
 listProjects(registry=info$registry)
 
 # Removing the project.
-removeProject("test", staging=info$staging)
+removeProject("test", staging=info$staging, url=info$url)
 listProjects(registry=info$registry)
 
 }

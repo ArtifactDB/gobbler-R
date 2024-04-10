@@ -4,7 +4,7 @@
 \alias{approveProbation}
 \title{Approve a probational upload}
 \usage{
-approveProbation(project, asset, version, staging)
+approveProbation(project, asset, version, staging, url)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -14,6 +14,8 @@ approveProbation(project, asset, version, staging)
 \item{version}{String containing the version name.}
 
 \item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
 \code{NULL} is invisibly returned upon successful approval.
@@ -24,18 +26,18 @@ This removes the \code{on_probation} tag from the uploaded version.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # to start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # to start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 res <- uploadDirectory("test", "probation", "v1", src, 
-    staging=info$staging, probation=TRUE)
+    staging=info$staging, url=info$url, probation=TRUE)
 fetchSummary("test", "probation", "v1", registry=info$registry)
 
 # After approval, the probation status disappears.
-approveProbation("test", "probation", "v1", staging=info$staging)
+approveProbation("test", "probation", "v1", staging=info$staging, url=info$url)
 fetchSummary("test", "probation", "v1", registry=info$registry)
 
 }

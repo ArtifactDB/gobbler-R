@@ -4,25 +4,25 @@
 \alias{checkHealth}
 \title{Check the Gobbler's health}
 \usage{
-checkHealth(staging, timeout = 10)
+checkHealth(staging, url)
 }
 \arguments{
 \item{staging}{String containing the path to the staging directory.}
 
-\item{timeout}{Integer specifying the number of seconds to wait for a response.}
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
-Logical scalar indicating whether the Gobbler responded within 10 seconds.
+Logical scalar indicating whether the Gobbler is active.
 }
 \description{
 Check that the Gobbler is still active and monitoring the staging directory.
 }
 \examples{
 info <- startGobbler()
-checkHealth(info$staging)
+checkHealth(info$staging, info$url)
 
 stopGobbler()
-checkHealth(info$staging, timeout=1)
+checkHealth(info$staging, info$url)
 
 }
 \author{

@@ -4,7 +4,7 @@
 \alias{rejectProbation}
 \title{Reject a probational upload}
 \usage{
-rejectProbation(project, asset, version, staging)
+rejectProbation(project, asset, version, staging, url)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -14,6 +14,8 @@ rejectProbation(project, asset, version, staging)
 \item{version}{String containing the version name.}
 
 \item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
 \code{NULL} is invisibly returned upon successful rejection.
@@ -24,18 +26,18 @@ This removes all files associated with that version.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 res <- uploadDirectory("test", "probation", "v1", src, 
-    staging=info$staging, probation=TRUE)
+    staging=info$staging, url=info$url, probation=TRUE)
 listVersions("test", "probation", registry=info$registry)
 
 # After rejection, the version disppears.
-rejectProbation("test", "probation", "v1", staging=info$staging)
+rejectProbation("test", "probation", "v1", staging=info$staging, url=info$url)
 listVersions("test", "probation", registry=info$registry)
 
 }
