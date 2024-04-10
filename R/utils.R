@@ -39,7 +39,10 @@ dump_request <- function(staging, url, action, payload) {
 
     actual <- tempfile(tmpdir=staging, pattern=paste0("request-", action, "-"))
     write(file=actual, x=as_str)
-    Sys.sleep(0.1)
+    on.exit(unlink(actual), add=TRUE, after=FALSE) # cleaning up the file once the request is done.
+
+    wait <- getOption("gobbler_request_wait", 0.1)
+    Sys.sleep(wait) # some leeway to allow network drives to sync.
 
     req <- request(paste0(url, "/new/", basename(actual)))
     req <- req_method(req, "POST")
