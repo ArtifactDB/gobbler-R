@@ -2,10 +2,10 @@
 # library(testthat); library(gobbler); source("test-list.R")
 
 info <- startGobbler()
-removeProject("test", staging=info$staging)
-removeProject("more-list-test", staging=info$staging)
-createProject("test", staging=info$staging)
-createProject("more-list-test", staging=info$staging)
+removeProject("test", staging=info$staging, url=info$url)
+removeProject("more-list-test", staging=info$staging, url=info$url)
+createProject("test", staging=info$staging, url=info$url)
+createProject("more-list-test", staging=info$staging, url=info$url)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
@@ -13,10 +13,10 @@ dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 write(file=file.path(src, "whee2"), LETTERS)
 
-res <- uploadDirectory("test", "list", "v1", src, staging=info$staging)
-res <- uploadDirectory("test", "list", "v2", src, staging=info$staging)
-res <- uploadDirectory("test", "more-list", version="foo", src, staging=info$staging)
-res <- uploadDirectory("more-list-test", "list", version="bar", src, staging=info$staging)
+res <- uploadDirectory("test", "list", "v1", src, staging=info$staging, url=info$url)
+res <- uploadDirectory("test", "list", "v2", src, staging=info$staging, url=info$url)
+res <- uploadDirectory("test", "more-list", version="foo", src, staging=info$staging, url=info$url)
+res <- uploadDirectory("more-list-test", "list", version="bar", src, staging=info$staging, url=info$url)
 
 test_that("listVersions works as expected", {
     versions <- listVersions("test", "list", registry=info$registry)

@@ -6,7 +6,7 @@
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' @param version String containing the version name.
-#' @param staging String containing the path to the staging directory.
+#' @inheritParams createProject
 #'
 #' @return \code{NULL} is invisibly returned upon successful approval.
 #'
@@ -18,23 +18,22 @@
 #' @author Aaron Lun
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # to start with a clean slate.
-#' createProject("test", info$staging)
+#' removeProject("test", info$staging, url=info$url) # to start with a clean slate.
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' res <- uploadDirectory("test", "probation", "v1", src, 
-#'     staging=info$staging, probation=TRUE)
+#'     staging=info$staging, url=info$url, probation=TRUE)
 #' fetchSummary("test", "probation", "v1", registry=info$registry)
 #'
 #' # After approval, the probation status disappears.
-#' approveProbation("test", "probation", "v1", staging=info$staging)
+#' approveProbation("test", "probation", "v1", staging=info$staging, url=info$url)
 #' fetchSummary("test", "probation", "v1", registry=info$registry)
 #' 
 #' @export
-approveProbation <- function(project, asset, version, staging) {
-    chosen <- dump_request(staging, "approve_probation", list(project=project, asset=asset, version=version))
-    wait_response(staging, chosen)
+approveProbation <- function(project, asset, version, staging, url) {
+    dump_request(staging, url, "approve_probation", list(project=project, asset=asset, version=version))
     invisible(NULL)
 }

@@ -2,15 +2,15 @@
 # library(testthat); library(gobbler); source("test-cloneVersion.R")
 
 info <- startGobbler()
-removeProject("test", staging=info$staging)
-createProject("test", staging=info$staging)
+removeProject("test", staging=info$staging, url=info$url)
+createProject("test", staging=info$staging, url=info$url)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 
-res <- uploadDirectory("test", "clone", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "clone", "v1", src, staging=info$staging, url=info$url)
 
 test_that("cloneVersion works as expected with existing files", {
     dest <- tempfile()

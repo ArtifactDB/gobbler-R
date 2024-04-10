@@ -2,14 +2,15 @@
 # library(testthat); library(gobbler); source("test-create.R")
 
 info <- startGobbler()
-removeProject("test-create", staging=info$staging)
+removeProject("test-create", staging=info$staging, url=info$url)
 
 test_that("project creation works as expected for complex permissions", {
     createProject(
         project="test-create",
         owners=c("LTLA", "jkanche"),
         uploaders=list(list(id="lawremi"), list(id="PeteHaitch", until=Sys.time() + 100)),
-        staging=info$staging
+        staging=info$staging,
+        url=info$url
     )
 
     perms <- fetchPermissions("test-create", registry=info$registry)

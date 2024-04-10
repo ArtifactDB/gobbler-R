@@ -4,12 +4,14 @@
 \alias{createProject}
 \title{Create a project}
 \usage{
-createProject(project, staging, owners = NULL, uploaders = NULL)
+createProject(project, staging, url, owners = NULL, uploaders = NULL)
 }
 \arguments{
 \item{project}{String containing the name of the project to create.}
 
 \item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 
 \item{owners}{Character vector containing the user IDs for owners of this project.
 This defaults to the current user.}
@@ -25,10 +27,10 @@ Create a new project in the registry.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", staging=info$staging) # start with a clean slate.
+removeProject("test", staging=info$staging, url=info$url) # start with a clean slate.
 
 # Creating our new project.
-createProject("test", staging=info$staging)
+createProject("test", staging=info$staging, url=info$url)
 listProjects(registry=info$registry)
 
 }

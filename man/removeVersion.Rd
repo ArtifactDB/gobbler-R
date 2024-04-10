@@ -4,7 +4,7 @@
 \alias{removeVersion}
 \title{Remove a versioned asset}
 \usage{
-removeVersion(project, asset, version, staging)
+removeVersion(project, asset, version, staging, url)
 }
 \arguments{
 \item{project}{String containing the project to remove.}
@@ -13,7 +13,9 @@ removeVersion(project, asset, version, staging)
 
 \item{version}{String containing the version of the asset to remove.}
 
-\item{staging}{String containing a path to a staging directory.}
+\item{staging}{String containing the path to the staging directory.}
+
+\item{url}{String containing the URL of the gobbler REST API.}
 }
 \value{
 \code{NULL} is invisibly returned if the version was successfully removed.
@@ -23,17 +25,17 @@ Remove a version of an asset of a project from the registry.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up a version if it doesn't already exist.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 listVersions("test", "simple", registry=info$registry)
 
 # Removing the version.
-removeVersion("test", "simple", "v1", staging=info$staging)
+removeVersion("test", "simple", "v1", staging=info$staging, url=info$url)
 listVersions("test", "simple", registry=info$registry)
 
 }

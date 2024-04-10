@@ -19,14 +19,14 @@ Fetch the quota usage for a project.
 }
 \examples{
 info <- startGobbler()
-removeProject("test", info$staging) # start with a clean slate.
-createProject("test", info$staging)
+removeProject("test", info$staging, url=info$url) # start with a clean slate.
+createProject("test", info$staging, url=info$url)
 
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 write(file=file.path(src, "whee"), "stuff")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 
 # Obtaining the project usage.
 fetchUsage("test", registry=info$registry)

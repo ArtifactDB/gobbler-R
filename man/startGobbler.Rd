@@ -5,7 +5,12 @@
 \alias{stopGobbler}
 \title{Start and stop a Gobbler service}
 \usage{
-startGobbler(staging = tempfile(), registry = tempfile(), wait = 1)
+startGobbler(
+  staging = tempfile(),
+  registry = tempfile(),
+  port = NULL,
+  wait = 1
+)
 
 stopGobbler()
 }
@@ -16,10 +21,20 @@ Ignored if the service is already running.}
 \item{registry}{String containing a path to a registry.
 Ignored if the service is already running.}
 
+\item{port}{Integer specifying the port to use for hosting the service.
+If \code{NULL}, a free port is randomly selected.}
+
 \item{wait}{Integer specifying the number of seconds to wait for service initialization.}
 }
 \value{
-For \code{startGobbler}, a list indicating whether a new service was set up, plus the locations of the staging directory and registry. 
+For \code{startGobbler}, a list containing:
+\itemize{
+\item \code{new}, a logical scalar indicating whether a new service was set up.
+\item \code{staging}, string containing the location of the staging directory.
+\item \code{registry}, string containing the location of the registry.
+\item \code{port}, integer containing the port.
+\item \code{url}, string containing the URL of the REST API.
+}
 
 For \code{stopGobbler}, any existing service is shut down, and \code{NULL} is invisibly returned.
 }

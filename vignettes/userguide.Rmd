@@ -39,16 +39,17 @@ library(gobbler)
 info <- startGobbler()
 STAGING <- info$staging
 REGISTRY <- info$registry
+URL <- info$url
 ```
 
 As we're the administrators of this instance, we can just create a new project outselves:
 
 ```{r, echo=FALSE}
-removeProject("test", staging=info$staging)
+removeProject("test", staging=info$staging, url=info$url)
 ```
 
 ```{r}
-createProject("test", staging=info$staging)
+createProject("test", staging=STAGING, url=URL)
 ```
 
 We'll also upload a new project to the registry, just for demonstration purposes.
@@ -59,7 +60,7 @@ write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 write(file=file.path(src, "whee2"), "more-stuff")
-uploadDirectory("test", "simple", "v1", src, staging=STAGING)
+uploadDirectory("test", "simple", "v1", src, staging=STAGING, url=URL)
 ```
 
 # Reading files
@@ -111,7 +112,8 @@ uploadDirectory(
     asset="new_asset",
     version="new_version",
     directory=tmp,
-    staging=STAGING
+    staging=STAGING,
+    url=URL
 )
 
 # Check that it was actually uploaded to the registry:
@@ -149,7 +151,8 @@ init <- uploadDirectory(
     asset="links",
     version="whee",
     directory=dest,
-    staging=STAGING
+    staging=STAGING,
+    url=URL
 )
 
 # Automatically converts the cloned files into links.
@@ -185,6 +188,7 @@ setPermissions(
         )
     ),
     staging=STAGING,
+    url=URL,
     registry=REGISTRY    
 )
 
@@ -208,6 +212,7 @@ init <- uploadDirectory(
     version="thingy",
     directory=tmp,
     staging=STAGING,
+    url=URL,
     probation=TRUE
 )
 
@@ -219,7 +224,7 @@ We can then approve (or reject) the probational status.
 This either clears the `on_probation=` flag or it deletes the version from the registry.
 
 ```{r}
-approveProbation("test", "probational", "thingy", STAGING)
+approveProbation("test", "probational", "thingy", staging=STAGING, url=URL)
 
 # Flag is gone!
 fetchSummary("test", "probational", "thingy", REGISTRY)
@@ -250,7 +255,8 @@ Authorized users can then upload new versions/assets via `uploadDirectory()` to 
 
 ```{r}
 createProject("another-project", 
-    STAGING, 
+    staging=STAGING, 
+    url=URL,
     owners="LTLA", 
     uploaders=list(list(id="jkanche"))
 )
@@ -260,14 +266,14 @@ Administrators of the Gobbler service can manually refresh the latest version fo
 This is required on very rare occasions where there are simultaneous uploads to the same project.
 
 ```{r}
-refreshLatest("test", "simple", STAGING)
-refreshUsage("test", STAGING)
+refreshLatest("test", "simple", staging=STAGING, url=URL)
+refreshUsage("test", staging=STAGING, url=URL)
 ```
 
 Administrators may also delete projects, assets or versions, though this should be done sparingly as it violates the Gobbler's expectations of immutability.
 
 ```{r}
-removeProject("test", STAGING)
+removeProject("test", staging=STAGING, url=URL)
 ```
 
 # Session information {-}

@@ -17,8 +17,8 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start with a clean slate.
-#' createProject("test", info$staging)
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
@@ -26,7 +26,7 @@
 #' dir.create(file.path(src, "whee"))
 #' write(file=file.path(src, "whee", "blah"), "stuff")
 #' write(file=file.path(src, "whee2"), "more-stuff")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #'
 #' # List files, with or without a prefix.
 #' listFiles("test", "simple", "v1", registry=info$registry)

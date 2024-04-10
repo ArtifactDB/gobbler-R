@@ -12,13 +12,13 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start from a clean slate.
-#' createProject("test", info$staging) 
+#' removeProject("test", info$staging, url=info$url) # start from a clean slate.
+#' createProject("test", info$staging, url=info$url) 
 #'
 #' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
 #' for (v in c("v1", "v2")) {
-#'     uploadDirectory("test", "simple", v, src, staging=info$staging)
+#'     uploadDirectory("test", "simple", v, src, staging=info$staging, url=info$url)
 #' }
 #'
 #' # Listing the versions of the asset:

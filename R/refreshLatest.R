@@ -5,7 +5,7 @@
 #' 
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
-#' @param staging String containing a path to the staging directory.
+#' @inheritParams createProject
 #'
 #' @return String containing the latest version of the project, or \code{NULL} if there are no non-probational versions.
 #'
@@ -16,13 +16,13 @@
 #' 
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start from a clean slate.
-#' createProject("test", info$staging)
+#' removeProject("test", info$staging, url=info$url) # start from a clean slate.
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
 #' for (v in c("v1", "v2")) {
-#'     uploadDirectory("test", "simple", v, src, staging=info$staging)
+#'     uploadDirectory("test", "simple", v, src, staging=info$staging, url=info$url)
 #' }
 #' 
 #' # Delete the ..latest file.
@@ -30,13 +30,12 @@
 #' fetchLatest("test", "simple", registry=info$registry)
 #'
 #' # Recomputing it:
-#' refreshLatest("test", "simple", info$staging)
+#' refreshLatest("test", "simple", info$staging, url=info$url)
 #' fetchLatest("test", "simple", registry=info$registry)
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-refreshLatest <- function(project, asset, staging) {
-    chosen <- dump_request(staging, "refresh_latest", list(project=project, asset=asset))
-    resp <- wait_response(staging, chosen)
+refreshLatest <- function(project, asset, staging, url) {
+    resp <- dump_request(staging, url, "refresh_latest", list(project=project, asset=asset))
     invisible(resp$version)
 }

@@ -7,9 +7,18 @@
 #' Ignored if the service is already running.
 #' @param registry String containing a path to a registry.
 #' Ignored if the service is already running.
+#' @param port Integer specifying the port to use for hosting the service.
+#' If \code{NULL}, a free port is randomly selected.
 #' @param wait Integer specifying the number of seconds to wait for service initialization.
 #'
-#' @return For \code{startGobbler}, a list indicating whether a new service was set up, plus the locations of the staging directory and registry. 
+#' @return For \code{startGobbler}, a list containing:
+#' \itemize{
+#' \item \code{new}, a logical scalar indicating whether a new service was set up.
+#' \item \code{staging}, string containing the location of the staging directory.
+#' \item \code{registry}, string containing the location of the registry.
+#' \item \code{port}, integer containing the port.
+#' \item \code{url}, string containing the URL of the REST API.
+#' }
 #'
 #' For \code{stopGobbler}, any existing service is shut down, and \code{NULL} is invisibly returned.
 #'
@@ -25,9 +34,9 @@
 #' 
 #' @export
 #' @importFrom utils download.file
-startGobbler <- function(staging=tempfile(), registry=tempfile(), wait = 1) {
+startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1) {
     if (!is.null(running$active)) {
-        return(list(new=FALSE, staging=running$staging, registry=running$registry))
+        return(list(new=FALSE, staging=running$staging, registry=running$registry, port=running$port, url=assemble_url(running$port)))
     }
 
     dir.create(staging)
@@ -78,9 +87,13 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), wait = 1) {
         }
     }
 
+    if (is.null(port)) {
+        port <- choose_port()
+    }
+
     self <- sinfo["user"]
     script <- system.file("scripts", "deploy.sh", package="gobbler", mustWork=TRUE)
-    pid <- system2(script, c(shQuote(exe), shQuote(staging), shQuote(registry), shQuote(self)), stdout=TRUE) 
+    pid <- system2(script, c(shQuote(exe), shQuote(staging), shQuote(registry), shQuote(self), shQuote(port)), stdout=TRUE) 
     Sys.sleep(wait)
 
     process <- new.env()
@@ -90,7 +103,28 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), wait = 1) {
     running$active <- process
     running$staging <- staging 
     running$registry <- registry
-    list(new=TRUE, staging=staging, registry=registry)
+    running$port <- port
+    list(new=TRUE, staging=staging, registry=registry, port=port, url=assemble_url(port))
+}
+
+#' @import methods
+choose_port <- function() {
+    # Based on the same logic as shiny::runApp. 
+    choices <- 3000:8000
+    choices <- setdiff(choices, c(3659, 4045, 5060, 5061, 6000, 6566, 6665:6669, 6697)) 
+
+    for (i in 1:10) {
+        port <- sample(choices, 1)
+        soc <- try(serverSocket(port), silent=TRUE)
+        if (!is(soc, "try-error")) {
+            close(soc)
+            return(port)
+        }
+    }
+}
+
+assemble_url <- function(port) { 
+    paste0("http://0.0.0.0:", port)
 }
 
 kill_gobbler <- function(process) {
@@ -110,6 +144,7 @@ stopGobbler <- function() {
         running$active <- NULL
         running$staging <- NULL
         running$registry <- NULL
+        running$port <- NULL
     }
     invisible(NULL)
 }

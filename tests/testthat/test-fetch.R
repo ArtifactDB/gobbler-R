@@ -2,16 +2,16 @@
 # library(testthat); library(gobbler); source("test-fetch.R")
 
 info <- startGobbler()
-removeProject("test", staging=info$staging)
-createProject("test", staging=info$staging)
+removeProject("test", staging=info$staging, url=info$url)
+createProject("test", staging=info$staging, url=info$url)
 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 
-res <- uploadDirectory("test", "fetch", "v1", src, staging=info$staging)
-res <- uploadDirectory("test", "fetch", "v2", src, staging=info$staging)
+res <- uploadDirectory("test", "fetch", "v1", src, staging=info$staging, url=info$url)
+res <- uploadDirectory("test", "fetch", "v2", src, staging=info$staging, url=info$url)
 
 test_that("fetchManifest works as expected", {
     man <- fetchManifest("test", "fetch", "v1", registry=info$registry)

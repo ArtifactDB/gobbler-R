@@ -5,7 +5,7 @@
 #' @param project String containing the project to remove.
 #' @param asset String containing the asset to remove.
 #' @param version String containing the version of the asset to remove.
-#' @param staging String containing a path to a staging directory.
+#' @inheritParams createProject
 #'
 #' @return \code{NULL} is invisibly returned if the version was successfully removed. 
 #'
@@ -16,22 +16,21 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", info$staging) # start with a clean slate.
-#' createProject("test", info$staging)
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up a version if it doesn't already exist.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging)
+#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #' listVersions("test", "simple", registry=info$registry)
 #'
 #' # Removing the version.
-#' removeVersion("test", "simple", "v1", staging=info$staging)
+#' removeVersion("test", "simple", "v1", staging=info$staging, url=info$url)
 #' listVersions("test", "simple", registry=info$registry)
 #'
 #' @export
-removeVersion <- function(project, asset, version, staging) {
-    chosen <- dump_request(staging, "delete_version", list(project=project, asset=asset, version=version))
-    wait_response(staging, chosen)
+removeVersion <- function(project, asset, version, staging, url) {
+    dump_request(staging, url, "delete_version", list(project=project, asset=asset, version=version))
     invisible(NULL)
 }

@@ -8,6 +8,7 @@
 #' @param uploaders List specifying the authorized uploaders for this project.
 #' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
 #' @param staging String containing the path to the staging directory.
+#' @param url String containing the URL of the gobbler REST API.
 #'
 #' @return \code{NULL} is invisibly returned if the project was successfully created. 
 #'
@@ -20,14 +21,14 @@
 #'
 #' @examples
 #' info <- startGobbler()
-#' removeProject("test", staging=info$staging) # start with a clean slate.
+#' removeProject("test", staging=info$staging, url=info$url) # start with a clean slate.
 #'
 #' # Creating our new project.
-#' createProject("test", staging=info$staging)
+#' createProject("test", staging=info$staging, url=info$url)
 #' listProjects(registry=info$registry)
 #'
 #' @export
-createProject <- function(project, staging, owners=NULL, uploaders=NULL) {
+createProject <- function(project, staging, url, owners=NULL, uploaders=NULL) {
     req <- list(project=project)
 
     permissions <- list()
@@ -41,7 +42,6 @@ createProject <- function(project, staging, owners=NULL, uploaders=NULL) {
         req$permissions <- permissions
     }
 
-    chosen <- dump_request(staging, "create_project", req)
-    wait_response(staging, chosen)
+    dump_request(staging, url, "create_project", req)
     invisible(NULL)
 }
