@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetchUsage</span><span class="op">(</span><span class="va">project</span>, <span class="va">registry</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetchUsage</span><span class="op">(</span><span class="va">project</span>, <span class="va">registry</span>, <span class="va">url</span>, forceRemote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -70,7 +70,16 @@
 
 
 <dt>registry</dt>
-<dd><p>String containing the path to the registry.</p></dd>
+<dd><p>String containing a path to the registry.</p></dd>
+
+
+<dt>url</dt>
+<dd><p>String containing the URL to the Gobbler REST API.</p></dd>
+
+
+<dt>forceRemote</dt>
+<dd><p>Logical scalar indicating whether to force remote access via the API,
+even if <code>registry</code> is accessible to the caller.</p></dd>
 
 </dl></div>
     <div id="value">
