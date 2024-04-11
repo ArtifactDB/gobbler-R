@@ -3,7 +3,7 @@
 #' Fetch the quota usage for a project.
 #' 
 #' @param project String containing the project name.
-#' @param registry String containing the path to the registry.
+#' @inheritParams listProjects
 #'
 #' @return Numeric scalar specifying the quota usage for the project, in bytes.
 #'
@@ -28,7 +28,16 @@
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchUsage <- function(project, registry) {
-    out <- fromJSON(file.path(registry, project, "..usage"), simplifyVector=FALSE)
+#' @import httr2
+fetchUsage <- function(project, registry, url, forceRemote=FALSE) {
+    if (file.exists(registry) && !forceRemote) {
+        content <- file.path(registry, project, "..usage")
+    } else {
+        req <- request(paste0(url, "/fetch/", paste(project, "..usage", sep="/")))
+        resp <- req_perform(req)
+        content <- resp_body_string(resp)
+    }
+
+    out <- fromJSON(content, simplifyVector=FALSE)
     out$total
 }

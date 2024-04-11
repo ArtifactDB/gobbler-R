@@ -1,10 +1,11 @@
 #' List asset versions
 #'
 #' List all versions of a project asset.
+#' This will call the REST API if the caller is not on the same filesystem as the registry.
 #'
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
-#' @param registry String containing a path to the registry.
+#' @inheritParams listProjects
 #'
 #' @author Aaron Lun
 #'
@@ -22,9 +23,11 @@
 #' }
 #'
 #' # Listing the versions of the asset:
-#' listVersions("test", "simple", registry=info$registry)
+#' listVersions("test", "simple", registry=info$registry, url=info$url)
 #' 
+#' # Force remote listing:
+#' listVersions("test", "simple", registry=info$registry, url=info$url, forceRemote=TRUE)
 #' @export
-listVersions <- function(project, asset, registry) {
-    list.files(file.path(registry, project, asset))
+listVersions <- function(project, asset, registry, url, forceRemote=FALSE) {
+    list_registry_directories(paste0(project, "/", asset), registry, url, forceRemote)
 }

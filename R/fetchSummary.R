@@ -1,6 +1,7 @@
 #' Fetch version summary
 #'
 #' Fetch the summary for a version of an asset of a project.
+#' This will call the REST API if the caller is not on the same filesystem as the registry.
 #'
 #' @inheritParams fetchManifest
 #'
@@ -26,11 +27,28 @@
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #'
 #' # Obtain a summary for this version.
-#' fetchSummary("test", "simple", "v1", registry=info$registry)
-#' 
+#' fetchSummary("test", "simple", "v1", registry=info$registry, url=info$url)
+#'
+#' # Force remote access.
+#' fetchSummary(
+#'     "test", 
+#'     "simple", 
+#'     "v1", 
+#'     registry=info$registry, 
+#'     url=info$url, 
+#'     forceRemote=TRUE
+#' )
 #' @export
-fetchSummary <- function(project, asset, version, registry) {
-    out <- fromJSON(file.path(registry, project, asset, version, "..summary"), simplifyVector=FALSE)
+#' @importFrom jsonlite fromJSON
+fetchSummary <- function(project, asset, version, registry, url, cache=NULL, forceRemote=FALSE, overwrite=FALSE) {
+    if (!forceRemote && file.exists(registry)) {
+        path <- file.path(registry, project, asset, version, "..summary")
+    } else {
+        cache <- local_registry(cache, url)
+        path <- acquire_file(cache, paste(project, asset, version, sep="/"), "..summary", url=url, overwrite=overwrite)
+    }
+
+    out <- fromJSON(path, simplifyVector=FALSE)
     out$upload_start <- cast_datetime(out$upload_start)
     out$upload_finish <- cast_datetime(out$upload_finish)
     out

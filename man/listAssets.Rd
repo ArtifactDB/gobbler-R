@@ -4,18 +4,24 @@
 \alias{listAssets}
 \title{List assets}
 \usage{
-listAssets(project, registry)
+listAssets(project, registry, url, forceRemote = FALSE)
 }
 \arguments{
 \item{project}{String containing the project name.}
 
 \item{registry}{String containing a path to the registry.}
+
+\item{url}{String containing the URL to the Gobbler REST API.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
+even if \code{registry} is accessible to the caller.}
 }
 \value{
 Character vector of asset names.
 }
 \description{
 List all assets in a project.
+This will call the REST API if the caller is not on the same filesystem as the registry.
 }
 \examples{
 info <- startGobbler()
@@ -29,7 +35,10 @@ for (ass in c("simple", "more-simple", "even-more-simple")) {
 }
 
 # Listing available assets:
-listAssets("test", registry=info$registry)
+listAssets("test", registry=info$registry, url=info$url)
+
+# Force remote listing:
+listAssets("test", registry=info$registry, url=info$url, forceRemote=TRUE)
 
 }
 \author{

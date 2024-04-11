@@ -4,7 +4,16 @@
 \alias{fetchSummary}
 \title{Fetch version summary}
 \usage{
-fetchSummary(project, asset, version, registry)
+fetchSummary(
+  project,
+  asset,
+  version,
+  registry,
+  url,
+  cache = NULL,
+  forceRemote = FALSE,
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -13,7 +22,17 @@ fetchSummary(project, asset, version, registry)
 
 \item{version}{String containing the version name.}
 
-\item{registry}{String containing the path to the registry.}
+\item{registry}{String containing a path to the registry.}
+
+\item{url}{String containing the URL to the Gobbler REST API.}
+
+\item{cache}{String containing a path to a cache directory.
+If \code{NULL}, an appropriate cache is automatically chosen.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access.
+This will download all files in the \code{path} via the REST API and cache them locally.}
+
+\item{overwrite}{Logical scalar indicating whether to overwrite the existing cache.}
 }
 \value{
 List containing the summary for this version, with the following fields:
@@ -27,6 +46,7 @@ If missing, this can be assumed to be \code{FALSE}.
 }
 \description{
 Fetch the summary for a version of an asset of a project.
+This will call the REST API if the caller is not on the same filesystem as the registry.
 }
 \examples{
 info <- startGobbler()
@@ -39,8 +59,17 @@ write(file=file.path(src, "foo"), "BAR")
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 
 # Obtain a summary for this version.
-fetchSummary("test", "simple", "v1", registry=info$registry)
+fetchSummary("test", "simple", "v1", registry=info$registry, url=info$url)
 
+# Force remote access.
+fetchSummary(
+    "test", 
+    "simple", 
+    "v1", 
+    registry=info$registry, 
+    url=info$url, 
+    forceRemote=TRUE
+)
 }
 \author{
 Aaron Lun

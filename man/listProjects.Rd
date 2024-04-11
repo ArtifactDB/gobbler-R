@@ -4,16 +4,22 @@
 \alias{listProjects}
 \title{List all projects}
 \usage{
-listProjects(registry)
+listProjects(registry, url, forceRemote = FALSE)
 }
 \arguments{
 \item{registry}{String containing a path to the registry.}
+
+\item{url}{String containing the URL to the Gobbler REST API.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
+even if \code{registry} is accessible to the caller.}
 }
 \value{
 Character vector of project names.
 }
 \description{
 List all projects in the registry.
+This will call the REST API if the caller is not on the same filesystem as the registry.
 }
 \examples{
 info <- startGobbler()
@@ -27,7 +33,10 @@ createProject("more-test", info$staging, url=info$url)
 createProject("even-more-test", info$staging, url=info$url)
 
 # Listing out the projects.
-listProjects(info$registry)
+listProjects(info$registry, info$url)
+
+# Forcing remote access.
+listProjects(info$registry, info$url, forceRemote=TRUE)
 
 }
 \author{

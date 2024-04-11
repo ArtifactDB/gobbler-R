@@ -1,9 +1,10 @@
 #' Fetch project permissions 
 #'
 #' Fetch the permissions for a project.
+#' This will call the REST API if the caller is not on the same filesystem as the registry.
 #' 
 #' @param project String containing the project name.
-#' @param registry String containing the path to the registry.
+#' @inheritParams listProjects
 #'
 #' @return List containing the permissions for this project.
 #' This has the following elements:
@@ -38,12 +39,24 @@
 #'     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
 #'
 #' # Fetching the permissions.
-#' fetchPermissions("test", registry=info$registry)
+#' fetchPermissions("test", registry=info$registry, url=info$url)
+#'
+#' # Forcing remote access.
+#' fetchPermissions("test", registry=info$registry, url=info$url, forceRemote=TRUE)
 #'
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchPermissions <- function(project, registry) {
-    perms <- fromJSON(file.path(registry, project, "..permissions"), simplifyVector=FALSE)
+#' @import httr2
+fetchPermissions <- function(project, registry, url, forceRemote=FALSE) {
+    if (file.exists(registry) && !forceRemote) {
+        content <- file.path(registry, project, "..permissions")
+    } else {
+        req <- request(paste0(url, "/fetch/", paste(project, "..permissions", sep="/")))
+        resp <- req_perform(req)
+        content <- resp_body_string(resp)
+    }
+
+    perms <- fromJSON(content, simplifyVector=FALSE)
 
     # Converting everything to POSIX dates.
     for (i in seq_along(perms$uploaders)) {

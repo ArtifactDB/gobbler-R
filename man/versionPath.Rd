@@ -4,7 +4,7 @@
 \alias{versionPath}
 \title{Path to a versioned asset}
 \usage{
-versionPath(project, asset, version, registry)
+versionPath(project, asset, version, ...)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -13,7 +13,7 @@ versionPath(project, asset, version, registry)
 
 \item{version}{String containing the version name.}
 
-\item{registry}{String containing the path to the registry.}
+\item{...}{Further arguments to pass to \code{\link{fetchDirectory}}.}
 }
 \value{
 String containing a path to a versioned asset in the registry.
@@ -22,8 +22,8 @@ String containing a path to a versioned asset in the registry.
 Obtain the path to the directory containing a versioned asset in the registry.
 }
 \examples{
-registry <- tempfile()
-versionPath("test", "simple", "v1", registry=registry)
+info <- startGobbler()
+versionPath("test", "simple", "v1", registry=info$registry, url=info$url)
 
 }
 \author{

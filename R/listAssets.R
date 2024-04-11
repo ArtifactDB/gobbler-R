@@ -1,9 +1,10 @@
 #' List assets
 #'
 #' List all assets in a project.
+#' This will call the REST API if the caller is not on the same filesystem as the registry.
 #'
 #' @param project String containing the project name.
-#' @param registry String containing a path to the registry.
+#' @inheritParams listProjects
 #'
 #' @author Aaron Lun
 #'
@@ -21,9 +22,12 @@
 #' }
 #'
 #' # Listing available assets:
-#' listAssets("test", registry=info$registry)
+#' listAssets("test", registry=info$registry, url=info$url)
+#'
+#' # Force remote listing:
+#' listAssets("test", registry=info$registry, url=info$url, forceRemote=TRUE)
 #' 
 #' @export
-listAssets <- function(project, registry) {
-    list.files(file.path(registry, project))
+listAssets <- function(project, registry, url, forceRemote=FALSE) {
+    list_registry_directories(project, registry, url, forceRemote)
 }

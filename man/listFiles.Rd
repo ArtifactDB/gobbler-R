@@ -4,7 +4,16 @@
 \alias{listFiles}
 \title{List files for a version}
 \usage{
-listFiles(project, asset, version, registry, prefix = NULL, include.. = TRUE)
+listFiles(
+  project,
+  asset,
+  version,
+  registry,
+  url,
+  prefix = NULL,
+  include.. = TRUE,
+  forceRemote = FALSE
+)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -15,17 +24,23 @@ listFiles(project, asset, version, registry, prefix = NULL, include.. = TRUE)
 
 \item{registry}{String containing a path to the registry.}
 
+\item{url}{String containing the URL to the Gobbler REST API.}
+
 \item{prefix}{String containing the prefix for the path.
 If provided, files are only listed if they have a relative path (i.e., inside the version subdirectory) that starts with this prefix.
 If \code{NULL}, all files associated with this version are listed.}
 
 \item{include..}{Logical scalar indicating whether to list files with path components that start with \code{..}.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
+even if \code{registry} is accessible to the caller.}
 }
 \value{
 Character vector of relative paths of files associated with the versioned asset.
 }
 \description{
 List the contents of a version of a project asset.
+This will call the REST API if the caller is not on the same filesystem as the registry.
 }
 \examples{
 info <- startGobbler()
@@ -41,9 +56,12 @@ write(file=file.path(src, "whee2"), "more-stuff")
 res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 
 # List files, with or without a prefix.
-listFiles("test", "simple", "v1", registry=info$registry)
+listFiles("test", "simple", "v1", registry=info$registry, url=info$url)
 listFiles("test", "simple", "v1", registry=info$registry, prefix="whee")
 listFiles("test", "simple", "v1", registry=info$registry, prefix="whee/")
+
+# Forcing remote access.
+listFiles("test", "simple", "v1", registry=info$registry, url=info$url, forceRemote=TRUE)
 
 }
 \author{

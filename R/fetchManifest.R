@@ -1,11 +1,12 @@
 #' Fetch version manifest 
 #'
 #' Fetch the manifest for a version of an asset of a project.
+#' This will call the REST API if the caller is not on the same filesystem as the registry.
 #'
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' @param version String containing the version name.
-#' @param registry String containing the path to the registry.
+#' @inheritParams fetchDirectory
 #'
 #' @author Aaron Lun
 #' 
@@ -32,10 +33,25 @@
 #' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #'
 #' # Obtaining the manifest for this version.
-#' fetchManifest("test", "simple", "v1", registry=info$registry)
+#' fetchManifest("test", "simple", "v1", registry=info$registry, url=info$url)
 #' 
+#' # Force remote access.
+#' fetchManifest(
+#'     "test", 
+#'     "simple", 
+#'     "v1", 
+#'     registry=info$registry, 
+#'     url=info$url, 
+#'     forceRemote=TRUE
+#' )
 #' @export
 #' @importFrom jsonlite fromJSON
-fetchManifest <- function(project, asset, version, registry) {
-    fromJSON(file.path(registry, project, asset, version, "..manifest"), simplifyVector=FALSE)
+fetchManifest <- function(project, asset, version, registry, url, cache=NULL, forceRemote=FALSE, overwrite=FALSE) {
+    if (!forceRemote && file.exists(registry)) {
+        path <- file.path(registry, project, asset, version, "..manifest")
+    } else {
+        cache <- local_registry(cache, url)
+        path <- acquire_file(cache, paste(project, asset, version, sep="/"), "..manifest", url=url, overwrite=overwrite)
+    }
+    fromJSON(path, simplifyVector=FALSE)
 }

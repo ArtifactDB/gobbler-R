@@ -4,12 +4,17 @@
 \alias{fetchUsage}
 \title{Fetch project usage details}
 \usage{
-fetchUsage(project, registry)
+fetchUsage(project, registry, url, forceRemote = FALSE)
 }
 \arguments{
 \item{project}{String containing the project name.}
 
-\item{registry}{String containing the path to the registry.}
+\item{registry}{String containing a path to the registry.}
+
+\item{url}{String containing the URL to the Gobbler REST API.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
+even if \code{registry} is accessible to the caller.}
 }
 \value{
 Numeric scalar specifying the quota usage for the project, in bytes.

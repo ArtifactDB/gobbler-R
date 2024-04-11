@@ -4,7 +4,7 @@
 \alias{listVersions}
 \title{List asset versions}
 \usage{
-listVersions(project, asset, registry)
+listVersions(project, asset, registry, url, forceRemote = FALSE)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -12,12 +12,18 @@ listVersions(project, asset, registry)
 \item{asset}{String containing the asset name.}
 
 \item{registry}{String containing a path to the registry.}
+
+\item{url}{String containing the URL to the Gobbler REST API.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
+even if \code{registry} is accessible to the caller.}
 }
 \value{
 Character vector of versions.
 }
 \description{
 List all versions of a project asset.
+This will call the REST API if the caller is not on the same filesystem as the registry.
 }
 \examples{
 info <- startGobbler()
@@ -31,8 +37,10 @@ for (v in c("v1", "v2")) {
 }
 
 # Listing the versions of the asset:
-listVersions("test", "simple", registry=info$registry)
+listVersions("test", "simple", registry=info$registry, url=info$url)
 
+# Force remote listing:
+listVersions("test", "simple", registry=info$registry, url=info$url, forceRemote=TRUE)
 }
 \author{
 Aaron Lun

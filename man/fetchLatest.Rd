@@ -4,7 +4,7 @@
 \alias{fetchLatest}
 \title{Fetch the latest version}
 \usage{
-fetchLatest(project, asset, registry)
+fetchLatest(project, asset, registry, url, forceRemote = FALSE)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -12,6 +12,11 @@ fetchLatest(project, asset, registry)
 \item{asset}{String containing the asset name.}
 
 \item{registry}{String containing a path to the registry.}
+
+\item{url}{String containing the URL to the Gobbler REST API.}
+
+\item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
+even if \code{registry} is accessible to the caller.}
 }
 \value{
 String containing the latest version of the asset. 
@@ -19,6 +24,7 @@ This may also be \code{NULL} if the asset has no (non-probational) versions.
 }
 \description{
 Fetch the latest version of a project's asset.
+This will call the REST API if the caller is not on the same filesystem as the registry.
 }
 \examples{
 info <- startGobbler()
@@ -31,7 +37,10 @@ res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=in
 res <- uploadDirectory("test", "simple", "v2", src, staging=info$staging, url=info$url)
 
 # Obtaining the latest version of this asset.
-fetchLatest("test", "simple", registry=info$registry)
+fetchLatest("test", "simple", registry=info$registry, url=info$url)
+
+# Forcing remote access.
+fetchLatest("test", "simple", registry=info$registry, url=info$url, forceRemote=TRUE)
 
 }
 \seealso{
