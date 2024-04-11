@@ -10,6 +10,8 @@
 #' @param port Integer specifying the port to use for hosting the service.
 #' If \code{NULL}, a free port is randomly selected.
 #' @param wait Integer specifying the number of seconds to wait for service initialization.
+#' @param overwrite Logical scalar indicating whether to redownload the Gobbler binary.
+#' @param version String containing the desired version of the Gobbler binary.
 #'
 #' @return For \code{startGobbler}, a list containing:
 #' \itemize{
@@ -34,7 +36,7 @@
 #' 
 #' @export
 #' @importFrom utils download.file
-startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1) {
+startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1, version = "0.3.0", overwrite = FALSE) {
     if (!is.null(running$active)) {
         return(list(new=FALSE, staging=running$staging, registry=running$registry, port=running$port, url=assemble_url(running$port)))
     }
@@ -65,12 +67,11 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
         stop("unsupported architecture '", sysmachine, "'")
     }
 
-    version <- "0.3.0"
     binary <- sprintf("gobbler-%s-%s", os, arch)
     desired <- paste0(binary, "-", version)
     exe <- file.path(cache, desired)
 
-    if (!file.exists(exe)) {
+    if (!file.exists(exe) || overwrite) {
         url <- paste0("https://github.com/ArtifactDB/gobbler/releases/download/", version,  "/", binary)
         tmp <- tempfile()
         if (download.file(url, tmp)) {

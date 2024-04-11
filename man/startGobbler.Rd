@@ -9,7 +9,9 @@ startGobbler(
   staging = tempfile(),
   registry = tempfile(),
   port = NULL,
-  wait = 1
+  wait = 1,
+  version = "0.3.0",
+  overwrite = FALSE
 )
 
 stopGobbler()
@@ -25,6 +27,10 @@ Ignored if the service is already running.}
 If \code{NULL}, a free port is randomly selected.}
 
 \item{wait}{Integer specifying the number of seconds to wait for service initialization.}
+
+\item{version}{String containing the desired version of the Gobbler binary.}
+
+\item{overwrite}{Logical scalar indicating whether to redownload the Gobbler binary.}
 }
 \value{
 For \code{startGobbler}, a list containing:
