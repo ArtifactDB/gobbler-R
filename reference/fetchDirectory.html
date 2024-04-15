@@ -18,7 +18,7 @@ possibly creating a local copy of the subdirectory's contents if the caller is n
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.3</span>
       </span>
     </div>
 
@@ -68,7 +68,8 @@ possibly creating a local copy of the subdirectory's contents if the caller is n
 <span>  <span class="va">url</span>,</span>
 <span>  cache <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  forceRemote <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  concurrent <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -99,6 +100,10 @@ This will download all files in the <code>path</code> via the REST API and cache
 
 <dt>overwrite</dt>
 <dd><p>Logical scalar indicating whether to overwrite the existing cache.</p></dd>
+
+
+<dt>concurrent</dt>
+<dd><p>Integer specifying the number of concurrent downloads.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -131,7 +136,7 @@ or a path to a local cache of the registry's contents otherwise.</p>
 <span class="r-in"><span><span class="co"># Now fetching the directory.</span></span></span>
 <span class="r-in"><span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu">fetchDirectory</span><span class="op">(</span><span class="st">"test/simple/v1"</span>, registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dir</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpTWzLhQ/file25c29a23f12/test/simple/v1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpZlhX0h/file2c254232bfc/test/simple/v1"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">dir</span>, recursive<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "foo"       "whee/blah" "whee2"    </span>
 <span class="r-in"><span></span></span>
@@ -144,7 +149,7 @@ or a path to a local cache of the registry's contents otherwise.</p>
 <span class="r-in"><span>    forceRemote<span class="op">=</span><span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dir1</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpTWzLhQ/file25c39ef595/http%3A%2F%2F0.0.0.0%3A5610/REGISTRY/test/simple/v1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpZlhX0h/file2c24d96bf9c/http%3A%2F%2F0.0.0.0%3A5114/REGISTRY/test/simple/v1"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">dir1</span>, recursive<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "foo"       "whee/blah" "whee2"    </span>
 <span class="r-in"><span></span></span>
