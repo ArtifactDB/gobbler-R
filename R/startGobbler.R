@@ -36,7 +36,7 @@
 #' 
 #' @export
 #' @importFrom utils download.file
-startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1, version = "0.3.1", overwrite = FALSE) {
+startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1, version = "0.3.2", overwrite = FALSE) {
     if (!is.null(running$active)) {
         return(list(new=FALSE, staging=running$staging, registry=running$registry, port=running$port, url=assemble_url(running$port)))
     }
