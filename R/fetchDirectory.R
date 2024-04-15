@@ -12,6 +12,7 @@
 #' @param forceRemote Logical scalar indicating whether to force remote access.
 #' This will download all files in the \code{path} via the REST API and cache them locally.
 #' @param overwrite Logical scalar indicating whether to overwrite the existing cache.
+#' @param concurrent Integer specifying the number of concurrent downloads.
 #'
 #' @return Path to the subdirectory on the caller's filesystem.
 #' This is either a path to the registry if it is accessible,
@@ -50,7 +51,7 @@
 #'
 #' @export
 #' @import httr2
-fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, overwrite=FALSE) {
+fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, overwrite=FALSE, concurrent=1) {
     if (!forceRemote && file.exists(registry)) {
         return(file.path(registry, path))
     }
@@ -66,8 +67,13 @@ fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, o
     req <- req_error(req, body = function(res) resp_body_json(res)$reason)
     res <- req_perform(req)
     listing <- resp_body_json(res)
-    for (l in listing) {
-        acquire_file(cache, path, l, url=url, overwrite=overwrite)
+
+    if (concurrent == 1L) {
+        lapply(listing, acquire_file, cache=cache, path=path, url=url, overwrite=overwrite)
+    } else {
+        cl <- parallel::makeCluster(concurrent)
+        on.exit(parallel::stopCluster(cl), add=TRUE, after=FALSE)
+        parallel::parLapply(cl, listing, acquire_file, cache=cache, path=path, url=url, overwrite=overwrite)
     }
 
     # We use a directory-level OK file to avoid having to scan through all 

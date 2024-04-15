@@ -71,4 +71,9 @@ test_that("fetchDirectory works as expected", {
     # Unless we force an overwrite.
     rdir2 <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE, overwrite=TRUE)
     expect_identical(readLines(file.path(rdir, "foo")), "BAR")
+
+    # Trying with multiple cores.
+    cache <- tempfile()
+    rdir2 <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE, concurrent=2)
+    expect_identical(readLines(file.path(rdir, "foo")), "BAR")
 })

@@ -10,7 +10,8 @@ fetchDirectory(
   url,
   cache = NULL,
   forceRemote = FALSE,
-  overwrite = FALSE
+  overwrite = FALSE,
+  concurrent = 1
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ If \code{NULL}, an appropriate cache is automatically chosen.}
 This will download all files in the \code{path} via the REST API and cache them locally.}
 
 \item{overwrite}{Logical scalar indicating whether to overwrite the existing cache.}
+
+\item{concurrent}{Integer specifying the number of concurrent downloads.}
 }
 \value{
 Path to the subdirectory on the caller's filesystem.
