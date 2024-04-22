@@ -34,7 +34,10 @@ test_that("fetchSummary works as expected", {
 
 test_that("fetchLatest works as expected", {
     expect_identical(fetchLatest("test", "fetch", registry=info$registry, url=info$url), "v2")
+    expect_null(fetchLatest("test", "missing", registry=info$registry, url=info$url))
+
     expect_identical(fetchLatest("test", "fetch", registry=info$registry, url=info$url, forceRemote=TRUE), "v2")
+    expect_null(fetchLatest("test", "missing", registry=info$registry, url=info$url, forceRemote=TRUE))
 })
 
 test_that("fetchUsage works as expected", {
@@ -66,14 +69,14 @@ test_that("fetchDirectory works as expected", {
     write(file=file.path(rdir, "foo"), "more-bar")
     rdir2 <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE)
     expect_identical(rdir, rdir2)
-    expect_identical(readLines(file.path(rdir, "foo")), "more-bar")
+    expect_identical(readLines(file.path(rdir2, "foo")), "more-bar")
 
     # Unless we force an overwrite.
     rdir2 <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE, overwrite=TRUE)
-    expect_identical(readLines(file.path(rdir, "foo")), "BAR")
+    expect_identical(readLines(file.path(rdir2, "foo")), "BAR")
 
     # Trying with multiple cores.
     cache <- tempfile()
     rdir2 <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE, concurrent=2)
-    expect_identical(readLines(file.path(rdir, "foo")), "BAR")
+    expect_identical(readLines(file.path(rdir2, "foo")), "BAR")
 })
