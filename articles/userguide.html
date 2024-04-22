@@ -148,7 +148,7 @@ several convenience methods for examining the Gobbler registry:</p>
 <pre><code><span><span class="co">## [1] "..manifest" "..summary"  "foo"        "whee/blah"  "whee2"</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/versionPath.html">versionPath</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpJk3WYK/file48a3d8f4710/test/simple/v1"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/Rtmp18YVjt/file48d78fce944/test/simple/v1"</span></span></code></pre>
 <p>We can fetch the summaries and manifests for each version of a
 project’s assets.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -181,10 +181,10 @@ project’s assets.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-04-15 21:41:11 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-22 19:51:28 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-04-15 21:41:11 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-22 19:51:28 UTC"</span></span></code></pre>
 <p>We can get the latest version of an asset:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchLatest.html">fetchLatest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
@@ -349,7 +349,7 @@ each authorization:</p>
 <span><span class="co">## [1] "1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $uploaders[[1]]$until</span></span>
-<span><span class="co">## [1] "2024-04-16 21:41:11 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-23 19:51:29 UTC"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="probational-uploads">Probational uploads<a class="anchor" aria-label="anchor" href="#probational-uploads"></a>
@@ -380,10 +380,10 @@ immutability. To demonstrate, let’s perform a probational upload:</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-04-15 21:41:12 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-22 19:51:29 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-04-15 21:41:12 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-22 19:51:29 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $on_probation</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre>
@@ -399,10 +399,10 @@ from the registry.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-04-15 21:41:12 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-22 19:51:29 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-04-15 21:41:12 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-22 19:51:29 UTC"</span></span></code></pre>
 <p>Unless specified otherwise, all <code>uploaders</code> in the
 permissions are considered to be “untrusted”, and any uploads from such
 untrusted users are considered probational. This allows project
@@ -451,7 +451,7 @@ of immutability.</p>
 </h2>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R Under development (unstable) (2024-04-10 r86396)</span></span>
+<pre><code><span><span class="co">## R version 4.4.0 RC (2024-04-16 r86441)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -484,11 +484,11 @@ of immutability.</p>
 <span><span class="co">## [13] rappdirs_0.3.3      rmarkdown_2.26      evaluate_0.23      </span></span>
 <span><span class="co">## [16] jquerylib_0.1.4     fastmap_1.1.1       yaml_2.3.8         </span></span>
 <span><span class="co">## [19] lifecycle_1.0.4     httr2_1.0.1         memoise_2.0.1      </span></span>
-<span><span class="co">## [22] bookdown_0.38       BiocManager_1.30.22 compiler_4.5.0     </span></span>
+<span><span class="co">## [22] bookdown_0.38       BiocManager_1.30.22 compiler_4.4.0     </span></span>
 <span><span class="co">## [25] fs_1.6.3            htmlwidgets_1.6.4   systemfonts_1.0.6  </span></span>
 <span><span class="co">## [28] digest_0.6.35       R6_2.5.1            curl_5.2.1         </span></span>
-<span><span class="co">## [31] magrittr_2.0.3      bslib_0.7.0         tools_4.5.0        </span></span>
-<span><span class="co">## [34] pkgdown_2.0.8       cachem_1.0.8        desc_1.4.3</span></span></code></pre>
+<span><span class="co">## [31] magrittr_2.0.3      bslib_0.7.0         tools_4.4.0        </span></span>
+<span><span class="co">## [34] pkgdown_2.0.9       cachem_1.0.8        desc_1.4.3</span></span></code></pre>
 </div>
   </div>
 
@@ -509,7 +509,7 @@ of immutability.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer>

@@ -130,7 +130,7 @@ If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are us
 <span class="r-in"><span><span class="co"># Mocking up an upload. </span></span></span>
 <span class="r-in"><span><span class="va">src</span> <span class="op">&lt;-</span> <span class="fu"><a href="allocateUploadDirectory.html">allocateUploadDirectory</a></span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/write.html" class="external-link">write</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">src</span>, <span class="st">"foo"</span><span class="op">)</span>, <span class="st">"BAR"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, <span class="va">src</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, <span class="va">src</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="fetchPermissions.html">fetchPermissions</a></span><span class="op">(</span><span class="st">"test"</span>, registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $owners</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $owners[[1]]</span>
@@ -173,7 +173,7 @@ If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are us
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ps5"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-17 01:27:44 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-23 23:38:01 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[2]]</span>
@@ -203,7 +203,7 @@ If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are us
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
       </footer></div>
