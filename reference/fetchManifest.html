@@ -98,7 +98,8 @@ This will call the REST API if the caller is not on the same filesystem as the r
 
 <dt>cache</dt>
 <dd><p>String containing a path to a cache directory.
-If <code>NULL</code>, an appropriate cache is automatically chosen.</p></dd>
+If <code>NULL</code>, an appropriate location is automatically chosen.
+Only used for remote access.</p></dd>
 
 
 <dt>forceRemote</dt>
@@ -107,7 +108,8 @@ This will download all files in the <code>path</code> via the REST API and cache
 
 
 <dt>overwrite</dt>
-<dd><p>Logical scalar indicating whether to overwrite the existing cache.</p></dd>
+<dd><p>Logical scalar indicating whether to overwrite the existing cache.
+Only used for remote access.</p></dd>
 
 </dl></div>
     <div id="value">
