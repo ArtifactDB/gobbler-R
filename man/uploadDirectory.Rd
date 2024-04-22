@@ -44,7 +44,7 @@ createProject("test", info$staging, url=info$url)
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 
-res <- uploadDirectory(
+uploadDirectory(
     project="test", 
     asset="simple", 
     version="v1", 
@@ -52,7 +52,6 @@ res <- uploadDirectory(
     staging=info$staging,
     url=info$url
 )
-res
 
 }
 \seealso{

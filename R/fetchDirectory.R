@@ -31,7 +31,7 @@
 #' dir.create(file.path(src, "whee"))
 #' write(file=file.path(src, "whee", "blah"), "stuff")
 #' write(file=file.path(src, "whee2"), "more-stuff")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+#' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #'
 #' # Now fetching the directory.
 #' dir <- fetchDirectory("test/simple/v1", registry=info$registry, url=info$url)

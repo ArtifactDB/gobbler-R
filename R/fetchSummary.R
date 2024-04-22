@@ -24,7 +24,7 @@
 #' # Mocking up an upload. 
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+#' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #'
 #' # Obtain a summary for this version.
 #' fetchSummary("test", "simple", "v1", registry=info$registry, url=info$url)

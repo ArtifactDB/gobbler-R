@@ -21,7 +21,7 @@
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #'
-#' res <- uploadDirectory(
+#' uploadDirectory(
 #'     project="test", 
 #'     asset="simple", 
 #'     version="v1", 
@@ -29,7 +29,6 @@
 #'     staging=info$staging,
 #'     url=info$url
 #' )
-#' res
 #'
 #' @seealso
 #' \code{\link{createProject}}, to create a new project for uploads.

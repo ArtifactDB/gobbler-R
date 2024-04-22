@@ -22,7 +22,7 @@
 #' # Mocking up a version if it doesn't already exist.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+#' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #' listVersions("test", "simple", registry=info$registry)
 #'
 #' # Removing the version.

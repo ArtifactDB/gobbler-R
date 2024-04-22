@@ -10,7 +10,7 @@ write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 
-res <- uploadDirectory("test", "clone", "v1", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "clone", "v1", src, staging=info$staging, url=info$url)
 
 test_that("cloneVersion works as expected with existing files", {
     dest <- tempfile()

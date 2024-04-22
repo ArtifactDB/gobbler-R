@@ -8,8 +8,8 @@ createProject("test", staging=info$staging, url=info$url)
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "probation", "good", src, staging=info$staging, url=info$url, probation=TRUE)
-res <- uploadDirectory("test", "probation", "bad", src, staging=info$staging, url=info$url, probation=TRUE)
+uploadDirectory("test", "probation", "good", src, staging=info$staging, url=info$url, probation=TRUE)
+uploadDirectory("test", "probation", "bad", src, staging=info$staging, url=info$url, probation=TRUE)
                                                                                              
 test_that('probation approval works as expected', {
     expect_true(fetchSummary("test", "probation", "good", registry=info$registry)$on_probation)

@@ -32,7 +32,7 @@ createProject("test", info$staging, url=info$url)
 # Mocking up an upload. 
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-res <- uploadDirectory("test", "probation", "v1", src, 
+uploadDirectory("test", "probation", "v1", src, 
     staging=info$staging, url=info$url, probation=TRUE)
 fetchSummary("test", "probation", "v1", registry=info$registry)
 

@@ -13,10 +13,10 @@ dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
 write(file=file.path(src, "whee2"), LETTERS)
 
-res <- uploadDirectory("test", "list", "v1", src, staging=info$staging, url=info$url)
-res <- uploadDirectory("test", "list", "v2", src, staging=info$staging, url=info$url)
-res <- uploadDirectory("test", "more-list", version="foo", src, staging=info$staging, url=info$url)
-res <- uploadDirectory("more-list-test", "list", version="bar", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "list", "v1", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "list", "v2", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "more-list", version="foo", src, staging=info$staging, url=info$url)
+uploadDirectory("more-list-test", "list", version="bar", src, staging=info$staging, url=info$url)
 
 test_that("listVersions works as expected", {
     versions <- listVersions("test", "list", registry=info$registry, url=info$url)

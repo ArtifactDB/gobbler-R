@@ -29,7 +29,7 @@ createProject("test", info$staging, url=info$url)
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 write(file=file.path(src, "whee"), "stuff")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 
 # Messing with the project usage:
 write(file=file.path(info$registry, "test", "..usage"), '{ "total": 0 }')

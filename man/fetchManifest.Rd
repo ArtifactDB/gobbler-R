@@ -59,7 +59,7 @@ src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))
 write(file=file.path(src, "whee", "blah"), "stuff")
-res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 
 # Obtaining the manifest for this version.
 fetchManifest("test", "simple", "v1", registry=info$registry, url=info$url)

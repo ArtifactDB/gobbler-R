@@ -6,9 +6,9 @@ removeProject("test-R-remove", staging=info$staging, url=info$url)
 createProject("test-R-remove", staging=info$staging, url=info$url)
 
 src <- allocateUploadDirectory(info$staging)
-res <- uploadDirectory("test-R-remove", "sacrifice", "v1", src, staging=info$staging, url=info$url)
+uploadDirectory("test-R-remove", "sacrifice", "v1", src, staging=info$staging, url=info$url)
 Sys.sleep(1.1) # force timestamps to be different for next versions.
-res <- uploadDirectory("test-R-remove", "sacrifice", "v2", src, staging=info$staging, url=info$url)
+uploadDirectory("test-R-remove", "sacrifice", "v2", src, staging=info$staging, url=info$url)
 
 test_that("removal functions work as expected", {
     expect_true(file.exists(file.path(info$registry, "test-R-remove", "sacrifice", "v2")))

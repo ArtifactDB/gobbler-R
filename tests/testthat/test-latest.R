@@ -6,11 +6,11 @@ removeProject("test", staging=info$staging, url=info$url)
 createProject("test", staging=info$staging, url=info$url)
 
 src <- allocateUploadDirectory(info$staging)
-res <- uploadDirectory("test", "latest", "v1", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "latest", "v1", src, staging=info$staging, url=info$url)
 Sys.sleep(1.1) # force timestamps to be different for next versions.
-res <- uploadDirectory("test", "latest", "v2", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "latest", "v2", src, staging=info$staging, url=info$url)
 Sys.sleep(1.1)
-res <- uploadDirectory("test", "latest", "v3", src, staging=info$staging, url=info$url)
+uploadDirectory("test", "latest", "v3", src, staging=info$staging, url=info$url)
 
 test_that("latest setting works as expected", {
     expect_identical(fetchLatest("test", "latest", registry=info$registry), "v3")

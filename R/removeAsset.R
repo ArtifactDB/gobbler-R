@@ -21,7 +21,7 @@
 #' # Mocking up an asset so we have something to remove.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
-#' res <- uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+#' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #' listAssets("test", registry=info$registry)
 #'
 #' # Removing the asset.
