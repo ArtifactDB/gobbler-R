@@ -119,7 +119,8 @@ Each element is named after the relative path of a file in this version.
 The value of each element is another list with the following fields:</p><ul><li><p><code>size</code>, an integer specifying the size of the file in bytes.</p></li>
 <li><p><code>md5sum</code>, a string containing the hex-encoded MD5 checksum of the file.</p></li>
 <li><p><code>link</code> (optional): a list specifying the link destination for a file. 
-This contains the strings <code>project</code>, <code>asset</code>, <code>version</code> and <code>path</code>.</p></li>
+This contains the strings <code>project</code>, <code>asset</code>, <code>version</code> and <code>path</code>.
+If the link destination is itself a link, an <code>ancestor</code> list will be present that specifies the final location of the file after resolving all intermediate links.</p></li>
 </ul></div>
     <div id="author">
     <h2>Author</h2>
