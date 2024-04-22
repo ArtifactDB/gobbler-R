@@ -104,7 +104,8 @@ Only used for remote access.</p></dd>
 
 <dt>forceRemote</dt>
 <dd><p>Logical scalar indicating whether to force remote access.
-This will download all files in the <code>path</code> via the REST API and cache them locally.</p></dd>
+This will download all files in the <code>path</code> via the REST API and cache them locally,
+even if <code>registry</code> is on the same filesystem as the caller.</p></dd>
 
 
 <dt>overwrite</dt>
@@ -144,10 +145,10 @@ If missing, this can be assumed to be <code>FALSE</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "root"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_start</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:17:53 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:20:57 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_finish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:17:53 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:20:57 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Force remote access.</span></span></span>
@@ -163,10 +164,10 @@ If missing, this can be assumed to be <code>FALSE</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "root"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_start</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:17:53 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:20:57 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_finish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:17:53 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-04-22 21:20:57 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
