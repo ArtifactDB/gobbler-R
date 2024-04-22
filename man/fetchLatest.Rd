@@ -16,7 +16,7 @@ fetchLatest(project, asset, registry, url, forceRemote = FALSE)
 \item{url}{String containing the URL to the Gobbler REST API.}
 
 \item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
-even if \code{registry} is accessible to the caller.}
+even if \code{registry} is on the same filesystem as the caller.}
 }
 \value{
 String containing the latest version of the asset. 

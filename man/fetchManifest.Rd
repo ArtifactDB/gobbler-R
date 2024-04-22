@@ -27,12 +27,15 @@ fetchManifest(
 \item{url}{String containing the URL to the Gobbler REST API.}
 
 \item{cache}{String containing a path to a cache directory.
-If \code{NULL}, an appropriate cache is automatically chosen.}
+If \code{NULL}, an appropriate location is automatically chosen.
+Only used for remote access.}
 
 \item{forceRemote}{Logical scalar indicating whether to force remote access.
-This will download all files in the \code{path} via the REST API and cache them locally.}
+This will download all files in the \code{path} via the REST API and cache them locally,
+even if \code{registry} is on the same filesystem as the caller.}
 
-\item{overwrite}{Logical scalar indicating whether to overwrite the existing cache.}
+\item{overwrite}{Logical scalar indicating whether to overwrite the existing cache.
+Only used for remote access.}
 }
 \value{
 List containing the manifest for this version.
@@ -43,6 +46,7 @@ The value of each element is another list with the following fields:
 \item \code{md5sum}, a string containing the hex-encoded MD5 checksum of the file.
 \item \code{link} (optional): a list specifying the link destination for a file. 
 This contains the strings \code{project}, \code{asset}, \code{version} and \code{path}.
+If the link destination is itself a link, an \code{ancestor} list will be present that specifies the final location of the file after resolving all intermediate links.
 }
 }
 \description{

@@ -8,11 +8,15 @@
 #' @param registry String containing a path to the registry.
 #' @param url String containing the URL to the Gobbler REST API.
 #' @param cache String containing a path to a cache directory.
-#' If \code{NULL}, an appropriate cache is automatically chosen.
+#' If \code{NULL}, an appropriate location is automatically chosen.
+#' Only used for remote access.
 #' @param forceRemote Logical scalar indicating whether to force remote access.
-#' This will download all files in the \code{path} via the REST API and cache them locally.
+#' This will download all files in the \code{path} via the REST API and cache them locally,
+#' even if \code{registry} is on the same filesystem as the caller.
 #' @param overwrite Logical scalar indicating whether to overwrite the existing cache.
+#' Only used for remote access.
 #' @param concurrent Integer specifying the number of concurrent downloads.
+#' Only used for remote access.
 #'
 #' @return Path to the subdirectory on the caller's filesystem.
 #' This is either a path to the registry if it is accessible,

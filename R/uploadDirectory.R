@@ -3,8 +3,8 @@
 #' Upload a directory as a new versioned asset of a project in the registry.
 #'
 #' @param project String containing an existing project name.
-#' @param asset String containing a new or existing asset name.
-#' @param version String containing a new or existing version name.
+#' @param asset String containing a new or existing asset name in \code{project}.
+#' @param version String containing the name of a new version of \code{asset}.
 #' @param directory String containing the path to a directory to be uploaded.
 #' This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.
 #' @param probation Logical scalar indicating whether to upload a probational version.

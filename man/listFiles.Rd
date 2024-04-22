@@ -33,7 +33,7 @@ If \code{NULL}, all files associated with this version are listed.}
 \item{include..}{Logical scalar indicating whether to list files with path components that start with \code{..}.}
 
 \item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
-even if \code{registry} is accessible to the caller.}
+even if \code{registry} is on the same filesystem as the caller.}
 }
 \value{
 Character vector of relative paths of files associated with the versioned asset.

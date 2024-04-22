@@ -17,9 +17,9 @@ uploadDirectory(
 \arguments{
 \item{project}{String containing an existing project name.}
 
-\item{asset}{String containing a new or existing asset name.}
+\item{asset}{String containing a new or existing asset name in \code{project}.}
 
-\item{version}{String containing a new or existing version name.}
+\item{version}{String containing the name of a new version of \code{asset}.}
 
 \item{directory}{String containing the path to a directory to be uploaded.
 This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.}
