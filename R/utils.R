@@ -28,6 +28,19 @@ sanitize_uploaders <- function(uploaders) {
     uploaders
 }
 
+handle_error <- function(req) {
+    req_error(req, body = function(res) {
+        ct <- resp_content_type(res)
+        if (ct == "application/json") {
+            resp_body_json(res)$reason
+        } else if (ct == "text/plain") {
+            resp_body_string(res)
+        } else {
+            NULL
+        }
+    })
+}
+
 #' @importFrom jsonlite toJSON
 #' @import httr2
 dump_request <- function(staging, url, action, payload) {
@@ -46,7 +59,7 @@ dump_request <- function(staging, url, action, payload) {
 
     req <- request(paste0(url, "/new/", basename(actual)))
     req <- req_method(req, "POST")
-    req <- req_error(req, body = function(res) resp_body_json(res)$reason)
+    req <- handle_error(req)
     res <- req_perform(req)
     resp_body_json(res)
 }

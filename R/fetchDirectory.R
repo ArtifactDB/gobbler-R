@@ -68,7 +68,7 @@ fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, o
     }
 
     req <- request(paste0(url, "/list?path=", URLencode(path), "&recursive=true"))
-    req <- req_error(req, body = function(res) resp_body_json(res)$reason)
+    req <- handle_error(req)
     res <- req_perform(req)
     listing <- resp_body_json(res)
 

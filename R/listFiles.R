@@ -65,7 +65,7 @@ listFiles <- function(project, asset, version, registry, url, prefix=NULL, inclu
             target <- paste0(target, "/", prefix) 
         }
         req <- request(paste0(url, "/list?path=", URLencode(target, reserved=TRUE), "&recursive=true"))
-        req <- req_error(req, body = function(res) resp_body_json(res)$reason)
+        req <- handle_error(req)
         res <- req_perform(req)
 
         listing <- unlist(resp_body_json(res))

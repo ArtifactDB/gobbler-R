@@ -16,7 +16,7 @@
 #' @import httr2
 serviceInfo <- function(url) {
     req <- request(paste0(url, "/info"))
-    req <- req_error(req, body = function(res) resp_body_json(res)$reason)
+    req <- handle_error(req)
     res <- req_perform(req)
     resp_body_json(res)
 }

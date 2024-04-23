@@ -45,7 +45,7 @@ list_registry_directories <- function(path, registry, url, forceRemote) {
             url <- paste0(url, "?path=", URLencode(path, reserved=TRUE))
         }
         req <- request(url)
-        req <- req_error(req, body = function(res) resp_body_json(res)$reason)
+        req <- handle_error(req)
         res <- req_perform(req)
         listing <- unlist(resp_body_json(res))
         dirs <- listing[endsWith(listing, "/")]
