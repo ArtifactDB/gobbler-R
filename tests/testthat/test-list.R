@@ -51,6 +51,11 @@ test_that("listFiles works as expected", {
     rfiles <- sort(listFiles("test", "list", "v1", registry=info$registry, url=info$url, forceRemote=TRUE))
     expect_identical(files, rfiles)
 
+    files <- sort(listFiles("test", "list", "v1", registry=info$registry, url=info$url, include..=FALSE))
+    expect_identical(files, sort(c("foo", "whee/blah", "whee2")))
+    rfiles <- sort(listFiles("test", "list", "v1", registry=info$registry, url=info$url, include..=FALSE, forceRemote=TRUE))
+    expect_identical(files, rfiles)
+
     files <- sort(listFiles("test", "list", "v1", registry=info$registry, url=info$url, prefix="whee"))
     expect_identical(files, sort(c("whee/blah", "whee2")))
     rfiles <- sort(listFiles("test", "list", "v1", registry=info$registry, url=info$url, forceRemote=TRUE, prefix="whee"))

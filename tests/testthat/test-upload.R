@@ -66,9 +66,9 @@ test_that("upload works as expected for links", {
     expect_null(man[["whee"]]$link)
 })
 
-test_that("upload works as expected for new versions", {
+test_that("upload works directly from the staging directory", {
     dir <- allocateUploadDirectory(info$staging)
-    write(file=file.path(dir, "blah.txt"), LETTERS)
+    write(file=file.path(dir, "blah.txt"), letters)
     dir.create(file.path(dir, "foo"))
     write(file=file.path(dir, "foo", "bar.txt"), 1:10)
 
@@ -81,6 +81,8 @@ test_that("upload works as expected for new versions", {
         url=info$url
     )
 
-    man <- fetchManifest("test-upload", "jennifer", "1", registry=info$registry)
+    man <- fetchManifest("test-upload", "jennifer", "3", registry=info$registry)
     expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt"))
+    expect_null(man[["blah.txt"]]$link)
+    expect_false(is.null(man[["foo/bar.txt"]]$link))
 })
