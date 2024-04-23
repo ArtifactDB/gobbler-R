@@ -60,6 +60,7 @@ dump_request <- function(staging, url, action, payload) {
     req <- request(paste0(url, "/new/", basename(actual)))
     req <- req_method(req, "POST")
     req <- handle_error(req)
+    req <- req_options(req, postredir=7) # see https://curl.se/libcurl/c/CURLOPT_POSTREDIR.html.
     res <- req_perform(req)
     resp_body_json(res)
 }
