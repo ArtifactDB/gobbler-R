@@ -60,7 +60,10 @@ cloneVersion <- function(project, asset, version, destination, registry) {
     for (x in names(listing)) {
         dpath <- file.path(destination, x)
         dir.create(dirname(dpath), showWarnings=FALSE)
-        file.symlink(file.path(target, x), dpath)
+        src <- file.path(target, x)
+        if (!file.symlink(src, dpath)) {
+            stop("failed to create a symlink from '", src, "' to '", dpath, "'")
+        }
     }
 
     invisible(NULL)
