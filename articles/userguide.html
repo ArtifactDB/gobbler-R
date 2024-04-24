@@ -80,8 +80,7 @@
                   <a class="author_email" href="mailto:#"></a><a href="mailto:infinite.monkeys.with.keyboards@gmail.com" class="email">infinite.monkeys.with.keyboards@gmail.com</a>
       
                   
-            <h4 data-toc-skip class="date">Revised: February 15,
-2024</h4>
+            <h4 data-toc-skip class="date">Revised: April 24, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ArtifactDB/gobbler-R/blob/HEAD/vignettes/userguide.Rmd" class="external-link"><code>vignettes/userguide.Rmd</code></a></small>
       <div class="hidden name"><code>userguide.Rmd</code></div>
@@ -95,10 +94,11 @@
 </h2>
 <p>The <em><a href="https://github.com/ArtifactDB/gobbler-R" class="external-link">gobbler</a></em> package
 implements an R client for the <a href="https://github.com/ArtifactDB/gobbler" class="external-link">service of the same
-name</a>. This allows Bioconductor packages to easily store and read
-data on a managed registry in a shared filesystem. It also provides
-mechanisms for project maintainers to easily manage upload
-authorizations and third-party contributions. Readers are referred to <a href="https://github.com/ArtifactDB/gobbler?tab=readme-ov-file#gobbling-data-on-shared-filesystems" class="external-link">Gobbler
+name</a>. This allows users to easily store and read data on a managed
+registry in a shared filesystem, e.g., on high-performance computing
+(HPC) clusters. It also provides mechanisms for project maintainers to
+easily manage upload authorizations and third-party contributions.
+Readers are referred to <a href="https://github.com/ArtifactDB/gobbler?tab=readme-ov-file#gobbling-data-on-shared-filesystems" class="external-link">Gobbler
 documentation</a> for a description of the concepts; this guide will
 strictly focus on the usage of the <em><a href="https://github.com/ArtifactDB/gobbler-R" class="external-link">gobbler</a></em>
 package.</p>
@@ -106,12 +106,12 @@ package.</p>
 <div class="section level2">
 <h2 id="demonstration-setup">Demonstration setup<a class="anchor" aria-label="anchor" href="#demonstration-setup"></a>
 </h2>
-<p>The rest of this vignette assumes that a Gobbler service is actually
-running on a shared filesystem, with known locations for the staging
-directory and registry. For demonstration purposes, we’ll set up a test
-instance of the service with some temporary paths for the staging
-directory and registry. Real applications should run the service outside
-of R, e.g., via <code>systemctl</code>.</p>
+<p>The rest of this vignette assumes that a Gobbler service is running
+on the same filesystem as the users of the <em><a href="https://github.com/ArtifactDB/gobbler-R" class="external-link">gobbler</a></em> package.
+This is typically done with service managers like <code>systemctl</code>
+with fixed locations for the staging directory and registry. For
+demonstration purposes, we’ll set up a test instance of the service with
+some temporary paths for the staging directory and registry.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ArtifactDB/gobbler-R" class="external-link">gobbler</a></span><span class="op">)</span></span>
 <span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/startGobbler.html">startGobbler</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -148,7 +148,7 @@ several convenience methods for examining the Gobbler registry:</p>
 <pre><code><span><span class="co">## [1] "..manifest" "..summary"  "foo"        "whee/blah"  "whee2"</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/versionPath.html">versionPath</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpDCJ5vb/file48b6bdeb87/test/simple/v1"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/RtmpMhm8p9/file48d4b5d6b96/test/simple/v1"</span></span></code></pre>
 <p>We can fetch the summaries and manifests for each version of a
 project’s assets.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -181,10 +181,10 @@ project’s assets.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-04-23 18:27:51 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-24 16:54:01 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-04-23 18:27:51 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-24 16:54:01 UTC"</span></span></code></pre>
 <p>We can get the latest version of an asset:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchLatest.html">fetchLatest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
@@ -349,7 +349,7 @@ each authorization:</p>
 <span><span class="co">## [1] "1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $uploaders[[1]]$until</span></span>
-<span><span class="co">## [1] "2024-04-24 18:27:52 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-25 16:54:02 UTC"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="probational-uploads">Probational uploads<a class="anchor" aria-label="anchor" href="#probational-uploads"></a>
@@ -380,10 +380,10 @@ immutability. To demonstrate, let’s perform a probational upload:</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-04-23 18:27:52 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-24 16:54:02 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-04-23 18:27:52 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-24 16:54:02 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $on_probation</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre>
@@ -399,10 +399,10 @@ from the registry.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2024-04-23 18:27:52 UTC"</span></span>
+<span><span class="co">## [1] "2024-04-24 16:54:02 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2024-04-23 18:27:52 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2024-04-24 16:54:02 UTC"</span></span></code></pre>
 <p>Unless specified otherwise, all <code>uploaders</code> in the
 permissions are considered to be “untrusted”, and any uploads from such
 untrusted users are considered probational. This allows project
