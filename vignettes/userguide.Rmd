@@ -4,7 +4,7 @@ author:
 - name: Aaron Lun
   email: infinite.monkeys.with.keyboards@gmail.com
 package: gobbler
-date: "Revised: February 15, 2024"
+date: "Revised: April 24, 2024"
 output:
   BiocStyle::html_document
 vignette: >
@@ -22,17 +22,16 @@ knitr::opts_chunk$set(error=FALSE, warning=FALSE, message=FALSE)
 # Introduction
 
 The `r self` package implements an R client for the [service of the same name](https://github.com/ArtifactDB/gobbler).
-This allows Bioconductor packages to easily store and read data on a managed registry in a shared filesystem. 
+This allows users to easily store and read data on a managed registry in a shared filesystem, e.g., on high-performance computing (HPC) clusters. 
 It also provides mechanisms for project maintainers to easily manage upload authorizations and third-party contributions.
 Readers are referred to [Gobbler documentation](https://github.com/ArtifactDB/gobbler?tab=readme-ov-file#gobbling-data-on-shared-filesystems) for a description of the concepts;
 this guide will strictly focus on the usage of the `r self` package.
 
 # Demonstration setup
 
-The rest of this vignette assumes that a Gobbler service is actually running on a shared filesystem,
-with known locations for the staging directory and registry.
+Most of this vignette assumes that a Gobbler service is running on the same filesystem as the users of the `r self` package.
+This is typically done with service managers like `systemctl` with fixed locations for the staging directory and registry. 
 For demonstration purposes, we'll set up a test instance of the service with some temporary paths for the staging directory and registry.
-Real applications should run the service outside of R, e.g., via `systemctl`.
 
 ```{r}
 library(gobbler)
@@ -85,6 +84,14 @@ We can get the latest version of an asset:
 
 ```{r}
 fetchLatest("test", "simple", registry=REGISTRY)
+```
+
+The functions in this section of the vignette can also be executed remotely (i.e., outside of the shared filesystem) if the `url=` argument is supplied.
+This provides read-only access to the registry for a wider range of applications, e.g., on the cloud or in the browser.
+
+```{r}
+# Forcing remote access to stop it from using the filesystem.
+fetchLatest('test', 'simple', registry=REGISTRY, url=URL, forceRemote=TRUE)
 ```
 
 # Uploading files
