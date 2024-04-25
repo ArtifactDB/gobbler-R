@@ -24,7 +24,8 @@ listFiles(
 
 \item{registry}{String containing a path to the registry.}
 
-\item{url}{String containing the URL to the Gobbler REST API.}
+\item{url}{String containing the URL to the Gobbler REST API.
+Only used for remote access.}
 
 \item{prefix}{String containing the prefix for the path.
 If provided, files are only listed if they have a relative path (i.e., inside the version subdirectory) that starts with this prefix.

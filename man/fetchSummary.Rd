@@ -24,7 +24,8 @@ fetchSummary(
 
 \item{registry}{String containing a path to the registry.}
 
-\item{url}{String containing the URL to the Gobbler REST API.}
+\item{url}{String containing the URL to the Gobbler REST API.
+Only used for remote access.}
 
 \item{cache}{String containing a path to a cache directory.
 If \code{NULL}, an appropriate location is automatically chosen.

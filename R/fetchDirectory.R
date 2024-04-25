@@ -7,6 +7,7 @@
 #' This usually takes the form of \code{PROJECT/ASSET/VERSION/*}, where path components should be separated by \code{/}.
 #' @param registry String containing a path to the registry.
 #' @param url String containing the URL to the Gobbler REST API.
+#' Only used for remote access.
 #' @param cache String containing a path to a cache directory.
 #' If \code{NULL}, an appropriate location is automatically chosen.
 #' Only used for remote access.

@@ -19,15 +19,16 @@ This usually takes the form of \code{PROJECT/ASSET/VERSION/*}, where path compon
 
 \item{registry}{String containing a path to the registry.}
 
-\item{url}{String containing the URL to the Gobbler REST API.}
+\item{url}{String containing the URL to the Gobbler REST API.
+Only used for remote access.}
 
 \item{cache}{String containing a path to a cache directory.
 If \code{NULL}, an appropriate location is automatically chosen.
 Only used for remote access.}
 
 \item{forceRemote}{Logical scalar indicating whether to force remote access.
-This will download all files in the \code{path} via the REST API and cache them locally,
-even if \code{registry} is on the same filesystem as the caller.}
+This will download \code{path} via the REST API and cache it locally,
+even if \code{path} is on the same filesystem as the caller.}
 
 \item{overwrite}{Logical scalar indicating whether to overwrite the existing cache.
 Only used for remote access.}

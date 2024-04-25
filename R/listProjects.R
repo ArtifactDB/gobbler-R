@@ -5,6 +5,7 @@
 #'
 #' @param registry String containing a path to the registry.
 #' @param url String containing the URL to the Gobbler REST API.
+#' Only used for remote access.
 #' @param forceRemote Logical scalar indicating whether to force remote access via the API,
 #' even if \code{registry} is on the same filesystem as the caller. 
 #'

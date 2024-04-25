@@ -13,7 +13,8 @@ listVersions(project, asset, registry, url, forceRemote = FALSE)
 
 \item{registry}{String containing a path to the registry.}
 
-\item{url}{String containing the URL to the Gobbler REST API.}
+\item{url}{String containing the URL to the Gobbler REST API.
+Only used for remote access.}
 
 \item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
 even if \code{registry} is on the same filesystem as the caller.}

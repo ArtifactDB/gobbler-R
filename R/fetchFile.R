@@ -5,6 +5,9 @@
 #'
 #' @param path String containing the relative path to a file within the registry.
 #' This usually takes the form of \code{PROJECT/ASSET/VERSION/*}, where path components should be separated by \code{/}.
+#' @param forceRemote Logical scalar indicating whether to force remote access.
+#' This will download \code{path} via the REST API and cache it locally,
+#' even if \code{path} is on the same filesystem as the caller.
 #' @inheritParams fetchDirectory
 #'
 #' @author Aaron Lun
