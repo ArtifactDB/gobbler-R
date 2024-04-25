@@ -54,6 +54,17 @@ test_that("fetchPermissions works as expected", {
     expect_identical(perms, rperms)
 })
 
+test_that("fetchFile works as expected", {
+    p <- fetchFile("test/fetch/v1/foo", registry=info$registry, url=info$url)
+    expect_identical(readLines(p), "BAR")
+    expect_true(startsWith(p, info$registry))
+
+    cache <- tempfile()
+    p <- fetchFile("test/fetch/v1/whee/blah", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE)
+    expect_identical(readLines(p), "stuff")
+    expect_true(startsWith(p, cache))
+})
+
 test_that("fetchDirectory works as expected", {
     dir <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url)
     expect_identical(readLines(file.path(dir, "foo")), "BAR")

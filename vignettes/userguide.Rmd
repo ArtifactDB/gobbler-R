@@ -86,6 +86,14 @@ We can get the latest version of an asset:
 fetchLatest("test", "simple", registry=REGISTRY)
 ```
 
+We can also obtain a path to the contents of a versioned asset, a subdirectory of that asset, or an individual file in the registry:
+
+```{r}
+versionPath("test", "simple", "v1", registry=REGISTRY)
+fetchDirectory("test/simple/v1/whee", registry=REGISTRY)
+fetchFile("test/simple/v1/whee/blah", registry=REGISTRY)
+```
+
 The functions in this section of the vignette can also be executed remotely (i.e., outside of the shared filesystem) if the `url=` argument is supplied.
 This provides read-only access to the registry for a wider range of applications, e.g., on the cloud or in the browser.
 

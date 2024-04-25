@@ -4,7 +4,7 @@
 #' possibly creating a local copy of the subdirectory's contents if the caller is not on the same filesystem as the registry.
 #'
 #' @param path String containing the relative path to a subdirectory within the registry.
-#' This usually takes the form of \code{PROJECT/ASSET/VERSION/*}.
+#' This usually takes the form of \code{PROJECT/ASSET/VERSION/*}, where path components should be separated by \code{/}.
 #' @param registry String containing a path to the registry.
 #' @param url String containing the URL to the Gobbler REST API.
 #' @param cache String containing a path to a cache directory.
@@ -88,8 +88,8 @@ fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, o
 }
 
 #' @importFrom utils download.file
-acquire_file <- function(cache, path, name, url, overwrite) {
-    target <- file.path(cache, "REGISTRY", path, name)
+acquire_file_raw <- function(cache, path, url, overwrite) {
+    target <- file.path(cache, "REGISTRY", path)
 
     if (overwrite || !file.exists(target)) {
         tempdir <- file.path(cache, "TEMP")
@@ -97,14 +97,18 @@ acquire_file <- function(cache, path, name, url, overwrite) {
         tempf <- tempfile(tmpdir=tempdir)
         on.exit(unlink(tempf), add=TRUE, after=FALSE)
 
-        if (download.file(paste0(url, "/fetch/", path, "/", name), tempf)) {
-            stop("failed to download '", name, "' from the registry")
+        if (download.file(paste0(url, "/fetch/", path), tempf)) {
+            stop("failed to download '", path, "' from the registry")
         }
         dir.create(dirname(target), recursive=TRUE, showWarnings=FALSE)
         file.rename(tempf, target) # this should be more or less atomic, so no need for locks.
     }
 
     target
+}
+
+acquire_file <- function(cache, path, name, url, overwrite) {
+    acquire_file_raw(cache, paste0(path, "/", name), url, overwrite)
 }
 
 #' @importFrom utils URLencode
