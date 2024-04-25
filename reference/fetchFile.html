@@ -84,7 +84,8 @@ This usually takes the form of <code>PROJECT/ASSET/VERSION/*</code>, where path 
 
 
 <dt>url</dt>
-<dd><p>String containing the URL to the Gobbler REST API.</p></dd>
+<dd><p>String containing the URL to the Gobbler REST API.
+Only used for remote access.</p></dd>
 
 
 <dt>cache</dt>
@@ -95,8 +96,8 @@ Only used for remote access.</p></dd>
 
 <dt>forceRemote</dt>
 <dd><p>Logical scalar indicating whether to force remote access.
-This will download all files in the <code>path</code> via the REST API and cache them locally,
-even if <code>registry</code> is on the same filesystem as the caller.</p></dd>
+This will download <code>path</code> via the REST API and cache it locally,
+even if <code>path</code> is on the same filesystem as the caller.</p></dd>
 
 
 <dt>overwrite</dt>
@@ -129,7 +130,7 @@ Only used for remote access.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, <span class="va">src</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">fetchFile</span><span class="op">(</span><span class="st">"test/simple/v1/foo"</span>, registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpj5y2KX/file2c31a89b0f/test/simple/v1/foo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvivOaE/file2c3150a8dcd/test/simple/v1/foo"</span>
 <span class="r-in"><span><span class="fu">fetchFile</span><span class="op">(</span><span class="st">"test/simple/v1/whee/blah"</span>, registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span>, forceRemote<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.local/share/R/gobbler/http%3A%2F%2F0.0.0.0%3A5114/REGISTRY/test/simple/v1/whee/blah"</span>
 <span class="r-in"><span></span></span>
