@@ -4,10 +4,12 @@
 \alias{allocateUploadDirectory}
 \title{Allocate a directory for upload}
 \usage{
-allocateUploadDirectory(staging)
+allocateUploadDirectory(staging, attempts = 3)
 }
 \arguments{
 \item{staging}{String containing the path to the staging directory.}
+
+\item{attempts}{Integer scalar specifying the number of attempts to allocate a new directory, after which an error is thrown.}
 }
 \value{
 String containing a path to a newly created subdirectory within \code{staging}.
