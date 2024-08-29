@@ -49,8 +49,13 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
             dir.create(dirname(dest), recursive=TRUE, showWarnings=FALSE)
 
             src.link <- Sys.readlink(src)
-            if (src.link == "" || !startsWith(src, "/")) { # i.e., not a link to an absolute path.
+            if (src.link == "") {
                 if (!suppressWarnings(file.link(src, dest)) && !file.copy(src, dest)) {
+                    stop("failed to link or copy '", p, "' to the staging directory")
+                }
+            } else if (!startsWith(src.link, "/")) { # i.e., not a link to an absolute path.
+                full.src <- normalizePath(file.path(dirname(src), src.link))
+                if (!suppressWarnings(file.link(full.src, dest)) && !file.copy(full.src, dest)) {
                     stop("failed to link or copy '", p, "' to the staging directory")
                 }
             } else {

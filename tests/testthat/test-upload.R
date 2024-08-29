@@ -45,7 +45,7 @@ test_that("upload works as expected for regular files", {
     expect_true(all(vapply(man, function(x) !is.null(x$link), TRUE)))
 })
 
-test_that("upload works as expected for links", {
+test_that("upload works as expected for absolute links", {
     dest <- tempfile()
     out <- cloneVersion("test-upload", "jennifer", "2", dest, registry=info$registry)
     write(file=file.path(dest, "whee"), "BLAH")
@@ -64,6 +64,32 @@ test_that("upload works as expected for links", {
     expect_false(is.null(man[["blah.txt"]]$link))
     expect_false(is.null(man[["foo/bar.txt"]]$link))
     expect_null(man[["whee"]]$link)
+})
+
+test_that("upload works as expected for relative links", {
+    dest <- tempfile()
+    dir.create(dest)
+    write(file=file.path(dest, "blah.txt"), letters)
+    file.symlink("blah.txt", file.path(dest, "whee.txt"))
+    dir.create(file.path(dest, "foo"))
+    file.symlink("../whee.txt", file.path(dest, "foo/bar.txt"))
+
+    uploadDirectory(
+        project="test-more-upload", 
+        asset="nicole", 
+        version="1", 
+        directory=dest,
+        staging=info$staging,
+        url=info$url
+    )
+
+    man <- fetchManifest("test-more-upload", "nicole", "1", registry=info$registry)
+    expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt", "whee.txt"))
+    expect_null(man[["whee"]]$link)
+    expect_null(man[["foo/bar.txt"]]$link)
+    expect_null(man[["blah.txt"]]$link)
+    expect_identical(man[["whee.txt"]]$size, man[["foo/bar.txt"]]$size)
+    expect_identical(man[["whee.txt"]]$size, man[["blah.txt"]]$size)
 })
 
 test_that("upload works directly from the staging directory", {
