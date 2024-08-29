@@ -41,6 +41,7 @@
 uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE) {
     directory <- normalizePath(directory)
     staging <- normalizePath(staging)
+
     if (dirname(directory) != staging) {
         new.dir <- allocateUploadDirectory(staging) 
         for (p in list.files(directory, recursive=TRUE)) {
@@ -76,5 +77,12 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
     )
 
     dump_request(staging, url, "upload", req)
+
+    # Once the upload is done, we make the directory world-writeable so the
+    # backend can more easily purge old files. We could also delete them right
+    # away but sometimes it's helpful for debugging to leave them there.
+    subdirs <- list.dirs(directory, full.names=TRUE, recursive=TRUE)
+    Sys.chmod(subdirs, mode="0777", use_umask=FALSE)
+
     invisible(NULL)
 }
