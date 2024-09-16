@@ -54,14 +54,16 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
                 if (!suppressWarnings(file.link(src, dest)) && !file.copy(src, dest)) {
                     stop("failed to link or copy '", p, "' to the staging directory")
                 }
-            } else if (!startsWith(src.link, "/")) { # i.e., not a link to an absolute path.
+
+            } else if (.has_valid_link(src.link, p)) {
+                if (!file.symlink(src.link, dest)) {
+                    stop("failed to create a symlink for '", p, "' in the staging directory")
+                }
+
+            } else {
                 full.src <- normalizePath(file.path(dirname(src), src.link))
                 if (!suppressWarnings(file.link(full.src, dest)) && !file.copy(full.src, dest)) {
                     stop("failed to link or copy '", p, "' to the staging directory")
-                }
-            } else {
-                if (!file.symlink(src.link, dest)) {
-                    stop("failed to create a symlink for '", p, "' in the staging directory")
                 }
             }
         }
@@ -85,4 +87,30 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
     Sys.chmod(subdirs, mode="0777", use_umask=FALSE)
 
     invisible(NULL)
+}
+
+#' @importFrom utils head
+.has_valid_link <- function(target, link.path) {
+    # Assuming Unix-style file paths, who uses a Windows HPC anyway?
+    if (startsWith(target, "/")) {
+        return(TRUE)
+    }
+
+    pre.length <- length(strsplit(link.path, "/")[[1]]) - 1L
+    post.fragments <- head(strsplit(target, "/")[[1]], -1L)
+
+    for (x in post.fragments) {
+        if (x == ".") {
+            next
+        } else if (x == "..") {
+            pre.length <- pre.length - 1L
+            if (pre.length < 0L) {
+                return(FALSE)
+            }
+        } else {
+            pre.length <- pre.length + 1L
+        }
+    }
+
+    TRUE
 }

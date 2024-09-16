@@ -70,9 +70,13 @@ test_that("upload works as expected for relative links", {
     dest <- tempfile()
     dir.create(dest)
     write(file=file.path(dest, "blah.txt"), letters)
-    file.symlink("blah.txt", file.path(dest, "whee.txt"))
+    file.symlink("blah.txt", file.path(dest, "whee.txt")) # relative links within the directory are preserved.
     dir.create(file.path(dest, "foo"))
-    file.symlink("../whee.txt", file.path(dest, "foo/bar.txt"))
+    file.symlink("../whee.txt", file.path(dest, "foo/bar.txt")) 
+
+    outside <- tempfile(tmpdir=dirname(dest))
+    write(file=outside, "FOOBLEWOOBLE")
+    file.symlink(file.path("../../", basename(outside)), file.path(dest, "foo/outer.txt")) # relative links outside the directory are lost.
 
     uploadDirectory(
         project="test-more-upload", 
@@ -84,10 +88,12 @@ test_that("upload works as expected for relative links", {
     )
 
     man <- fetchManifest("test-more-upload", "nicole", "1", registry=info$registry)
-    expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt", "whee.txt"))
-    expect_null(man[["whee"]]$link)
-    expect_null(man[["foo/bar.txt"]]$link)
+    expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt", "foo/outer.txt", "whee.txt"))
+    expect_false(is.null(man[["whee.txt"]]$link))
+    expect_null(man[["foo/outer.txt"]]$link)
+    expect_false(is.null(man[["foo/bar.txt"]]$link))
     expect_null(man[["blah.txt"]]$link)
+    expect_identical(13L, man[["foo/outer.txt"]]$size)
     expect_identical(man[["whee.txt"]]$size, man[["foo/bar.txt"]]$size)
     expect_identical(man[["whee.txt"]]$size, man[["blah.txt"]]$size)
 })
