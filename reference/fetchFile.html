@@ -18,7 +18,7 @@ This will call the REST API if the caller is not on the same filesystem as the r
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.7</span>
       </span>
     </div>
 
@@ -130,7 +130,7 @@ Only used for remote access.</p></dd>
 <span class="r-in"><span><span class="fu"><a href="uploadDirectory.html">uploadDirectory</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, <span class="va">src</span>, staging<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">staging</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">fetchFile</span><span class="op">(</span><span class="st">"test/simple/v1/foo"</span>, registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp87ZMeM/file2195a68fd99/test/simple/v1/foo"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp5exYNQ/file24c5de4e164/test/simple/v1/foo"</span>
 <span class="r-in"><span><span class="fu">fetchFile</span><span class="op">(</span><span class="st">"test/simple/v1/whee/blah"</span>, registry<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">registry</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span>, forceRemote<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/github/home/.local/share/R/gobbler/http%3A%2F%2F0.0.0.0%3A5114/REGISTRY/test/simple/v1/whee/blah"</span>
 <span class="r-in"><span></span></span>
