@@ -1,6 +1,6 @@
 Package: gobbler
-Version: 0.3.8
-Date: 2024-09-18
+Version: 0.3.9
+Date: 2024-10-02
 Title: Interface to the gobbler service
 Description:
     Friendly interface to the gobbler service.
