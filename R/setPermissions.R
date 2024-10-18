@@ -8,6 +8,8 @@
 #' @param uploaders List specifying the authorized uploaders for this project.
 #' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
 #' If \code{NULL}, no change is made to the existing uploaders of the project.
+#' @param globalWrite Logical scalar indicating whether global writes should be enabled (see \code{\link{fetchPermissions}} for details).
+#' If \code{NULL}, no change is made to the global write status of the project.
 #' @param append Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project.
 #' If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.
 #' @param registry String containing a path to the registry.
@@ -47,7 +49,7 @@
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' @export
-setPermissions <- function(project, registry, staging, url, owners=NULL, uploaders=NULL, append=TRUE) {
+setPermissions <- function(project, registry, staging, url, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE) {
     perms <- list()
     if (append) {
         old.perms <- fetchPermissions(project, registry=registry)
@@ -68,6 +70,10 @@ setPermissions <- function(project, registry, staging, url, owners=NULL, uploade
 
     if (!is.null(perms$uploaders)) {
         perms$uploaders <- sanitize_uploaders(perms$uploaders)
+    }
+
+    if (!is.null(globalWrite)) {
+        perms$global_write <- globalWrite
     }
 
     dump_request(staging, url, "set_permissions", list(project=project, permissions=perms))

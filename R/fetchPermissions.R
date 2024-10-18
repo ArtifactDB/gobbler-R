@@ -20,9 +20,12 @@
 #' If not provided, there is no restriction on the uploaded version name.
 #' \item (optional) \code{until}, a \link{POSIXct} object containing the expiry date of this authorization.
 #' If not provided, the authorization does not expire.
-#' \item (optional) \code{trusted}, whether the uploader is trusted.
+#' \item (optional) \code{trusted}, a logical scalar indicating whether the uploader is trusted.
 #' If not provided, defaults to \code{FALSE}.
 #' }
+#' \item (optional) \code{global_write}, a logical scalar indicating whether global writes are enabled. 
+#' In this mode, any user can create any number of new assets in this project.
+#' Each user can also upload new versions of any asset that they created in this mode.
 #' }
 #'
 #' @author Aaron Lun

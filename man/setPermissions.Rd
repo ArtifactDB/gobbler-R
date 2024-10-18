@@ -11,6 +11,7 @@ setPermissions(
   url,
   owners = NULL,
   uploaders = NULL,
+  globalWrite = NULL,
   append = TRUE
 )
 }
@@ -29,6 +30,9 @@ If \code{NULL}, no change is made to the existing owners of the project.}
 \item{uploaders}{List specifying the authorized uploaders for this project.
 See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
 If \code{NULL}, no change is made to the existing uploaders of the project.}
+
+\item{globalWrite}{Logical scalar indicating whether global writes should be enabled (see \code{\link{fetchPermissions}} for details).
+If \code{NULL}, no change is made to the global write status of the project.}
 
 \item{append}{Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project.
 If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.}
