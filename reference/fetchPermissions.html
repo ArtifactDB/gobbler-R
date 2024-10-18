@@ -18,7 +18,7 @@ This will call the REST API if the caller is not on the same filesystem as the r
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.10</span>
       </span>
     </div>
 
@@ -99,9 +99,12 @@ If not provided, there is no restriction on the uploaded asset name.</p></li>
 If not provided, there is no restriction on the uploaded version name.</p></li>
 <li><p>(optional) <code>until</code>, a <a href="https://rdrr.io/r/base/DateTimeClasses.html" class="external-link">POSIXct</a> object containing the expiry date of this authorization.
 If not provided, the authorization does not expire.</p></li>
-<li><p>(optional) <code>trusted</code>, whether the uploader is trusted.
+<li><p>(optional) <code>trusted</code>, a logical scalar indicating whether the uploader is trusted.
 If not provided, defaults to <code>FALSE</code>.</p></li>
 </ul></li>
+<li><p>(optional) <code>global_write</code>, a logical scalar indicating whether global writes are enabled.
+In this mode, any user can create any number of new assets in this project.
+Each user can also upload new versions of any asset that they created in this mode.</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -134,7 +137,7 @@ If not provided, defaults to <code>FALSE</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "urmom"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-10-02 21:16:25 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-10-18 18:01:04 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -152,7 +155,7 @@ If not provided, defaults to <code>FALSE</code>.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "urmom"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-10-02 21:16:25 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-10-18 18:01:04 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

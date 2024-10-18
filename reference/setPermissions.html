@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.10</span>
       </span>
     </div>
 
@@ -67,6 +67,7 @@
 <span>  <span class="va">url</span>,</span>
 <span>  owners <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uploaders <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  globalWrite <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  append <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -100,6 +101,11 @@ If <code>NULL</code>, no change is made to the existing owners of the project.</
 <dd><p>List specifying the authorized uploaders for this project.
 See the <code>uploaders</code> field in the <code><a href="fetchPermissions.html">fetchPermissions</a></code> return value for the expected format.
 If <code>NULL</code>, no change is made to the existing uploaders of the project.</p></dd>
+
+
+<dt id="arg-globalwrite">globalWrite<a class="anchor" aria-label="anchor" href="#arg-globalwrite"></a></dt>
+<dd><p>Logical scalar indicating whether global writes should be enabled (see <code><a href="fetchPermissions.html">fetchPermissions</a></code> for details).
+If <code>NULL</code>, no change is made to the global write status of the project.</p></dd>
 
 
 <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
@@ -173,7 +179,7 @@ If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are us
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ps5"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-10-04 00:46:33 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2024-10-19 21:31:12 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[2]]</span>
