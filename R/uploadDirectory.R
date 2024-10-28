@@ -51,20 +51,16 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
 
             src.link <- Sys.readlink(src)
             if (src.link == "") {
-                if (!suppressWarnings(file.link(src, dest)) && !file.copy(src, dest)) {
-                    stop("failed to link or copy '", p, "' to the staging directory")
-                }
+                .link_or_copy(src, dest, p)
 
-            } else if (.has_valid_link(src.link, p)) {
+            } else if (.is_absolute_or_local_link(src.link, p)) {
                 if (!file.symlink(src.link, dest)) {
                     stop("failed to create a symlink for '", p, "' in the staging directory")
                 }
 
             } else {
                 full.src <- normalizePath(file.path(dirname(src), src.link))
-                if (!suppressWarnings(file.link(full.src, dest)) && !file.copy(full.src, dest)) {
-                    stop("failed to link or copy '", p, "' to the staging directory")
-                }
+                .link_or_copy(full.src, dest, p)
             }
         }
         directory <- new.dir
@@ -84,12 +80,15 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
 }
 
 #' @importFrom utils head
-.has_valid_link <- function(target, link.path) {
+.is_absolute_or_local_link <- function(target, link.path) {
     # Assuming Unix-style file paths, who uses a Windows HPC anyway?
     if (startsWith(target, "/")) {
         return(TRUE)
     }
 
+    # Both 'target' and 'link.path' should be relative at this point, so the
+    # idea is to check whether 'file.path(dirname(link.path), target)' is still
+    # a child of 'dirname(link.path)'.
     pre.length <- length(strsplit(link.path, "/")[[1]]) - 1L
     post.fragments <- head(strsplit(target, "/")[[1]], -1L)
 
@@ -107,4 +106,10 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
     }
 
     TRUE
+}
+
+.link_or_copy <- function(src, dest, p) {
+    if (!suppressWarnings(file.link(src, dest)) && !file.copy(src, dest)) {
+        stop("failed to link or copy '", p, "' to the staging directory")
+    }
 }
