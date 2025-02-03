@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.12</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">removeAsset</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">staging</span>, <span class="va">url</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">removeAsset</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">staging</span>, <span class="va">url</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -68,11 +68,11 @@
 
 
 <dl><dt id="arg-project">project<a class="anchor" aria-label="anchor" href="#arg-project"></a></dt>
-<dd><p>String containing the project to remove.</p></dd>
+<dd><p>String specifying the project containing the asset to remove.</p></dd>
 
 
 <dt id="arg-asset">asset<a class="anchor" aria-label="anchor" href="#arg-asset"></a></dt>
-<dd><p>String containing the asset to remove.</p></dd>
+<dd><p>String specifying the asset to remove.</p></dd>
 
 
 <dt id="arg-staging">staging<a class="anchor" aria-label="anchor" href="#arg-staging"></a></dt>
@@ -81,6 +81,11 @@
 
 <dt id="arg-url">url<a class="anchor" aria-label="anchor" href="#arg-url"></a></dt>
 <dd><p>String containing the URL of the gobbler REST API.</p></dd>
+
+
+<dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
+<dd><p>Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
+If this needs to be set to <code>TRUE</code>, users may need to call <code><a href="refreshUsage.html">refreshUsage</a></code> afterwards to correct project-level usage statistics.</p></dd>
 
 </dl></div>
     <div id="value">

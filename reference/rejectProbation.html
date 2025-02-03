@@ -18,7 +18,7 @@ This removes all files associated with that version."><!-- mathjax --><script sr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.12</span>
       </span>
     </div>
 
@@ -62,7 +62,7 @@ This removes all files associated with that version.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rejectProbation</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">version</span>, <span class="va">staging</span>, <span class="va">url</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rejectProbation</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">version</span>, <span class="va">staging</span>, <span class="va">url</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,6 +87,11 @@ This removes all files associated with that version.</p>
 
 <dt id="arg-url">url<a class="anchor" aria-label="anchor" href="#arg-url"></a></dt>
 <dd><p>String containing the URL of the gobbler REST API.</p></dd>
+
+
+<dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
+<dd><p>Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
+If this needs to be set to <code>TRUE</code>, users may need to call <code><a href="refreshUsage.html">refreshUsage</a></code> afterwards to correct project-level usage statistics.</p></dd>
 
 </dl></div>
     <div id="value">
