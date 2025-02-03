@@ -4,7 +4,7 @@
 \alias{fetchPermissions}
 \title{Fetch project permissions}
 \usage{
-fetchPermissions(project, registry, url, forceRemote = FALSE)
+fetchPermissions(project, registry, url, asset = NULL, forceRemote = FALSE)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -14,12 +14,15 @@ fetchPermissions(project, registry, url, forceRemote = FALSE)
 \item{url}{String containing the URL to the Gobbler REST API.
 Only used for remote access.}
 
+\item{asset}{String containing the asset name.
+If specified, permissions are retrieved for the asset rather than the entire project.}
+
 \item{forceRemote}{Logical scalar indicating whether to force remote access via the API,
 even if \code{registry} is on the same filesystem as the caller.}
 }
 \value{
-List containing the permissions for this project.
-This has the following elements:
+List containing the permissions for this project/asset.
+For project-level permissions, the list has the following elements:
 \itemize{
 \item \code{owners}, a character vector containing the user IDs of owners of this project.
 \item \code{uploaders}, a list of lists specifying the users or organizations who are authorzied to upload to this project.
@@ -39,6 +42,7 @@ If not provided, defaults to \code{FALSE}.
 In this mode, any user can create any number of new assets in this project.
 Each user can also upload new versions of any asset that they created in this mode.
 }
+For asset-level permissions, the list has \code{owners} and \code{uploaders} to describe the owners and uploaders, respectively, for the specified \code{asset}.
 }
 \description{
 Fetch the permissions for a project.

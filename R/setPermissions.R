@@ -3,14 +3,17 @@
 #' Set the owner and uploader permissions for a project.
 #'
 #' @param project String containing the project name.
-#' @param owners Character vector containing the user IDs for owners of this project.
+#' @param asset String containing the asset name.
+#' If specified, permissions are set on the asset rather than the entire project.
+#' @param owners Character vector containing the user IDs for owners of this project/asset.
 #' If \code{NULL}, no change is made to the existing owners of the project.
-#' @param uploaders List specifying the authorized uploaders for this project.
+#' @param uploaders List specifying the authorized uploaders for this project/asset.
 #' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
-#' If \code{NULL}, no change is made to the existing uploaders of the project.
+#' If \code{NULL}, no change is made to the existing uploaders of the project/asset.
 #' @param globalWrite Logical scalar indicating whether global writes should be enabled (see \code{\link{fetchPermissions}} for details).
 #' If \code{NULL}, no change is made to the global write status of the project.
-#' @param append Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project.
+#' Ignored if \code{asset} is specified.
+#' @param append Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project/asset.
 #' If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.
 #' @param registry String containing a path to the registry.
 #' @inheritParams createProject
@@ -49,10 +52,12 @@
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' @export
-setPermissions <- function(project, registry, staging, url, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE) {
+setPermissions <- function(project, registry, staging, url, asset=NULL, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE) {
     perms <- list()
+    names(perms) <- character(0)
+
     if (append) {
-        old.perms <- fetchPermissions(project, registry=registry)
+        old.perms <- fetchPermissions(project, asset=asset, registry=registry, url=url)
         if (!is.null(owners)) {
             perms$owners <- as.list(union(unlist(old.perms$owners), owners))
         }
@@ -72,10 +77,14 @@ setPermissions <- function(project, registry, staging, url, owners=NULL, uploade
         perms$uploaders <- sanitize_uploaders(perms$uploaders)
     }
 
-    if (!is.null(globalWrite)) {
+    payload <- list(project=project)
+    if (!is.null(asset)) {
+        payload$asset <- asset
+    } else if (!is.null(globalWrite)) {
         perms$global_write <- globalWrite
     }
 
-    dump_request(staging, url, "set_permissions", list(project=project, permissions=perms))
+    payload$permissions <- perms
+    dump_request(staging, url, "set_permissions", payload)
     invisible(NULL)
 }

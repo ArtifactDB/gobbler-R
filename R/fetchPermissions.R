@@ -4,10 +4,12 @@
 #' This will call the REST API if the caller is not on the same filesystem as the registry.
 #' 
 #' @param project String containing the project name.
+#' @param asset String containing the asset name.
+#' If specified, permissions are retrieved for the asset rather than the entire project.
 #' @inheritParams listProjects
 #'
-#' @return List containing the permissions for this project.
-#' This has the following elements:
+#' @return List containing the permissions for this project/asset.
+#' For project-level permissions, the list has the following elements:
 #' \itemize{
 #' \item \code{owners}, a character vector containing the user IDs of owners of this project.
 #' \item \code{uploaders}, a list of lists specifying the users or organizations who are authorzied to upload to this project.
@@ -27,6 +29,7 @@
 #' In this mode, any user can create any number of new assets in this project.
 #' Each user can also upload new versions of any asset that they created in this mode.
 #' }
+#' For asset-level permissions, the list has \code{owners} and \code{uploaders} to describe the owners and uploaders, respectively, for the specified \code{asset}.
 #'
 #' @author Aaron Lun
 #'
@@ -50,16 +53,35 @@
 #' @export
 #' @importFrom jsonlite fromJSON
 #' @import httr2
-fetchPermissions <- function(project, registry, url, forceRemote=FALSE) {
-    if (file.exists(registry) && !forceRemote) {
-        content <- file.path(registry, project, "..permissions")
-    } else {
-        req <- request(paste0(url, "/fetch/", paste(project, "..permissions", sep="/")))
-        resp <- req_perform(req)
-        content <- resp_body_string(resp)
-    }
+fetchPermissions <- function(project, registry, url, asset=NULL, forceRemote=FALSE) {
+    use.registry <- (file.exists(registry) && !forceRemote)
 
-    perms <- fromJSON(content, simplifyVector=FALSE)
+    if (is.null(asset)) {
+        if (use.registry) {
+            content <- file.path(registry, project, "..permissions")
+        } else {
+            req <- request(paste0(url, "/fetch/", paste(project, "..permissions", sep="/")))
+            resp <- req_perform(req)
+            content <- resp_body_string(resp)
+        }
+        perms <- fromJSON(content, simplifyVector=FALSE)
+
+    } else {
+        perms <- list(owners=list(), uploaders=list())
+        if (use.registry) {
+            content <- file.path(registry, project, asset, "..permissions")
+            if (file.exists(content)) {
+                perms <- fromJSON(content, simplifyVector=FALSE)
+            }
+        } else {
+            perms <- tryCatch({
+                req <- request(paste0(url, "/fetch/", paste(project, asset, "..permissions", sep="/")))
+                resp <- req_perform(req)
+                content <- resp_body_string(resp)
+                fromJSON(content, simplifyVector=FALSE)
+            }, httr2_http_404 = function(cnd) perms)
+        }
+    }
 
     # Converting everything to POSIX dates.
     for (i in seq_along(perms$uploaders)) {
