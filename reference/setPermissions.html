@@ -65,6 +65,7 @@
 <span>  <span class="va">registry</span>,</span>
 <span>  <span class="va">staging</span>,</span>
 <span>  <span class="va">url</span>,</span>
+<span>  asset <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  owners <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uploaders <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  globalWrite <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -92,24 +93,30 @@
 <dd><p>String containing the URL of the gobbler REST API.</p></dd>
 
 
+<dt id="arg-asset">asset<a class="anchor" aria-label="anchor" href="#arg-asset"></a></dt>
+<dd><p>String containing the asset name.
+If specified, permissions are set on the asset rather than the entire project.</p></dd>
+
+
 <dt id="arg-owners">owners<a class="anchor" aria-label="anchor" href="#arg-owners"></a></dt>
-<dd><p>Character vector containing the user IDs for owners of this project.
+<dd><p>Character vector containing the user IDs for owners of this project/asset.
 If <code>NULL</code>, no change is made to the existing owners of the project.</p></dd>
 
 
 <dt id="arg-uploaders">uploaders<a class="anchor" aria-label="anchor" href="#arg-uploaders"></a></dt>
-<dd><p>List specifying the authorized uploaders for this project.
+<dd><p>List specifying the authorized uploaders for this project/asset.
 See the <code>uploaders</code> field in the <code><a href="fetchPermissions.html">fetchPermissions</a></code> return value for the expected format.
-If <code>NULL</code>, no change is made to the existing uploaders of the project.</p></dd>
+If <code>NULL</code>, no change is made to the existing uploaders of the project/asset.</p></dd>
 
 
 <dt id="arg-globalwrite">globalWrite<a class="anchor" aria-label="anchor" href="#arg-globalwrite"></a></dt>
 <dd><p>Logical scalar indicating whether global writes should be enabled (see <code><a href="fetchPermissions.html">fetchPermissions</a></code> for details).
-If <code>NULL</code>, no change is made to the global write status of the project.</p></dd>
+If <code>NULL</code>, no change is made to the global write status of the project.
+Ignored if <code>asset</code> is specified.</p></dd>
 
 
 <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
-<dd><p>Logical scalar indicating whether <code>owners</code> and <code>uploaders</code> should be appended to the existing owners and uploaders, respectively, of the project.
+<dd><p>Logical scalar indicating whether <code>owners</code> and <code>uploaders</code> should be appended to the existing owners and uploaders, respectively, of the project/asset.
 If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are used to replace the existing values.</p></dd>
 
 </dl></div>
@@ -179,7 +186,7 @@ If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are us
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ps5"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-01-29 21:16:45 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-02-04 21:21:26 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[2]]</span>

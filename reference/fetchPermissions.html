@@ -62,7 +62,7 @@ This will call the REST API if the caller is not on the same filesystem as the r
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetchPermissions</span><span class="op">(</span><span class="va">project</span>, <span class="va">registry</span>, <span class="va">url</span>, forceRemote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fetchPermissions</span><span class="op">(</span><span class="va">project</span>, <span class="va">registry</span>, <span class="va">url</span>, asset <span class="op">=</span> <span class="cn">NULL</span>, forceRemote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -82,6 +82,11 @@ This will call the REST API if the caller is not on the same filesystem as the r
 Only used for remote access.</p></dd>
 
 
+<dt id="arg-asset">asset<a class="anchor" aria-label="anchor" href="#arg-asset"></a></dt>
+<dd><p>String containing the asset name.
+If specified, permissions are retrieved for the asset rather than the entire project.</p></dd>
+
+
 <dt id="arg-forceremote">forceRemote<a class="anchor" aria-label="anchor" href="#arg-forceremote"></a></dt>
 <dd><p>Logical scalar indicating whether to force remote access via the API,
 even if <code>registry</code> is on the same filesystem as the caller.</p></dd>
@@ -89,8 +94,8 @@ even if <code>registry</code> is on the same filesystem as the caller.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List containing the permissions for this project.
-This has the following elements:</p><ul><li><p><code>owners</code>, a character vector containing the user IDs of owners of this project.</p></li>
+    <p>List containing the permissions for this project/asset.
+For project-level permissions, the list has the following elements:</p><ul><li><p><code>owners</code>, a character vector containing the user IDs of owners of this project.</p></li>
 <li><p><code>uploaders</code>, a list of lists specifying the users or organizations who are authorzied to upload to this project.
 Each entry is a list with the following fields:</p><ul><li><p><code>id</code>, a string containing a user ID that is authorized to upload.</p></li>
 <li><p>(optional) <code>asset</code>, a string containing the name of the asset that the uploader is allowed to upload to.
@@ -105,7 +110,8 @@ If not provided, defaults to <code>FALSE</code>.</p></li>
 <li><p>(optional) <code>global_write</code>, a logical scalar indicating whether global writes are enabled.
 In this mode, any user can create any number of new assets in this project.
 Each user can also upload new versions of any asset that they created in this mode.</p></li>
-</ul></div>
+</ul><p>For asset-level permissions, the list has <code>owners</code> and <code>uploaders</code> to describe the owners and uploaders, respectively, for the specified <code>asset</code>.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="setPermissions.html">setPermissions</a></code>, to set the permissions.</p></div>
@@ -137,7 +143,7 @@ Each user can also upload new versions of any asset that they created in this mo
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "urmom"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-01-28 17:46:36 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-02-03 17:51:17 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -155,7 +161,7 @@ Each user can also upload new versions of any asset that they created in this mo
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "urmom"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-01-28 17:46:36 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-02-03 17:51:17 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
