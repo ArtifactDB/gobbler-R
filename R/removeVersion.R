@@ -2,9 +2,12 @@
 #'
 #' Remove a version of an asset of a project from the registry.
 #'
-#' @param project String containing the project to remove.
-#' @param asset String containing the asset to remove.
+#' @param project String specifying the project containing the version of the asset to remove.
+#' @param asset String specifying the asset containing the version to remove.
 #' @param version String containing the version of the asset to remove.
+#' @param force Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
+#' If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} to correct project-level usage statistics.
+#' Similarly, \code{\link{refreshLatest}} may also need to be called.
 #' @inheritParams createProject
 #'
 #' @return \code{NULL} is invisibly returned if the version was successfully removed. 
@@ -30,7 +33,7 @@
 #' listVersions("test", "simple", registry=info$registry)
 #'
 #' @export
-removeVersion <- function(project, asset, version, staging, url) {
-    dump_request(staging, url, "delete_version", list(project=project, asset=asset, version=version))
+removeVersion <- function(project, asset, version, staging, url, force=FALSE) {
+    dump_request(staging, url, "delete_version", list(project=project, asset=asset, version=version, force=force))
     invisible(NULL)
 }

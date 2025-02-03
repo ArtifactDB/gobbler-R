@@ -4,16 +4,19 @@
 \alias{removeAsset}
 \title{Remove an asset of a project}
 \usage{
-removeAsset(project, asset, staging, url)
+removeAsset(project, asset, staging, url, force = FALSE)
 }
 \arguments{
-\item{project}{String containing the project to remove.}
+\item{project}{String specifying the project containing the asset to remove.}
 
-\item{asset}{String containing the asset to remove.}
+\item{asset}{String specifying the asset to remove.}
 
 \item{staging}{String containing the path to the staging directory.}
 
 \item{url}{String containing the URL of the gobbler REST API.}
+
+\item{force}{Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
+If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.}
 }
 \value{
 \code{NULL} is invisibly returned if the asset was successfully removed.

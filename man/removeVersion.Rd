@@ -4,18 +4,22 @@
 \alias{removeVersion}
 \title{Remove a versioned asset}
 \usage{
-removeVersion(project, asset, version, staging, url)
+removeVersion(project, asset, version, staging, url, force = FALSE)
 }
 \arguments{
-\item{project}{String containing the project to remove.}
+\item{project}{String specifying the project containing the version of the asset to remove.}
 
-\item{asset}{String containing the asset to remove.}
+\item{asset}{String specifying the asset containing the version to remove.}
 
 \item{version}{String containing the version of the asset to remove.}
 
 \item{staging}{String containing the path to the staging directory.}
 
 \item{url}{String containing the URL of the gobbler REST API.}
+
+\item{force}{Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
+If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} to correct project-level usage statistics.
+Similarly, \code{\link{refreshLatest}} may also need to be called.}
 }
 \value{
 \code{NULL} is invisibly returned if the version was successfully removed.

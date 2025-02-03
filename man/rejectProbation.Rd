@@ -4,7 +4,7 @@
 \alias{rejectProbation}
 \title{Reject a probational upload}
 \usage{
-rejectProbation(project, asset, version, staging, url)
+rejectProbation(project, asset, version, staging, url, force = FALSE)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -16,6 +16,9 @@ rejectProbation(project, asset, version, staging, url)
 \item{staging}{String containing the path to the staging directory.}
 
 \item{url}{String containing the URL of the gobbler REST API.}
+
+\item{force}{Logical scalar indicating that the version should be forcibly rejected and removed if it contains invalid files.
+If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.}
 }
 \value{
 \code{NULL} is invisibly returned upon successful rejection.

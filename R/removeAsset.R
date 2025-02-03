@@ -2,8 +2,10 @@
 #'
 #' Remove an asset of the project from the registry.
 #'
-#' @param project String containing the project to remove.
-#' @param asset String containing the asset to remove.
+#' @param project String specifying the project containing the asset to remove.
+#' @param asset String specifying the asset to remove.
+#' @param force Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
+#' If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.
 #' @inheritParams createProject 
 #'
 #' @return \code{NULL} is invisibly returned if the asset was successfully removed. 
@@ -29,7 +31,7 @@
 #' listAssets("test", registry=info$registry)
 #'
 #' @export
-removeAsset <- function(project, asset, staging, url) {
-    dump_request(staging, url, "delete_asset", list(project=project, asset=asset))
+removeAsset <- function(project, asset, staging, url, force=FALSE) {
+    dump_request(staging, url, "delete_asset", list(project=project, asset=asset, force=force))
     invisible(NULL)
 }

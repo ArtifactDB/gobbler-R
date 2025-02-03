@@ -6,6 +6,8 @@
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' @param version String containing the version name.
+#' @param force Logical scalar indicating that the version should be forcibly rejected and removed if it contains invalid files.
+#' If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.
 #' @inheritParams createProject 
 #'
 #' @return \code{NULL} is invisibly returned upon successful rejection.
@@ -33,7 +35,7 @@
 #' listVersions("test", "probation", registry=info$registry)
 #' 
 #' @export
-rejectProbation <- function(project, asset, version, staging, url) {
-    dump_request(staging, url, "reject_probation", list(project=project, asset=asset, version=version))
+rejectProbation <- function(project, asset, version, staging, url, force=FALSE) {
+    dump_request(staging, url, "reject_probation", list(project=project, asset=asset, version=version, force=force))
     invisible(NULL)
 }
