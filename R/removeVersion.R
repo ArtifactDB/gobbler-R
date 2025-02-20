@@ -1,6 +1,8 @@
 #' Remove a versioned asset
 #'
 #' Remove a version of an asset of a project from the registry.
+#' This should only be performed by Gobbler instance administrators,
+#' who should consider running \code{\link{rerouteLinks}} beforehand to avoid dangling references to this version.
 #'
 #' @param project String specifying the project containing the version of the asset to remove.
 #' @param asset String specifying the asset containing the version to remove.
@@ -16,6 +18,8 @@
 #'
 #' @seealso
 #' \code{\link{removeProject}} and \code{\link{removeAsset}}, to remove a project or asset.
+#'
+#' \code{\link{rerouteLinks}}, to reroute links to this version's contents prior to deletion.
 #'
 #' @examples
 #' info <- startGobbler()

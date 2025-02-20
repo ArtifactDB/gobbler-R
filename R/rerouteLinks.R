@@ -1,0 +1,65 @@
+#' Reroute links prior to deletion
+#'
+#' Reroute symbolic links to files in directories that are to be deleted, e.g., by \code{\link{removeProject}}.
+#' This preserves the validity of links within the Gobbler registry.
+#'
+#' @param to.delete List of projects, assets or versions to be deleted.
+#' Each entry should be a named list containing at least the \code{project} name.
+#' When deleting an asset, the inner list should also contain an \code{asset} name.
+#' When deleting a version, the inner list should also specify a \code{version} name.
+#' Different inner lists may specify different projects, assets or versions.
+#' @param dry.run Logical scalar indicating whether to perform a dry run of the rerouting.
+#' @inheritParams createProject
+#'
+#' @return
+#' A data frame where each row corresponds to a rerouting action, and contains the following columns:
+#' \itemize{
+#' \item \code{path}, the path to a symbolic link in the registry that was changed by rerouting.
+#' \item \code{copy}, whether the link at `path` was replaced by a copy of its target file.
+#' If \code{FALSE}, the link was merely updated to refer to a new target file.
+#' Specifically, this is a file in one of the to-be-deleted directories specified in \code{to_delete}.
+#' If \code{copy = TRUE}, this is the original linked-to file that was copied to \code{path}.
+#' }
+#'
+#' If \code{dry.run=FALSE}, the registry is modified as described by the rerouting actions.
+#' Otherwise, no modifications are performed to the registry.
+#'
+#' @details
+#' Note that rerouting does not actually delete the directories specified in \code{to.delete}.
+#' Deletion requires separate invocations of \code{\link{removeProject}} and friends -
+#' preferably after the user has verified that rerouting was successful!
+#'
+#' @seealso
+#' \code{\link{removeProject}}, \code{\link{removeAsset}} and \code{\link{removeVersion}},
+#' to remove the projects, assets and versions corresponding to \code{to.delete}.
+#'
+#' @author Aaron Lun
+#'
+#' @examples
+#' info <- startGobbler()
+#' removeProject("test", info$staging, url=info$url) # start with a clean slate.
+#' createProject("test", info$staging, url=info$url)
+#'
+#' # Mocking up an asset so we have something interesting to reroute.
+#' src <- allocateUploadDirectory(info$staging)
+#' write(file=file.path(src, "foo"), "BAR")
+#' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
+#' uploadDirectory("test", "simple", "v2", src, staging=info$staging, url=info$url)
+#' uploadDirectory("test", "simple", "v3", src, staging=info$staging, url=info$url)
+#' 
+#' # Checking out how rerouting works when we delete the first version. 
+#' rerouteLinks(
+#'     list(list(project="test", asset="simple", version="v1")),
+#'     staging=info$staging,
+#'     url=info$url
+#' )
+#' 
+#' @export
+rerouteLinks <- function(to.delete, staging, url, dry.run=FALSE) {
+    out <- dump_request(staging, url, "reroute_links", list(to_delete=to.delete, dry_run=dry.run))
+    data.frame(
+        copy=vapply(out$changes, function(x) x$copy, TRUE),
+        path=vapply(out$changes, function(x) x$path, ""),
+        source=vapply(out$changes, function(x) x$source, "")
+    )
+}

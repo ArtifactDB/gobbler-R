@@ -23,6 +23,8 @@ If this needs to be set to \code{TRUE}, users may need to call \code{\link{refre
 }
 \description{
 Remove an asset of the project from the registry.
+This should only be performed by Gobbler instance administrators,
+who should consider running \code{\link{rerouteLinks}} beforehand to avoid dangling references to this version.
 }
 \examples{
 info <- startGobbler()
@@ -42,6 +44,8 @@ listAssets("test", registry=info$registry)
 }
 \seealso{
 \code{\link{removeProject}} and \code{\link{removeVersion}}, to remove projects and versions respectively.
+
+\code{\link{rerouteLinks}}, to reroute links to this asset's contents prior to deletion.
 }
 \author{
 Aaron Lun

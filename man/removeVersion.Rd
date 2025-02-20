@@ -26,6 +26,8 @@ Similarly, \code{\link{refreshLatest}} may also need to be called.}
 }
 \description{
 Remove a version of an asset of a project from the registry.
+This should only be performed by Gobbler instance administrators,
+who should consider running \code{\link{rerouteLinks}} beforehand to avoid dangling references to this version.
 }
 \examples{
 info <- startGobbler()
@@ -45,6 +47,8 @@ listVersions("test", "simple", registry=info$registry)
 }
 \seealso{
 \code{\link{removeProject}} and \code{\link{removeAsset}}, to remove a project or asset.
+
+\code{\link{rerouteLinks}}, to reroute links to this version's contents prior to deletion.
 }
 \author{
 Aaron Lun

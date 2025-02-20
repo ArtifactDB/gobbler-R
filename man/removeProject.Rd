@@ -18,6 +18,8 @@ removeProject(project, staging, url)
 }
 \description{
 Remove a project from the registry.
+This should only be performed by Gobbler instance administrators,
+who should consider running \code{\link{rerouteLinks}} beforehand to avoid dangling references to this version.
 }
 \examples{
 info <- startGobbler()
@@ -34,6 +36,8 @@ listProjects(registry=info$registry)
 }
 \seealso{
 \code{\link{removeAsset}} and \code{\link{removeVersion}}, to remove assets and versions respectively.
+
+\code{\link{rerouteLinks}}, to reroute links to this project's contents prior to deletion.
 
 \code{\link{createProject}}, to create a project.
 }

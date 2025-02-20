@@ -287,7 +287,11 @@ refreshUsage("test", staging=STAGING, url=URL)
 
 Administrators may also delete projects, assets or versions, though this should be done sparingly as it violates the Gobbler's expectations of immutability.
 
-```{r}
+```{r, results="hide"}
+# Reroute links away from the to-be-deleted projects/assets/versions.
+rerouteLinks(to.delete=list(list(project="test")), staging=STAGING, url=URL)
+
+# Then actually perform the deletion.
 removeProject("test", staging=STAGING, url=URL)
 ```
 

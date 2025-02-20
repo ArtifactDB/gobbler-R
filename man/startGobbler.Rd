@@ -10,7 +10,7 @@ startGobbler(
   registry = tempfile(),
   port = NULL,
   wait = 1,
-  version = "0.3.9",
+  version = "0.3.10",
   overwrite = FALSE
 )
 
