@@ -5,8 +5,8 @@
 #'
 #' @param to.delete List of projects, assets or versions to be deleted.
 #' Each entry should be a named list containing at least the \code{project} name.
-#' When deleting an asset, the inner list should also contain an \code{asset} name.
-#' When deleting a version, the inner list should also specify a \code{version} name.
+#' When deleting an asset, the inner list should contain an additional \code{asset} name.
+#' When deleting a version, the inner list should contain additional \code{asset} and \code{version} names.
 #' Different inner lists may specify different projects, assets or versions.
 #' @param dry.run Logical scalar indicating whether to perform a dry run of the rerouting.
 #' @inheritParams createProject
@@ -15,8 +15,9 @@
 #' A data frame where each row corresponds to a rerouting action, and contains the following columns:
 #' \itemize{
 #' \item \code{path}, the path to a symbolic link in the registry that was changed by rerouting.
-#' \item \code{copy}, whether the link at `path` was replaced by a copy of its target file.
+#' \item \code{copy}, whether the link at \code{path} was replaced by a copy of its target file.
 #' If \code{FALSE}, the link was merely updated to refer to a new target file.
+#' \item \code{source}, the path to the target file that caused rerouting of \code{path}.
 #' Specifically, this is a file in one of the to-be-deleted directories specified in \code{to_delete}.
 #' If \code{copy = TRUE}, this is the original linked-to file that was copied to \code{path}.
 #' }
@@ -28,6 +29,9 @@
 #' Note that rerouting does not actually delete the directories specified in \code{to.delete}.
 #' Deletion requires separate invocations of \code{\link{removeProject}} and friends -
 #' preferably after the user has verified that rerouting was successful!
+#'
+#' Rerouting is not necessary if \code{to.delete} consists only of probational versions (or projects/assets containing only probational versions),
+#' as the Gobbler should never create links to files in probational version directories.
 #'
 #' @seealso
 #' \code{\link{removeProject}}, \code{\link{removeAsset}} and \code{\link{removeVersion}},
