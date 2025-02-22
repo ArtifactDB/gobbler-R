@@ -72,8 +72,8 @@ This preserves the validity of links within the Gobbler registry.</p>
 <dl><dt id="arg-to-delete">to.delete<a class="anchor" aria-label="anchor" href="#arg-to-delete"></a></dt>
 <dd><p>List of projects, assets or versions to be deleted.
 Each entry should be a named list containing at least the <code>project</code> name.
-When deleting an asset, the inner list should also contain an <code>asset</code> name.
-When deleting a version, the inner list should also specify a <code>version</code> name.
+When deleting an asset, the inner list should contain an additional <code>asset</code> name.
+When deleting a version, the inner list should contain additional <code>asset</code> and <code>version</code> names.
 Different inner lists may specify different projects, assets or versions.</p></dd>
 
 
@@ -92,8 +92,9 @@ Different inner lists may specify different projects, assets or versions.</p></d
     <div id="value">
     <h2>Value</h2>
     <p>A data frame where each row corresponds to a rerouting action, and contains the following columns:</p><ul><li><p><code>path</code>, the path to a symbolic link in the registry that was changed by rerouting.</p></li>
-<li><p><code>copy</code>, whether the link at `path` was replaced by a copy of its target file.
-If <code>FALSE</code>, the link was merely updated to refer to a new target file.
+<li><p><code>copy</code>, whether the link at <code>path</code> was replaced by a copy of its target file.
+If <code>FALSE</code>, the link was merely updated to refer to a new target file.</p></li>
+<li><p><code>source</code>, the path to the target file that caused rerouting of <code>path</code>.
 Specifically, this is a file in one of the to-be-deleted directories specified in <code>to_delete</code>.
 If <code>copy = TRUE</code>, this is the original linked-to file that was copied to <code>path</code>.</p></li>
 </ul><p>If <code>dry.run=FALSE</code>, the registry is modified as described by the rerouting actions.
@@ -104,7 +105,7 @@ Otherwise, no modifications are performed to the registry.</p>
     <p>Note that rerouting does not actually delete the directories specified in <code>to.delete</code>.
 Deletion requires separate invocations of <code><a href="removeProject.html">removeProject</a></code> and friends -
 preferably after the user has verified that rerouting was successful!</p>
-<p>Rerouting is not necessary if the <code>to.delete</code> consists only of probational versions,
+<p>Rerouting is not necessary if <code>to.delete</code> consists only of probational versions (or projects/assets containing only probational versions),
 as the Gobbler should never create links to files in probational version directories.</p>
     </div>
     <div id="see-also">
