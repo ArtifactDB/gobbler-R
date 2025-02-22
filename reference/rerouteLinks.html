@@ -104,6 +104,8 @@ Otherwise, no modifications are performed to the registry.</p>
     <p>Note that rerouting does not actually delete the directories specified in <code>to.delete</code>.
 Deletion requires separate invocations of <code><a href="removeProject.html">removeProject</a></code> and friends -
 preferably after the user has verified that rerouting was successful!</p>
+<p>Rerouting is not necessary if the <code>to.delete</code> consists only of probational versions,
+as the Gobbler should never create links to files in probational version directories.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
