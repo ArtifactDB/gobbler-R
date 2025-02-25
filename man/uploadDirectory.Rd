@@ -22,7 +22,8 @@ uploadDirectory(
 \item{version}{String containing the name of a new version of \code{asset}.}
 
 \item{directory}{String containing the path to a directory to be uploaded.
-This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.}
+This should be inside \code{staging} for best performance, typically using the directory allocated by \code{\link{allocateUploadDirectory}}.
+Otherwise, the contents of \code{directory} will need to be copied to \code{staging} prior to upload.}
 
 \item{staging}{String containing the path to the staging directory.}
 
@@ -34,7 +35,7 @@ This should be inside \code{staging} for best performance, see \code{\link{alloc
 On success, \code{NULL} is invisibly returned.
 }
 \description{
-Upload a directory as a new versioned asset of a project in the registry.
+Upload a directory as a new versioned asset of a project in the Gobbler registry.
 }
 \examples{
 info <- startGobbler()

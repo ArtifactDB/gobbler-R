@@ -13,9 +13,11 @@ allocateUploadDirectory(staging, attempts = 3)
 }
 \value{
 String containing a path to a newly created subdirectory within \code{staging}.
+This (or its subdirectories) are typically used as the \code{directory} argument in \code{\link{uploadDirectory}}.
 }
 \description{
-Create a new subdirectory in the staging directory to store files for an upload via \code{\link{uploadDirectory}}.
+Create a new subdirectory in the staging directory to store files for an upload to the Gobbler registry.
+If the to-be-uploaded files are saved here, users can avoid an extra copying step in \code{\link{uploadDirectory}}.
 }
 \examples{
 staging <- tempfile()

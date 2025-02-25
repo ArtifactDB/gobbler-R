@@ -1,12 +1,13 @@
 #' Upload a directory's contents
 #'
-#' Upload a directory as a new versioned asset of a project in the registry.
+#' Upload a directory as a new versioned asset of a project in the Gobbler registry.
 #'
 #' @param project String containing an existing project name.
 #' @param asset String containing a new or existing asset name in \code{project}.
 #' @param version String containing the name of a new version of \code{asset}.
 #' @param directory String containing the path to a directory to be uploaded.
-#' This should be inside \code{staging} for best performance, see \code{\link{allocateUploadDirectory}} for details.
+#' This should be inside \code{staging} for best performance, typically using the directory allocated by \code{\link{allocateUploadDirectory}}.
+#' Otherwise, the contents of \code{directory} will need to be copied to \code{staging} prior to upload.
 #' @param probation Logical scalar indicating whether to upload a probational version.
 #' @inheritParams createProject
 #'
