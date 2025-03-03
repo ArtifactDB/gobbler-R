@@ -11,6 +11,12 @@ uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 uploadDirectory("test", "simple", "v2", src, staging=info$staging, url=info$url)
 uploadDirectory("test", "simple", "v3", src, staging=info$staging, url=info$url)
 
+.sort_array_of_actions <- function(x) {
+    x <- x[order(x$path),]
+    rownames(x) <- NULL
+    x
+}
+
 test_that("rerouting functions work as expected", {
     actions <- rerouteLinks(list(list(project="test", asset="simple", version="v1")), staging=info$staging, url=info$url, dry.run=TRUE)
     expect_true(all("test/simple/v1/foo" == actions$source))
@@ -21,6 +27,6 @@ test_that("rerouting functions work as expected", {
     expect_true(Sys.readlink(file.path(info$registry, "test/simple/v2/foo")) != "")
 
     actions2 <- rerouteLinks(list(list(project="test", asset="simple", version="v1")), staging=info$staging, url=info$url)
-    expect_identical(actions, actions2)
+    expect_identical(.sort_array_of_actions(actions), .sort_array_of_actions(actions2))
     expect_true(Sys.readlink(file.path(info$registry, "test/simple/v2/foo")) == "")
 })
