@@ -11,7 +11,9 @@ uploadDirectory(
   directory,
   staging,
   url,
-  probation = FALSE
+  probation = FALSE,
+  consume = NULL,
+  ignore.. = TRUE
 )
 }
 \arguments{
@@ -23,13 +25,20 @@ uploadDirectory(
 
 \item{directory}{String containing the path to a directory to be uploaded.
 This should be inside \code{staging} for best performance, typically using the directory allocated by \code{\link{allocateUploadDirectory}}.
-Otherwise, the contents of \code{directory} will need to be copied to \code{staging} prior to upload.}
+Otherwise, the contents of \code{directory} will be copied to \code{staging} prior to upload.}
 
 \item{staging}{String containing the path to the staging directory.}
 
 \item{url}{String containing the URL of the gobbler REST API.}
 
 \item{probation}{Logical scalar indicating whether to upload a probational version.}
+
+\item{consume}{Logical scalar indicating whether the contents of \code{directory} can be consumed by the upload process.
+If \code{TRUE}, the Gobbler will attempt to move files from \code{directory} into the registry.
+Otherwise, the contents of \code{directory} will not be modified by the upload.
+Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to \code{staging}.}
+
+\item{ignore..}{Logical scalar indicating whether to skip dotfiles in \code{directory} during upload.}
 }
 \value{
 On success, \code{NULL} is invisibly returned.

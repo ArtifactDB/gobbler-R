@@ -7,8 +7,13 @@
 #' @param version String containing the name of a new version of \code{asset}.
 #' @param directory String containing the path to a directory to be uploaded.
 #' This should be inside \code{staging} for best performance, typically using the directory allocated by \code{\link{allocateUploadDirectory}}.
-#' Otherwise, the contents of \code{directory} will need to be copied to \code{staging} prior to upload.
+#' Otherwise, the contents of \code{directory} will be copied to \code{staging} prior to upload.
 #' @param probation Logical scalar indicating whether to upload a probational version.
+#' @param consume Logical scalar indicating whether the contents of \code{directory} can be consumed by the upload process.
+#' If \code{TRUE}, the Gobbler will attempt to move files from \code{directory} into the registry.
+#' Otherwise, the contents of \code{directory} will not be modified by the upload.
+#' Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to \code{staging}.
+#' @param ignore.. Logical scalar indicating whether to skip dotfiles in \code{directory} during upload.
 #' @inheritParams createProject
 #'
 #' @return On success, \code{NULL} is invisibly returned.
@@ -39,13 +44,23 @@
 #' \code{\link{fetchManifest}}, to obtain the manifest of the versioned asset's contents.
 #'
 #' @export
-uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE) {
+uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE, consume=NULL, ignore..=TRUE) {
     directory <- normalizePath(directory)
     staging <- normalizePath(staging)
 
-    if (dirname(directory) != staging) {
+    in.staging <- (function() {
+        while (nchar(staging) < nchar(directory)) {
+            directory <- dirname(directory)
+            if (staging == directory) {
+                return(TRUE)
+            }
+        }
+        return(FALSE)
+    })()
+
+    if (!in.staging) {
         new.dir <- allocateUploadDirectory(staging) 
-        for (p in list.files(directory, recursive=TRUE)) {
+        for (p in list.files(directory, recursive=TRUE, all.files=!ignore..)) {
             src <- file.path(directory, p)
             dest <- file.path(new.dir, p)
             dir.create(dirname(dest), recursive=TRUE, showWarnings=FALSE)
@@ -64,7 +79,13 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
                 .link_or_copy(full.src, dest, p)
             }
         }
+
         directory <- new.dir
+    }
+
+    if (is.null(consume)) {
+        # If we had to copy it over, we're entitled to consume it if the user provides no further instruction.
+        consume <- !in.staging
     }
 
     req <- list(
@@ -72,7 +93,9 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
         project = project,
         asset = asset,
         version = version,
-        on_probation = probation
+        on_probation = probation,
+        consume = consume,
+        ignore_dot = ignore.. 
     )
 
     dump_request(staging, url, "upload", req)
