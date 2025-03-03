@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.14</span>
       </span>
     </div>
 
@@ -67,7 +67,9 @@
 <span>  <span class="va">directory</span>,</span>
 <span>  <span class="va">staging</span>,</span>
 <span>  <span class="va">url</span>,</span>
-<span>  probation <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  probation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  consume <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ignore.. <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,7 +92,7 @@
 <dt id="arg-directory">directory<a class="anchor" aria-label="anchor" href="#arg-directory"></a></dt>
 <dd><p>String containing the path to a directory to be uploaded.
 This should be inside <code>staging</code> for best performance, typically using the directory allocated by <code><a href="allocateUploadDirectory.html">allocateUploadDirectory</a></code>.
-Otherwise, the contents of <code>directory</code> will need to be copied to <code>staging</code> prior to upload.</p></dd>
+Otherwise, the contents of <code>directory</code> will be copied to <code>staging</code> prior to upload.</p></dd>
 
 
 <dt id="arg-staging">staging<a class="anchor" aria-label="anchor" href="#arg-staging"></a></dt>
@@ -103,6 +105,17 @@ Otherwise, the contents of <code>directory</code> will need to be copied to <cod
 
 <dt id="arg-probation">probation<a class="anchor" aria-label="anchor" href="#arg-probation"></a></dt>
 <dd><p>Logical scalar indicating whether to upload a probational version.</p></dd>
+
+
+<dt id="arg-consume">consume<a class="anchor" aria-label="anchor" href="#arg-consume"></a></dt>
+<dd><p>Logical scalar indicating whether the contents of <code>directory</code> can be consumed by the upload process.
+If <code>TRUE</code>, the Gobbler will attempt to move files from <code>directory</code> into the registry.
+Otherwise, the contents of <code>directory</code> will not be modified by the upload.
+Defaults to <code>TRUE</code> if the contents of <code>directory</code> need to be copied to <code>staging</code>.</p></dd>
+
+
+<dt id="arg-ignore-">ignore..<a class="anchor" aria-label="anchor" href="#arg-ignore-"></a></dt>
+<dd><p>Logical scalar indicating whether to skip dotfiles in <code>directory</code> during upload.</p></dd>
 
 </dl></div>
     <div id="value">
