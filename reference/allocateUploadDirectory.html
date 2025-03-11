@@ -18,7 +18,7 @@ If the to-be-uploaded files are saved here, users can avoid an extra copying ste
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.15</span>
       </span>
     </div>
 
@@ -62,7 +62,7 @@ If the to-be-uploaded files are saved here, users can avoid an extra copying ste
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">allocateUploadDirectory</span><span class="op">(</span><span class="va">staging</span>, attempts <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">allocateUploadDirectory</span><span class="op">(</span><span class="va">staging</span>, create <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,14 +73,15 @@ If the to-be-uploaded files are saved here, users can avoid an extra copying ste
 <dd><p>String containing the path to the staging directory.</p></dd>
 
 
-<dt id="arg-attempts">attempts<a class="anchor" aria-label="anchor" href="#arg-attempts"></a></dt>
-<dd><p>Integer scalar specifying the number of attempts to allocate a new directory, after which an error is thrown.</p></dd>
+<dt id="arg-create">create<a class="anchor" aria-label="anchor" href="#arg-create"></a></dt>
+<dd><p>Logical scalar specifying whether to actually create the subdirectory.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p>String containing a path to a newly created subdirectory within <code>staging</code>.
 This (or its subdirectories) are typically used as the <code>directory</code> argument in <code><a href="uploadDirectory.html">uploadDirectory</a></code>.</p>
+<p>If <code>create=FALSE</code>, a name will be chosen but the subdirectory itself will not yet be created.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -92,7 +93,7 @@ This (or its subdirectories) are typically used as the <code>directory</code> ar
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">staging</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="va">staging</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">allocateUploadDirectory</span><span class="op">(</span><span class="va">staging</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpsIcUUy/file1cc4cf9dc8c/upload-1cc3508e752"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmprVVRFc/file5153ea5bdd1/upload-root-51564bdea1a"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
