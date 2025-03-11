@@ -183,3 +183,8 @@ test_that("upload ignores dotfiles by default", {
     man <- fetchManifest("test-upload", "annabelle", "1", registry=info$registry)
     expect_identical(sort(names(man)), c(".blah.txt", ".foo/bar.txt"))
 })
+
+test_that("allocation works when creation is disabled", {
+    expect_true(file.exists(allocateUploadDirectory(info$staging)))
+    expect_false(file.exists(allocateUploadDirectory(info$staging, create=FALSE)))
+})

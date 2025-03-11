@@ -4,16 +4,18 @@
 \alias{allocateUploadDirectory}
 \title{Allocate a directory for upload}
 \usage{
-allocateUploadDirectory(staging, attempts = 3)
+allocateUploadDirectory(staging, create = TRUE)
 }
 \arguments{
 \item{staging}{String containing the path to the staging directory.}
 
-\item{attempts}{Integer scalar specifying the number of attempts to allocate a new directory, after which an error is thrown.}
+\item{create}{Logical scalar specifying whether to actually create the subdirectory.}
 }
 \value{
 String containing a path to a newly created subdirectory within \code{staging}.
 This (or its subdirectories) are typically used as the \code{directory} argument in \code{\link{uploadDirectory}}.
+
+If \code{create=FALSE}, a name will be chosen but the subdirectory itself will not yet be created.
 }
 \description{
 Create a new subdirectory in the staging directory to store files for an upload to the Gobbler registry.

@@ -4,10 +4,12 @@
 #' If the to-be-uploaded files are saved here, users can avoid an extra copying step in \code{\link{uploadDirectory}}. 
 #'
 #' @param staging String containing the path to the staging directory.
-#' @param attempts Integer scalar specifying the number of attempts to allocate a new directory, after which an error is thrown.
+#' @param create Logical scalar specifying whether to actually create the subdirectory.
 #'
 #' @return String containing a path to a newly created subdirectory within \code{staging}.
 #' This (or its subdirectories) are typically used as the \code{directory} argument in \code{\link{uploadDirectory}}.
+#'
+#' If \code{create=FALSE}, a name will be chosen but the subdirectory itself will not yet be created.
 #'
 #' @author Aaron Lun
 #'
@@ -17,19 +19,14 @@
 #' allocateUploadDirectory(staging)
 #' 
 #' @export
-allocateUploadDirectory <- function(staging, attempts = 3) {
+allocateUploadDirectory <- function(staging, create=TRUE) {
     sinfo <- Sys.info()
-    usernames <- unlist(sinfo[c("user", "login", "effective_user")])
-
-    # Ensure that we create a unique path inside the staging
-    # directory that is actually owned by the current user.
-    for (i in seq_len(attempts)) {
-        tmp <- tempfile(tmpdir=staging, pattern="upload-")
-        dir.create(tmp, showWarnings=FALSE)
-        if (file.info(tmp)$uname %in% usernames) {
-            return(tmp)
+    pattern <- paste0("upload-", sinfo[["user"]], "-")
+    tmp <- tempfile(tmpdir=staging, pattern=pattern)
+    if (create) {
+        if (!dir.create(tmp, showWarnings=FALSE)) {
+            stop("failed to allocate an upload directory")
         }
     }
-
-    stop("failed to allocate an upload directory")
+    tmp
 }
