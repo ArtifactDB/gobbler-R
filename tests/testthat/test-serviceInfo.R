@@ -5,6 +5,10 @@ info <- startGobbler()
 
 test_that("serviceInfo works correctly", {
     deets <- serviceInfo(url=info$url)
-    expect_identical(deets$staging, info$staging)
-    expect_identical(deets$registry, info$registry)
+
+    # Normalizing paths to avoid string mismatches when Gobbler cleans the path.
+    # This is relevant when tempfile() does not return a cleaned path, e.g.,
+    # on Macs, there are instances of redundant '//'.
+    expect_identical(normalizePath(deets$staging), normalizePath(info$staging))
+    expect_identical(normalizePath(deets$registry), normalizePath(info$registry))
 })

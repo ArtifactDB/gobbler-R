@@ -45,6 +45,7 @@
 #'
 #' @export
 uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE, consume=NULL, ignore..=TRUE) {
+    # Normalizing them so that they're comparable, in order to figure out whether 'directory' lies inside 'staging'.
     directory <- normalizePath(directory)
     staging <- normalizePath(staging)
 
