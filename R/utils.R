@@ -43,12 +43,11 @@ handle_error <- function(req) {
 
 #' @importFrom jsonlite toJSON
 #' @import httr2
-dump_request <- function(staging, url, action, payload) {
-    if (is.null(payload)) {
-        as_str <- character(0)
-    } else {
-        as_str <- toJSON(payload, auto_unbox=TRUE) 
+dump_request <- function(staging, url, action, payload, spoof=NULL) {
+    if (!is.null(spoof)) {
+        payload$spoof <- spoof
     }
+    as_str <- toJSON(payload, auto_unbox=TRUE)
 
     actual <- tempfile(tmpdir=staging, pattern=paste0("request-", action, "-"))
     write(file=actual, x=as_str)

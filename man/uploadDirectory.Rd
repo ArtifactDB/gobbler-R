@@ -13,7 +13,8 @@ uploadDirectory(
   url,
   probation = FALSE,
   consume = NULL,
-  ignore.. = TRUE
+  ignore.. = TRUE,
+  spoof = NULL
 )
 }
 \arguments{
@@ -39,6 +40,10 @@ Otherwise, the contents of \code{directory} will not be modified by the upload.
 Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to \code{staging}.}
 
 \item{ignore..}{Logical scalar indicating whether to skip dotfiles in \code{directory} during upload.}
+
+\item{spoof}{String containing the name of a user on whose behalf this request is being made.
+This should only be used if the Gobbler service allows spoofing by the current user. 
+If \code{NULL}, no spoofing is performed.}
 }
 \value{
 On success, \code{NULL} is invisibly returned.

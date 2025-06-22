@@ -14,6 +14,9 @@
 #' Otherwise, the contents of \code{directory} will not be modified by the upload.
 #' Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to \code{staging}.
 #' @param ignore.. Logical scalar indicating whether to skip dotfiles in \code{directory} during upload.
+#' @param spoof String containing the name of a user on whose behalf this request is being made.
+#' This should only be used if the Gobbler service allows spoofing by the current user. 
+#' If \code{NULL}, no spoofing is performed.
 #' @inheritParams createProject
 #'
 #' @return On success, \code{NULL} is invisibly returned.
@@ -44,7 +47,7 @@
 #' \code{\link{fetchManifest}}, to obtain the manifest of the versioned asset's contents.
 #'
 #' @export
-uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE, consume=NULL, ignore..=TRUE) {
+uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE, consume=NULL, ignore..=TRUE, spoof=NULL) {
     # Normalizing them so that they're comparable, in order to figure out whether 'directory' lies inside 'staging'.
     directory <- normalizePath(directory)
     staging <- normalizePath(staging)
@@ -101,7 +104,7 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
         ignore_dot = ignore.. 
     )
 
-    dump_request(staging, url, "upload", req)
+    dump_request(staging, url, "upload", req, spoof=spoof)
 
     invisible(NULL)
 }

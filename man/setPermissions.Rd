@@ -13,7 +13,8 @@ setPermissions(
   owners = NULL,
   uploaders = NULL,
   globalWrite = NULL,
-  append = TRUE
+  append = TRUE,
+  spoof = NULL
 )
 }
 \arguments{
@@ -41,6 +42,10 @@ Ignored if \code{asset} is specified.}
 
 \item{append}{Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project/asset.
 If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.}
+
+\item{spoof}{String containing the name of a user on whose behalf this request is being made.
+This should only be used if the Gobbler service allows spoofing by the current user. 
+If \code{NULL}, no spoofing is performed.}
 }
 \value{
 \code{NULL} is invisibly returned upon successful setting of the permissions.

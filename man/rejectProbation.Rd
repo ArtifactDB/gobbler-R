@@ -4,7 +4,15 @@
 \alias{rejectProbation}
 \title{Reject a probational upload}
 \usage{
-rejectProbation(project, asset, version, staging, url, force = FALSE)
+rejectProbation(
+  project,
+  asset,
+  version,
+  staging,
+  url,
+  force = FALSE,
+  spoof = NULL
+)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -19,6 +27,10 @@ rejectProbation(project, asset, version, staging, url, force = FALSE)
 
 \item{force}{Logical scalar indicating that the version should be forcibly rejected and removed if it contains invalid files.
 If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.}
+
+\item{spoof}{String containing the name of a user on whose behalf this request is being made.
+This should only be used if the Gobbler service allows spoofing by the current user. 
+If \code{NULL}, no spoofing is performed.}
 }
 \value{
 \code{NULL} is invisibly returned upon successful rejection.

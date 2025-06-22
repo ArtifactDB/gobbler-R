@@ -16,6 +16,9 @@
 #' @param append Logical scalar indicating whether \code{owners} and \code{uploaders} should be appended to the existing owners and uploaders, respectively, of the project/asset.
 #' If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.
 #' @param registry String containing a path to the registry.
+#' @param spoof String containing the name of a user on whose behalf this request is being made.
+#' This should only be used if the Gobbler service allows spoofing by the current user. 
+#' If \code{NULL}, no spoofing is performed.
 #' @inheritParams createProject
 #'
 #' @author Aaron Lun
@@ -52,7 +55,7 @@
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' @export
-setPermissions <- function(project, registry, staging, url, asset=NULL, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE) {
+setPermissions <- function(project, registry, staging, url, asset=NULL, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE, spoof=NULL) {
     perms <- list()
     names(perms) <- character(0)
 
@@ -85,6 +88,6 @@ setPermissions <- function(project, registry, staging, url, asset=NULL, owners=N
     }
 
     payload$permissions <- perms
-    dump_request(staging, url, "set_permissions", payload)
+    dump_request(staging, url, "set_permissions", payload, spoof=spoof)
     invisible(NULL)
 }

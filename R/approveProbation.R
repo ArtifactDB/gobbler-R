@@ -6,6 +6,9 @@
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' @param version String containing the version name.
+#' @param spoof String containing the name of a user on whose behalf this request is being made.
+#' This should only be used if the Gobbler service allows spoofing by the current user. 
+#' If \code{NULL}, no spoofing is performed.
 #' @inheritParams createProject
 #'
 #' @return \code{NULL} is invisibly returned upon successful approval.
@@ -33,7 +36,7 @@
 #' fetchSummary("test", "probation", "v1", registry=info$registry)
 #' 
 #' @export
-approveProbation <- function(project, asset, version, staging, url) {
-    dump_request(staging, url, "approve_probation", list(project=project, asset=asset, version=version))
+approveProbation <- function(project, asset, version, staging, url, spoof=NULL) {
+    dump_request(staging, url, "approve_probation", list(project=project, asset=asset, version=version), spoof=spoof)
     invisible(NULL)
 }

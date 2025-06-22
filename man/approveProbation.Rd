@@ -4,7 +4,7 @@
 \alias{approveProbation}
 \title{Approve a probational upload}
 \usage{
-approveProbation(project, asset, version, staging, url)
+approveProbation(project, asset, version, staging, url, spoof = NULL)
 }
 \arguments{
 \item{project}{String containing the project name.}
@@ -16,6 +16,10 @@ approveProbation(project, asset, version, staging, url)
 \item{staging}{String containing the path to the staging directory.}
 
 \item{url}{String containing the URL of the gobbler REST API.}
+
+\item{spoof}{String containing the name of a user on whose behalf this request is being made.
+This should only be used if the Gobbler service allows spoofing by the current user. 
+If \code{NULL}, no spoofing is performed.}
 }
 \value{
 \code{NULL} is invisibly returned upon successful approval.
