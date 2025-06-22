@@ -62,7 +62,7 @@ This removes the <code>on_probation</code> tag from the uploaded version.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">approveProbation</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">version</span>, <span class="va">staging</span>, <span class="va">url</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">approveProbation</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">version</span>, <span class="va">staging</span>, <span class="va">url</span>, spoof <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -88,6 +88,12 @@ This removes the <code>on_probation</code> tag from the uploaded version.</p>
 <dt id="arg-url">url<a class="anchor" aria-label="anchor" href="#arg-url"></a></dt>
 <dd><p>String containing the URL of the gobbler REST API.</p></dd>
 
+
+<dt id="arg-spoof">spoof<a class="anchor" aria-label="anchor" href="#arg-spoof"></a></dt>
+<dd><p>String containing the name of a user on whose behalf this request is being made.
+This should only be used if the Gobbler service allows spoofing by the current user.
+If <code>NULL</code>, no spoofing is performed.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -106,7 +112,7 @@ This removes the <code>on_probation</code> tag from the uploaded version.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="startGobbler.html">startGobbler</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot rename file '/tmp/Rtmp6mehBs/file1ce46a86ca3' to '/github/home/.local/share/R/gobbler/gobbler-linux-amd64-0.4.1', reason 'Invalid cross-device link'</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot rename file '/tmp/RtmpjhT6OI/file1ea1d2bf521' to '/github/home/.local/share/R/gobbler/gobbler-linux-amd64-0.4.3', reason 'Invalid cross-device link'</span>
 <span class="r-in"><span><span class="fu"><a href="removeProject.html">removeProject</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">info</span><span class="op">$</span><span class="va">staging</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span> <span class="co"># to start with a clean slate.</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="createProject.html">createProject</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="va">info</span><span class="op">$</span><span class="va">staging</span>, url<span class="op">=</span><span class="va">info</span><span class="op">$</span><span class="va">url</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -120,10 +126,10 @@ This removes the <code>on_probation</code> tag from the uploaded version.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "root"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_start</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-05-22 22:08:44 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-06-22 21:55:49 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_finish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-05-22 22:08:44 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-06-22 21:55:49 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $on_probation</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
@@ -136,10 +142,10 @@ This removes the <code>on_probation</code> tag from the uploaded version.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "root"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_start</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-05-22 22:08:44 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-06-22 21:55:49 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $upload_finish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-05-22 22:08:44 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-06-22 21:55:49 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -156,7 +162,7 @@ This removes the <code>on_probation</code> tag from the uploaded version.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>

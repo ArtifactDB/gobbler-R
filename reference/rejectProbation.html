@@ -62,7 +62,15 @@ This removes all files associated with that version.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rejectProbation</span><span class="op">(</span><span class="va">project</span>, <span class="va">asset</span>, <span class="va">version</span>, <span class="va">staging</span>, <span class="va">url</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rejectProbation</span><span class="op">(</span></span>
+<span>  <span class="va">project</span>,</span>
+<span>  <span class="va">asset</span>,</span>
+<span>  <span class="va">version</span>,</span>
+<span>  <span class="va">staging</span>,</span>
+<span>  <span class="va">url</span>,</span>
+<span>  force <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  spoof <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,6 +100,12 @@ This removes all files associated with that version.</p>
 <dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
 <dd><p>Logical scalar indicating that the version should be forcibly rejected and removed if it contains invalid files.
 If this needs to be set to <code>TRUE</code>, users may need to call <code><a href="refreshUsage.html">refreshUsage</a></code> afterwards to correct project-level usage statistics.</p></dd>
+
+
+<dt id="arg-spoof">spoof<a class="anchor" aria-label="anchor" href="#arg-spoof"></a></dt>
+<dd><p>String containing the name of a user on whose behalf this request is being made.
+This should only be used if the Gobbler service allows spoofing by the current user.
+If <code>NULL</code>, no spoofing is performed.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -141,7 +155,7 @@ If this needs to be set to <code>TRUE</code>, users may need to call <code><a hr
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>
