@@ -66,3 +66,18 @@ test_that("listFiles works as expected", {
     rfiles <- sort(listFiles("test", "list", "v1", registry=info$registry, url=info$url, forceRemote=TRUE, prefix="whee/"))
     expect_identical(files, rfiles)
 })
+
+test_that("listFiles works with some empty directories", {
+    src.empty <- allocateUploadDirectory(info$staging)
+    write(file=file.path(src.empty, "yay"), "BAR")
+    dir.create(file.path(src.empty, "whee"))
+    write(file=file.path(src.empty, "whee", "blah"), "stuff")
+    dir.create(file.path(src.empty, "whee", "stuff"))
+    dir.create(file.path(src.empty, "foo", "bar"), recursive=TRUE)
+    uploadDirectory("test", "list-empty", "v1", src.empty, staging=info$staging, url=info$url)
+
+    files <- sort(listFiles("test", "list-empty", "v1", registry=info$registry, url=info$url))
+    expect_identical(files, sort(c("..summary", "..manifest", "foo/bar/", "whee/blah", "whee/stuff/", "yay")))
+    rfiles <- sort(listFiles("test", "list-empty", "v1", registry=info$registry, url=info$url, forceRemote=TRUE))
+    expect_identical(files, rfiles)
+})

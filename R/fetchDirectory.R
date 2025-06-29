@@ -72,6 +72,19 @@ fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, o
     req <- handle_error(req)
     res <- req_perform(req)
     listing <- resp_body_json(res)
+    listing <- unlist(listing)
+
+    is.empty.dir <- endsWith(listing, "/")
+    if (any(is.empty.dir)) {
+        empty.dirs <- listing[is.empty.dir]
+        for (e in empty.dirs) {
+            epath <- file.path(final, e)
+            if (!dir.exists(epath) && !dir.create(epath, recursive=TRUE)) {
+                stop("failed to create empty directory at '", epath, "'")
+            }
+        }
+        listing <- listing[!is.empty.dir]
+    }
 
     if (concurrent == 1L) {
         lapply(listing, acquire_file, cache=cache, path=path, url=url, overwrite=overwrite)

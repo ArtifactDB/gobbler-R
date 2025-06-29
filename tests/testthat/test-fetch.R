@@ -91,3 +91,24 @@ test_that("fetchDirectory works as expected", {
     rdir2 <- fetchDirectory("test/fetch/v2", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE, concurrent=2)
     expect_identical(readLines(file.path(rdir2, "foo")), "BAR")
 })
+
+test_that("fetchDirectory works with empty directories", {
+    src.empty <- allocateUploadDirectory(info$staging)
+    write(file=file.path(src.empty, "yay"), "BAR")
+    dir.create(file.path(src.empty, "whee"))
+    write(file=file.path(src.empty, "whee", "blah"), "stuff")
+    dir.create(file.path(src.empty, "whee", "stuff"))
+    dir.create(file.path(src.empty, "foo", "bar"), recursive=TRUE)
+    uploadDirectory("test", "fetch-empty", "v1", src.empty, staging=info$staging, url=info$url)
+
+    cache <- tempfile()
+    rdir <- fetchDirectory("test/fetch-empty/v1", registry=info$registry, url=info$url, cache=cache, forceRemote=TRUE)
+    expect_identical(readLines(file.path(rdir, "yay")), "BAR")
+    expect_identical(readLines(file.path(rdir, "whee", "blah")), "stuff")
+
+    expect_true(dir.exists(file.path(rdir, "whee", "stuff")))
+    expect_identical(length(list.files(file.path(rdir, "whee", "stuff"))), 0L)
+
+    expect_true(dir.exists(file.path(rdir, "foo", "bar")))
+    expect_identical(length(list.files(file.path(rdir, "foo", "bar"))), 0L)
+})

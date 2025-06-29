@@ -58,7 +58,14 @@ listFiles <- function(project, asset, version, registry, url, prefix=NULL, inclu
         if (!is.null(prefix)) {
             target <- file.path(target, prefix)
         }
-        listing <- list.files(target, recursive=TRUE, all.files=include..)
+        files <- list.files(target, recursive=TRUE, all.files=TRUE)
+
+        dirs <- list.dirs(target, full.names=FALSE)
+        dirs <- dirs[dirs != ""] # for some reason, list.dirs() includes an empty string for 'target'.
+        all.dirs <- union(dirname(dirs), dirname(files))
+        empty.dirs <- setdiff(dirs, all.dirs)
+        listing <- c(files, sprintf("%s/", empty.dirs))
+
     } else {
         target <- paste(project, asset, version, sep="/")
         if (!is.null(prefix)) {
@@ -69,11 +76,11 @@ listFiles <- function(project, asset, version, registry, url, prefix=NULL, inclu
         res <- req_perform(req)
 
         listing <- unlist(resp_body_json(res))
-        if (!include..) {
-            listing <- listing[!startsWith(listing, "..") & !grepl("/\\.\\.", listing)]
-        }
     }
 
+    if (!include..) {
+        listing <- listing[!startsWith(listing, "..") & !grepl("/\\.\\.", listing)]
+    }
     if (!is.null(filter)) {
         listing <- listing[startsWith(listing, filter)]
     }
