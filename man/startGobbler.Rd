@@ -11,7 +11,9 @@ startGobbler(
   port = NULL,
   wait = 1,
   version = "0.5.0",
-  overwrite = FALSE
+  overwrite = FALSE,
+  admin = NULL,
+  extra.args = NULL
 )
 
 stopGobbler()
@@ -31,6 +33,12 @@ If \code{NULL}, a free port is randomly selected.}
 \item{version}{String containing the desired version of the Gobbler binary.}
 
 \item{overwrite}{Logical scalar indicating whether to redownload the Gobbler binary.}
+
+\item{admin}{Character vector of user names of the Gobbler administrators.
+If \code{NULL}, this defaults to the current user.}
+
+\item{extra.args}{Character vector of extra arguments to pass to the Gobbler binary.
+If \code{NULL}, no extra arguments are added.}
 }
 \value{
 For \code{startGobbler}, a list containing:

@@ -12,6 +12,10 @@
 #' @param wait Integer specifying the number of seconds to wait for service initialization.
 #' @param overwrite Logical scalar indicating whether to redownload the Gobbler binary.
 #' @param version String containing the desired version of the Gobbler binary.
+#' @param admin Character vector of user names of the Gobbler administrators.
+#' If \code{NULL}, this defaults to the current user.
+#' @param extra.args Character vector of extra arguments to pass to the Gobbler binary.
+#' If \code{NULL}, no extra arguments are added.
 #'
 #' @return For \code{startGobbler}, a list containing:
 #' \itemize{
@@ -36,7 +40,7 @@
 #' 
 #' @export
 #' @importFrom utils download.file
-startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1, version = "0.5.0", overwrite = FALSE) {
+startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1, version = "0.5.0", overwrite = FALSE, admin = NULL, extra.args = NULL) {
     if (!is.null(running$active)) {
         return(list(new=FALSE, staging=running$staging, registry=running$registry, port=running$port, url=assemble_url(running$port)))
     }
@@ -49,7 +53,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
     cache <- tools::R_user_dir("gobbler", "data")
 
     sinfo <- Sys.info()
-    sysname <- sinfo["sysname"]
+    sysname <- sinfo[["sysname"]]
     if (sysname == "Darwin") {
         os <- "darwin"
     } else if (sysname == "Linux") {
@@ -58,7 +62,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
         stop("unsupported operating system '", sysname, "'")
     }
 
-    sysmachine <- sinfo["machine"]
+    sysmachine <- sinfo[["machine"]]
     if (sysmachine == "arm64") {
         arch <- "arm64"
     } else if (sysmachine == "x86_64") {
@@ -91,10 +95,18 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
     if (is.null(port)) {
         port <- choose_port()
     }
+    if (is.null(admin)) {
+        admin <- sinfo[["user"]]
+    }
 
-    self <- sinfo["user"]
+    args <- c(shQuote(exe), "-staging", shQuote(staging), "-registry", shQuote(registry), "-port", shQuote(port))
+    if (length(admin)) {
+        args <- c(args, "-admin", shQuote(paste(admin, collapse=",")))
+    }
+    args <- c(args, extra.args)
+
     script <- system.file("scripts", "deploy.sh", package="gobbler", mustWork=TRUE)
-    pid <- system2(script, c(shQuote(exe), shQuote(staging), shQuote(registry), shQuote(self), shQuote(port)), stdout=TRUE) 
+    pid <- system2(script, args, stdout=TRUE) 
     Sys.sleep(wait)
 
     process <- new.env()
