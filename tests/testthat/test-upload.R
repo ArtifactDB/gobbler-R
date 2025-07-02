@@ -45,6 +45,27 @@ test_that("upload works as expected for regular files", {
     expect_true(all(vapply(man, function(x) !is.null(x$link), TRUE)))
 })
 
+test_that("upload works as expected with empty directories", {
+    tmp <- tempfile()
+    dir.create(tmp)
+    write(file=file.path(tmp, "blah.txt"), LETTERS)
+    dir.create(file.path(tmp, "foo"))
+
+    uploadDirectory(
+        project="test-upload", 
+        asset="violet", 
+        version="1", 
+        directory=tmp,
+        staging=info$staging, 
+        url=info$url
+    )
+
+    man <- fetchManifest("test-upload", "violet", "1", registry=info$registry)
+    expect_identical(sort(names(man)), c("blah.txt", "foo"))
+    expect_identical(man$foo$md5sum, "")
+    expect_false(any(vapply(man, function(x) !is.null(x$link), TRUE)))
+})
+
 test_that("upload works as expected for absolute links", {
     dest <- tempfile()
     out <- cloneVersion("test-upload", "jennifer", "2", dest, registry=info$registry)

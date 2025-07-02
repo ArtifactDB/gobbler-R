@@ -66,10 +66,13 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
         new.dir <- allocateUploadDirectory(staging) 
         on.exit(unlink(new.dir, recursive=TRUE), add=TRUE, after=FALSE) # cleaning up after the request is done.
 
-        for (p in list.files(directory, recursive=TRUE, all.files=!ignore..)) {
+        for (p in list.files(directory, recursive=TRUE, include.dirs=TRUE, all.files=TRUE)) {
             src <- file.path(directory, p)
             dest <- file.path(new.dir, p)
-            dir.create(dirname(dest), recursive=TRUE, showWarnings=FALSE)
+            if (file.info(src)$isdir) {
+                stopifnot(dir.create(dest, showWarnings=FALSE))
+                next
+            }
 
             src.link <- Sys.readlink(src)
             if (src.link == "") {
