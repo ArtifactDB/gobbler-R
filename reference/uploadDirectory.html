@@ -129,6 +129,11 @@ If <code>NULL</code>, no spoofing is performed.</p></dd>
     <h2>Value</h2>
     <p>On success, <code>NULL</code> is invisibly returned.</p>
     </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>If <code>directory</code> is not inside <code>staging</code>, a new staging subdirectory is allocated by <code><a href="allocateUploadDirectory.html">allocateUploadDirectory</a></code>.
+The contents of <code>directory</code> are then copied to the new subdirectory, preserving all symbolic links, dotfiles and empty directories.</p>
+    </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="createProject.html">createProject</a></code>, to create a new project for uploads.</p>
