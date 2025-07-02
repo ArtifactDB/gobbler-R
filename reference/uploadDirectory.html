@@ -71,7 +71,6 @@
 <span>  consume <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ignore.. <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  spoof <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  forceCopy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  concurrent <span class="op">=</span> <span class="fl">1L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -127,11 +126,6 @@ This should only be used if the Gobbler service allows spoofing by the current u
 If <code>NULL</code>, no spoofing is performed.</p></dd>
 
 
-<dt id="arg-forcecopy">forceCopy<a class="anchor" aria-label="anchor" href="#arg-forcecopy"></a></dt>
-<dd><p>Logical scalar indicating whether to always copy files, i.e., do not attempt to create hard links.
-Only used if files need to be copied from <code>directory</code> to <code>staging</code>.</p></dd>
-
-
 <dt id="arg-concurrent">concurrent<a class="anchor" aria-label="anchor" href="#arg-concurrent"></a></dt>
 <dd><p>Integer specifying the number of concurrent downloads.
 Only used if files need to be copied from <code>directory</code> to <code>staging</code>.</p></dd>
@@ -144,9 +138,8 @@ Only used if files need to be copied from <code>directory</code> to <code>stagin
     <div id="details">
     <h2>Details</h2>
     <p>If <code>directory</code> is not inside <code>staging</code>, a new staging subdirectory is allocated by <code><a href="allocateUploadDirectory.html">allocateUploadDirectory</a></code>.
-The contents of <code>directory</code> are then replicated in the new subdirectory, preserving all symbolic links, dotfiles and empty directories.
-We attempt to create hard links to files, falling back to a copy if the linking fails or if <code>forceCopy=TRUE</code>.
-If <code>consume=NULL</code> and no hard links were created, it is set to <code>TRUE</code> as the copied contents will no longer be used.</p>
+The contents of <code>directory</code> are then copied to the new subdirectory, preserving all symbolic links, dotfiles and empty directories.
+If <code>consume=NULL</code>, it is set to <code>TRUE</code> as the copied contents will no longer be used.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
