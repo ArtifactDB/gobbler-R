@@ -45,6 +45,14 @@ test_that("project-level permission setting works as expected", {
     expect_identical(perms$owners, list("LTLA"))
     expect_identical(length(perms$uploaders), 2L)
 
+    # Dry-run has no effect.
+    out <- setPermissions("test-perms", owners="foobar", staging=info$staging, url=info$url, registry=info$registry, dryRun=TRUE)
+    expect_identical(out$owners, list("LTLA", "foobar"))
+    expect_null(out$uploaders)
+    perms <- fetchPermissions("test-perms", registry=info$registry)
+    expect_identical(perms$owners, list("LTLA"))
+    expect_identical(length(perms$uploaders), 2L)
+
     # Now resetting the uploaders. 
     setPermissions("test-perms", uploaders=list(), append=FALSE, staging=info$staging, url=info$url, registry=info$registry)
     perms <- fetchPermissions("test-perms", registry=info$registry)

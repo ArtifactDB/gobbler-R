@@ -19,6 +19,7 @@
 #' @param spoof String containing the name of a user on whose behalf this request is being made.
 #' This should only be used if the Gobbler service allows spoofing by the current user. 
 #' If \code{NULL}, no spoofing is performed.
+#' @param dryRun Logical scalar indicating whether to return the new permissions without actually modifying the registry.
 #' @inheritParams createProject
 #'
 #' @author Aaron Lun
@@ -28,7 +29,11 @@
 #'
 #' \code{\link{createProject}}, to set permissions during project creation.
 #'
-#' @return \code{NULL} is invisibly returned upon successful setting of the permissions.
+#' @return If \code{dryRun=FALSE}, \code{NULL} is invisibly returned upon successful setting of the permissions.
+#'
+#' If \code{dryRun=TRUE}, a named list is returned containing the new permissions for the project/asset.
+#' This contains zero, one or more of \code{owners}, \code{uploaders} and \code{global_write} (see \code{\link{fetchPermissions}} for descriptions).
+#' A missing field indicates that it will not be updated in the project/asset permissions. 
 #'
 #' @examples
 #' info <- startGobbler()
@@ -55,7 +60,7 @@
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' @export
-setPermissions <- function(project, registry, staging, url, asset=NULL, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE, spoof=NULL) {
+setPermissions <- function(project, registry, staging, url, asset=NULL, owners=NULL, uploaders=NULL, globalWrite=NULL, append=TRUE, spoof=NULL, dryRun=FALSE) {
     perms <- list()
     names(perms) <- character(0)
 
@@ -87,7 +92,11 @@ setPermissions <- function(project, registry, staging, url, asset=NULL, owners=N
         perms$global_write <- globalWrite
     }
 
+    if (dryRun) {
+        return(perms)
+    }
     payload$permissions <- perms
+
     dump_request(staging, url, "set_permissions", payload, spoof=spoof)
     invisible(NULL)
 }

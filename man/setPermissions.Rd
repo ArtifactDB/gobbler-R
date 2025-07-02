@@ -14,7 +14,8 @@ setPermissions(
   uploaders = NULL,
   globalWrite = NULL,
   append = TRUE,
-  spoof = NULL
+  spoof = NULL,
+  dryRun = FALSE
 )
 }
 \arguments{
@@ -46,9 +47,15 @@ If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the 
 \item{spoof}{String containing the name of a user on whose behalf this request is being made.
 This should only be used if the Gobbler service allows spoofing by the current user. 
 If \code{NULL}, no spoofing is performed.}
+
+\item{dryRun}{Logical scalar indicating whether to return the new permissions without actually modifying the registry.}
 }
 \value{
-\code{NULL} is invisibly returned upon successful setting of the permissions.
+If \code{dryRun=FALSE}, \code{NULL} is invisibly returned upon successful setting of the permissions.
+
+If \code{dryRun=TRUE}, a named list is returned containing the new permissions for the project/asset.
+This contains zero, one or more of \code{owners}, \code{uploaders} and \code{global_write} (see \code{\link{fetchPermissions}} for descriptions).
+A missing field indicates that it will not be updated in the project/asset permissions.
 }
 \description{
 Set the owner and uploader permissions for a project.
