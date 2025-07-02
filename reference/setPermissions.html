@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gobbler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.17</span>
       </span>
     </div>
 
@@ -70,7 +70,8 @@
 <span>  uploaders <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  globalWrite <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  append <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  spoof <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  spoof <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  dryRun <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -126,10 +127,17 @@ If <code>FALSE</code>, the <code>owners</code> and <code>uploaders</code> are us
 This should only be used if the Gobbler service allows spoofing by the current user.
 If <code>NULL</code>, no spoofing is performed.</p></dd>
 
+
+<dt id="arg-dryrun">dryRun<a class="anchor" aria-label="anchor" href="#arg-dryrun"></a></dt>
+<dd><p>Logical scalar indicating whether to return the new permissions without actually modifying the registry.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>NULL</code> is invisibly returned upon successful setting of the permissions.</p>
+    <p>If <code>dryRun=FALSE</code>, <code>NULL</code> is invisibly returned upon successful setting of the permissions.</p>
+<p>If <code>dryRun=TRUE</code>, a named list is returned containing the new permissions for the project/asset.
+This contains zero, one or more of <code>owners</code>, <code>uploaders</code> and <code>global_write</code> (see <code><a href="fetchPermissions.html">fetchPermissions</a></code> for descriptions).
+A missing field indicates that it will not be updated in the project/asset permissions.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -193,7 +201,7 @@ If <code>NULL</code>, no spoofing is performed.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ps5"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[1]]$until</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-07-01 01:11:31 UTC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-07-03 21:12:25 UTC"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $uploaders[[2]]</span>
