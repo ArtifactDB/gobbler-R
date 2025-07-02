@@ -17,7 +17,14 @@
 #' @param spoof String containing the name of a user on whose behalf this request is being made.
 #' This should only be used if the Gobbler service allows spoofing by the current user. 
 #' If \code{NULL}, no spoofing is performed.
+#' @param concurrent Integer specifying the number of concurrent downloads.
+#' Only used if files need to be copied from \code{directory} to \code{staging}.
 #' @inheritParams createProject
+#'
+#' @details
+#' If \code{directory} is not inside \code{staging}, a new staging subdirectory is allocated by \code{\link{allocateUploadDirectory}}.
+#' The contents of \code{directory} are then copied to the new subdirectory, preserving all symbolic links, dotfiles and empty directories.
+#' If \code{consume=NULL}, it is set to \code{TRUE} as the copied contents will no longer be used. 
 #'
 #' @return On success, \code{NULL} is invisibly returned.
 #'
@@ -47,7 +54,7 @@
 #' \code{\link{fetchManifest}}, to obtain the manifest of the versioned asset's contents.
 #'
 #' @export
-uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE, consume=NULL, ignore..=TRUE, spoof=NULL) {
+uploadDirectory <- function(project, asset, version, directory, staging, url, probation=FALSE, consume=NULL, ignore..=TRUE, spoof=NULL, concurrent=1L) {
     # Normalizing them so that they're comparable, in order to figure out whether 'directory' lies inside 'staging'.
     directory <- normalizePath(directory)
     staging <- normalizePath(staging)
@@ -65,6 +72,7 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
     if (!in.staging) {
         new.dir <- allocateUploadDirectory(staging) 
         on.exit(unlink(new.dir, recursive=TRUE), add=TRUE, after=FALSE) # cleaning up after the request is done.
+        to.copy <- character(0)
 
         for (p in list.files(directory, recursive=TRUE, include.dirs=TRUE, all.files=TRUE)) {
             src <- file.path(directory, p)
@@ -76,17 +84,20 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
 
             src.link <- Sys.readlink(src)
             if (src.link == "") {
-                .link_or_copy(src, dest, p)
-
-            } else if (.is_absolute_or_local_link(src.link, p)) {
-                if (!file.symlink(src.link, dest)) {
-                    stop("failed to create a symlink for '", p, "' in the staging directory")
-                }
-
+                to.copy <- c(to.copy, list(c(src, dest)))
             } else {
-                full.src <- normalizePath(file.path(dirname(src), src.link))
-                .link_or_copy(full.src, dest, p)
+                if (!file.symlink(src.link, dest)) {
+                    stop("failed to create a symlink '", dest, "' to '", src.link, "'")
+                }
             }
+        }
+
+        if (concurrent == 1L) {
+            lapply(to.copy, copy_file)
+        } else {
+            cl <- parallel::makeCluster(concurrent)
+            on.exit(parallel::stopCluster(cl), add=TRUE, after=FALSE)
+            parallel::parLapply(cl, to.copy, copy_file)
         }
 
         directory <- new.dir
@@ -112,37 +123,23 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
     invisible(NULL)
 }
 
-#' @importFrom utils head
-.is_absolute_or_local_link <- function(target, link.path) {
-    # Assuming Unix-style file paths, who uses a Windows HPC anyway?
-    if (startsWith(target, "/")) {
-        return(TRUE)
+#' @importFrom digest digest
+copy_file <- function(job) {
+    src <- job[[1]]
+    dest <- job[[2]]
+    if (!file.copy(src, dest)) {
+        stop("failed to copy '", src, "' to '", dest, "'")
     }
 
-    # Both 'target' and 'link.path' should be relative at this point, so the
-    # idea is to check whether 'file.path(dirname(link.path), target)' is still
-    # a child of 'dirname(link.path)'.
-    pre.length <- length(strsplit(link.path, "/")[[1]]) - 1L
-    post.fragments <- head(strsplit(target, "/")[[1]], -1L)
-
-    for (x in post.fragments) {
-        if (x == ".") {
-            next
-        } else if (x == "..") {
-            pre.length <- pre.length - 1L
-            if (pre.length < 0L) {
-                return(FALSE)
-            }
-        } else {
-            pre.length <- pre.length + 1L
-        }
+    old.size <- file.info(src)$size
+    new.size <- file.info(dest)$size
+    if (old.size != new.size) {
+        stop("mismatching sizes for '", src, "' and '", dest, "'")
     }
 
-    TRUE
-}
-
-.link_or_copy <- function(src, dest, p) {
-    if (!suppressWarnings(file.link(src, dest)) && !file.copy(src, dest)) {
-        stop("failed to link or copy '", p, "' to the staging directory")
+    old.md5 <- digest(file=src)
+    new.md5 <- digest(file=dest)
+    if (old.md5 != new.md5) {
+        stop("mismatching MD5 checksums for '", src, "' and '", dest, "'")
     }
 }

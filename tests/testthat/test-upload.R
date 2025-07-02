@@ -45,6 +45,21 @@ test_that("upload works as expected for regular files", {
     expect_true(all(vapply(man, function(x) !is.null(x$link), TRUE)))
 })
 
+test_that("upload works as expected with parallel copying", {
+    uploadDirectory(
+        project="test-upload", 
+        asset="penelope", 
+        version="1", 
+        directory=tmp,
+        staging=info$staging, 
+        url=info$url,
+        concurrent=2
+    )
+
+    man <- fetchManifest("test-upload", "penelope", "1", registry=info$registry)
+    expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt"))
+})
+
 test_that("upload works as expected with empty directories", {
     tmp <- tempfile()
     dir.create(tmp)
@@ -91,13 +106,9 @@ test_that("upload works as expected for relative links", {
     dest <- tempfile()
     dir.create(dest)
     write(file=file.path(dest, "blah.txt"), letters)
-    file.symlink("blah.txt", file.path(dest, "whee.txt")) # relative links within the directory are preserved.
+    file.symlink("blah.txt", file.path(dest, "whee.txt"))
     dir.create(file.path(dest, "foo"))
     file.symlink("../whee.txt", file.path(dest, "foo/bar.txt")) 
-
-    outside <- tempfile(tmpdir=dirname(dest))
-    write(file=outside, "FOOBLEWOOBLE")
-    file.symlink(file.path("../../", basename(outside)), file.path(dest, "foo/outer.txt")) # relative links outside the directory are lost.
 
     uploadDirectory(
         project="test-more-upload", 
@@ -109,12 +120,10 @@ test_that("upload works as expected for relative links", {
     )
 
     man <- fetchManifest("test-more-upload", "nicole", "1", registry=info$registry)
-    expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt", "foo/outer.txt", "whee.txt"))
+    expect_identical(sort(names(man)), c("blah.txt", "foo/bar.txt", "whee.txt"))
     expect_false(is.null(man[["whee.txt"]]$link))
-    expect_null(man[["foo/outer.txt"]]$link)
     expect_false(is.null(man[["foo/bar.txt"]]$link))
     expect_null(man[["blah.txt"]]$link)
-    expect_identical(13L, man[["foo/outer.txt"]]$size)
     expect_identical(man[["whee.txt"]]$size, man[["foo/bar.txt"]]$size)
     expect_identical(man[["whee.txt"]]$size, man[["blah.txt"]]$size)
 })

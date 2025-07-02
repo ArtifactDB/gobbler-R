@@ -14,7 +14,8 @@ uploadDirectory(
   probation = FALSE,
   consume = NULL,
   ignore.. = TRUE,
-  spoof = NULL
+  spoof = NULL,
+  concurrent = 1L
 )
 }
 \arguments{
@@ -44,12 +45,20 @@ Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to
 \item{spoof}{String containing the name of a user on whose behalf this request is being made.
 This should only be used if the Gobbler service allows spoofing by the current user. 
 If \code{NULL}, no spoofing is performed.}
+
+\item{concurrent}{Integer specifying the number of concurrent downloads.
+Only used if files need to be copied from \code{directory} to \code{staging}.}
 }
 \value{
 On success, \code{NULL} is invisibly returned.
 }
 \description{
 Upload a directory as a new versioned asset of a project in the Gobbler registry.
+}
+\details{
+If \code{directory} is not inside \code{staging}, a new staging subdirectory is allocated by \code{\link{allocateUploadDirectory}}.
+The contents of \code{directory} are then copied to the new subdirectory, preserving all symbolic links, dotfiles and empty directories.
+If \code{consume=NULL}, it is set to \code{TRUE} as the copied contents will no longer be used.
 }
 \examples{
 info <- startGobbler()

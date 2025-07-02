@@ -12,6 +12,7 @@ Imports:
     methods,
     tools,
     jsonlite,
+    digest,
     httr2
 Suggests:
     parallel,
