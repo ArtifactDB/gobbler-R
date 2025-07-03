@@ -68,7 +68,9 @@ Real Gobbler deployments should operate outside of R.</p>
 <span>  port <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  wait <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  version <span class="op">=</span> <span class="st">"0.5.0"</span>,</span>
-<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  admin <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extra.args <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">stopGobbler</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -104,6 +106,16 @@ If <code>NULL</code>, a free port is randomly selected.</p></dd>
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
 <dd><p>Logical scalar indicating whether to redownload the Gobbler binary.</p></dd>
 
+
+<dt id="arg-admin">admin<a class="anchor" aria-label="anchor" href="#arg-admin"></a></dt>
+<dd><p>Character vector of user names of the Gobbler administrators.
+If <code>NULL</code>, this defaults to the current user.</p></dd>
+
+
+<dt id="arg-extra-args">extra.args<a class="anchor" aria-label="anchor" href="#arg-extra-args"></a></dt>
+<dd><p>Character vector of extra arguments to pass to the Gobbler binary.
+If <code>NULL</code>, no extra arguments are added.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -126,10 +138,10 @@ If <code>NULL</code>, a free port is randomly selected.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $staging</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvzAFO2/file1d1315318f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkAGkVg/file1d145cc67c9"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $registry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvzAFO2/file1d12d7d5700"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkAGkVg/file1d14dcc6d47"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $port</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3484</span>
@@ -142,10 +154,10 @@ If <code>NULL</code>, a free port is randomly selected.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $staging</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvzAFO2/file1d1315318f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkAGkVg/file1d145cc67c9"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $registry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvzAFO2/file1d12d7d5700"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkAGkVg/file1d14dcc6d47"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $port</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3484</span>
@@ -160,10 +172,10 @@ If <code>NULL</code>, a free port is randomly selected.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $staging</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvzAFO2/file1d12ec0e3b2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkAGkVg/file1d1102f4b0f"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $registry</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpvzAFO2/file1d15326e2fc"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkAGkVg/file1d129b8c278"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $port</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5073</span>
