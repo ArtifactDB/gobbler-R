@@ -30,14 +30,14 @@
 #'
 #' @seealso
 #' \url{https://github.com/ArtifactDB/gobbler}, for source code and binaries to build and run a Gobbler service.
-#' 
+#'
 #' @examples
 #' startGobbler()
 #' startGobbler() # repeated calls just re-use the same instance.
 #'
 #' stopGobbler()
 #' startGobbler() # reinitializes a new instance.
-#' 
+#'
 #' @export
 #' @importFrom utils download.file
 startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, wait = 1, version = "0.5.0", overwrite = FALSE, admin = NULL, extra.args = NULL) {
@@ -49,7 +49,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
     dir.create(registry)
 
     # This should really be the cache directory, but our HPC deployment does
-    # naughty things with mounting .cache, so we'll just use data instead. 
+    # naughty things with mounting .cache, so we'll just use data instead.
     cache <- tools::R_user_dir("gobbler", "data")
 
     sinfo <- Sys.info()
@@ -87,7 +87,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
         # that renaming doesn't work across different filesystems so in that
         # case we just fall back to copying.
         dir.create(cache, recursive=TRUE, showWarnings=FALSE)
-        if (!file.rename(tmp, exe) && !file.copy(tmp, exe)) { 
+        if (!file.rename(tmp, exe) && !file.copy(tmp, exe)) {
             stop("cannot transfer file from '", tmp, "' to '", exe, "'")
         }
     }
@@ -106,7 +106,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
     args <- c(args, extra.args)
 
     script <- system.file("scripts", "deploy.sh", package="gobbler", mustWork=TRUE)
-    pid <- system2(script, args, stdout=TRUE) 
+    pid <- system2(script, args, stdout=TRUE)
     Sys.sleep(wait)
 
     process <- new.env()
@@ -114,7 +114,7 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
     reg.finalizer(process, kill_gobbler, onexit=TRUE)
 
     running$active <- process
-    running$staging <- staging 
+    running$staging <- staging
     running$registry <- registry
     running$port <- port
     list(new=TRUE, staging=staging, registry=registry, port=port, url=assemble_url(port))
@@ -122,9 +122,9 @@ startGobbler <- function(staging=tempfile(), registry=tempfile(), port = NULL, w
 
 #' @import methods
 choose_port <- function() {
-    # Based on the same logic as shiny::runApp. 
+    # Based on the same logic as shiny::runApp.
     choices <- 3000:8000
-    choices <- setdiff(choices, c(3659, 4045, 5060, 5061, 6000, 6566, 6665:6669, 6697)) 
+    choices <- setdiff(choices, c(3659, 4045, 5060, 5061, 6000, 6566, 6665:6669, 6697))
 
     for (i in 1:10) {
         port <- sample(choices, 1)
@@ -136,7 +136,7 @@ choose_port <- function() {
     }
 }
 
-assemble_url <- function(port) { 
+assemble_url <- function(port) {
     paste0("http://0.0.0.0:", port)
 }
 

@@ -34,7 +34,7 @@ If specified, permissions are set on the asset rather than the entire project.}
 If \code{NULL}, no change is made to the existing owners of the project.}
 
 \item{uploaders}{List specifying the authorized uploaders for this project/asset.
-See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
+See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format.
 If \code{NULL}, no change is made to the existing uploaders of the project/asset.}
 
 \item{globalWrite}{Logical scalar indicating whether global writes should be enabled (see \code{\link{fetchPermissions}} for details).
@@ -45,7 +45,7 @@ Ignored if \code{asset} is specified.}
 If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.}
 
 \item{spoof}{String containing the name of a user on whose behalf this request is being made.
-This should only be used if the Gobbler service allows spoofing by the current user. 
+This should only be used if the Gobbler service allows spoofing by the current user.
 If \code{NULL}, no spoofing is performed.}
 
 \item{dryRun}{Logical scalar indicating whether to return the new permissions without actually modifying the registry.}
@@ -65,15 +65,15 @@ info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # start with a clean slate.
 createProject("test", info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 fetchPermissions("test", registry=info$registry)
 
 # Setting them to something else.
-setPermissions("test", 
-    owners=c("mum", "dad"), 
+setPermissions("test",
+    owners=c("mum", "dad"),
     uploaders=list(
         list(id='brother1', asset='ps5', until=Sys.time() + 100000),
         list(id='brother2', asset='harry_potter', version='goblet_of_fire')

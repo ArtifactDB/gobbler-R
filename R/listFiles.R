@@ -21,7 +21,7 @@
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #' createProject("test", info$staging, url=info$url)
 #'
-#' # Mocking up an upload. 
+#' # Mocking up an upload.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' dir.create(file.path(src, "whee"))
@@ -36,7 +36,7 @@
 #'
 #' # Forcing remote access.
 #' listFiles("test", "simple", "v1", registry=info$registry, url=info$url, forceRemote=TRUE)
-#' 
+#'
 #' @export
 #' @import httr2
 listFiles <- function(project, asset, version, registry, url, prefix=NULL, include..=TRUE, forceRemote=FALSE) {
@@ -69,7 +69,7 @@ listFiles <- function(project, asset, version, registry, url, prefix=NULL, inclu
     } else {
         target <- paste(project, asset, version, sep="/")
         if (!is.null(prefix)) {
-            target <- paste0(target, "/", prefix) 
+            target <- paste0(target, "/", prefix)
         }
         req <- request(paste0(url, "/list?path=", URLencode(target, reserved=TRUE), "&recursive=true"))
         req <- handle_error(req)

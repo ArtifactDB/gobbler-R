@@ -1,8 +1,8 @@
-#' Fetch project permissions 
+#' Fetch project permissions
 #'
 #' Fetch the permissions for a project.
 #' This will call the REST API if the caller is not on the same filesystem as the registry.
-#' 
+#'
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' If specified, permissions are retrieved for the asset rather than the entire project.
@@ -25,7 +25,7 @@
 #' \item (optional) \code{trusted}, a logical scalar indicating whether the uploader is trusted.
 #' If not provided, defaults to \code{FALSE}.
 #' }
-#' \item (optional) \code{global_write}, a logical scalar indicating whether global writes are enabled. 
+#' \item (optional) \code{global_write}, a logical scalar indicating whether global writes are enabled.
 #' In this mode, any user can create any number of new assets in this project.
 #' Each user can also upload new versions of any asset that they created in this mode.
 #' }
@@ -40,7 +40,7 @@
 #' info <- startGobbler()
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #'
-#' # Mocking up a project.upload. 
+#' # Mocking up a project.upload.
 #' createProject("test", info$staging, url=info$url,
 #'     uploaders=list(list(id="urmom", until=Sys.time() + 1000)))
 #'

@@ -1,4 +1,4 @@
-# This tests the upload functions. 
+# This tests the upload functions.
 # library(testthat); library(gobbler); source("test-upload.R")
 
 info <- startGobbler()
@@ -17,11 +17,11 @@ write(file=file.path(tmp, "foo", "bar.txt"), 1:10)
 
 test_that("upload works as expected for regular files", {
     uploadDirectory(
-        project="test-upload", 
-        asset="jennifer", 
-        version="1", 
+        project="test-upload",
+        asset="jennifer",
+        version="1",
         directory=tmp,
-        staging=info$staging, 
+        staging=info$staging,
         url=info$url
     )
 
@@ -32,9 +32,9 @@ test_that("upload works as expected for regular files", {
 
     # Deduplication happens naturally.
     uploadDirectory(
-        project="test-upload", 
-        asset="jennifer", 
-        version="2", 
+        project="test-upload",
+        asset="jennifer",
+        version="2",
         directory=tmp,
         staging=info$staging,
         url=info$url
@@ -47,11 +47,11 @@ test_that("upload works as expected for regular files", {
 
 test_that("upload works as expected with parallel copying", {
     uploadDirectory(
-        project="test-upload", 
-        asset="penelope", 
-        version="1", 
+        project="test-upload",
+        asset="penelope",
+        version="1",
         directory=tmp,
-        staging=info$staging, 
+        staging=info$staging,
         url=info$url,
         concurrent=2
     )
@@ -67,11 +67,11 @@ test_that("upload works as expected with empty directories", {
     dir.create(file.path(tmp, "foo"))
 
     uploadDirectory(
-        project="test-upload", 
-        asset="violet", 
-        version="1", 
+        project="test-upload",
+        asset="violet",
+        version="1",
         directory=tmp,
-        staging=info$staging, 
+        staging=info$staging,
         url=info$url
     )
 
@@ -87,9 +87,9 @@ test_that("upload works as expected for absolute links", {
     write(file=file.path(dest, "whee"), "BLAH")
 
     uploadDirectory(
-        project="test-more-upload", 
-        asset="natalie", 
-        version="1", 
+        project="test-more-upload",
+        asset="natalie",
+        version="1",
         directory=dest,
         staging=info$staging,
         url=info$url
@@ -108,12 +108,12 @@ test_that("upload works as expected for relative links", {
     write(file=file.path(dest, "blah.txt"), letters)
     file.symlink("blah.txt", file.path(dest, "whee.txt"))
     dir.create(file.path(dest, "foo"))
-    file.symlink("../whee.txt", file.path(dest, "foo/bar.txt")) 
+    file.symlink("../whee.txt", file.path(dest, "foo/bar.txt"))
 
     uploadDirectory(
-        project="test-more-upload", 
-        asset="nicole", 
-        version="1", 
+        project="test-more-upload",
+        asset="nicole",
+        version="1",
         directory=dest,
         staging=info$staging,
         url=info$url
@@ -135,9 +135,9 @@ test_that("upload works directly from the staging directory", {
     write(file=file.path(dir, "foo", "bar.txt"), 1:10)
 
     uploadDirectory(
-        project="test-upload", 
-        asset="jennifer", 
-        version="3", 
+        project="test-upload",
+        asset="jennifer",
+        version="3",
         directory=dir,
         staging=info$staging,
         url=info$url
@@ -157,9 +157,9 @@ test_that("upload consumes files by default", {
 
     # Use different names here to avoid issues with MD5 deduplication.
     uploadDirectory(
-        project="test-upload", 
-        asset="anastasia", 
-        version="1", 
+        project="test-upload",
+        asset="anastasia",
+        version="1",
         directory=dir,
         staging=info$staging,
         url=info$url,
@@ -169,9 +169,9 @@ test_that("upload consumes files by default", {
     expect_true(file.exists(file.path(dir, "foo/bar.txt")))
 
     uploadDirectory(
-        project="test-upload", 
-        asset="victoria", 
-        version="1", 
+        project="test-upload",
+        asset="victoria",
+        version="1",
         directory=dir,
         staging=info$staging,
         url=info$url,
@@ -190,9 +190,9 @@ test_that("upload ignores dotfiles by default", {
     write(file=file.path(dir, ".foo", "bar.txt"), 1:10)
 
     uploadDirectory(
-        project="test-upload", 
-        asset="annabelle", 
-        version="0", 
+        project="test-upload",
+        asset="annabelle",
+        version="0",
         directory=dir,
         staging=info$staging,
         url=info$url
@@ -202,9 +202,9 @@ test_that("upload ignores dotfiles by default", {
 
     # unless we disable the ignorance.
     uploadDirectory(
-        project="test-upload", 
-        asset="annabelle", 
-        version="1", 
+        project="test-upload",
+        asset="annabelle",
+        version="1",
         directory=dir,
         staging=info$staging,
         url=info$url,

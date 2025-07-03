@@ -29,7 +29,7 @@ This will call the REST API if the caller is not on the same filesystem as the r
 \examples{
 info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # start from a clean slate.
-createProject("test", info$staging, url=info$url) 
+createProject("test", info$staging, url=info$url)
 
 # Mocking up a few uploads.
 src <- allocateUploadDirectory(info$staging)

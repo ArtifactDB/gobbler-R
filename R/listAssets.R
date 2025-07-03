@@ -26,7 +26,7 @@
 #'
 #' # Force remote listing:
 #' listAssets("test", registry=info$registry, url=info$url, forceRemote=TRUE)
-#' 
+#'
 #' @export
 listAssets <- function(project, registry, url, forceRemote=FALSE) {
     list_registry_directories(project, registry, url, forceRemote)

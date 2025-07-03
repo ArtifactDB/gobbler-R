@@ -18,7 +18,7 @@ approveProbation(project, asset, version, staging, url, spoof = NULL)
 \item{url}{String containing the URL of the gobbler REST API.}
 
 \item{spoof}{String containing the name of a user on whose behalf this request is being made.
-This should only be used if the Gobbler service allows spoofing by the current user. 
+This should only be used if the Gobbler service allows spoofing by the current user.
 If \code{NULL}, no spoofing is performed.}
 }
 \value{
@@ -33,10 +33,10 @@ info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # to start with a clean slate.
 createProject("test", info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-uploadDirectory("test", "probation", "v1", src, 
+uploadDirectory("test", "probation", "v1", src,
     staging=info$staging, url=info$url, probation=TRUE)
 fetchSummary("test", "probation", "v1", registry=info$registry)
 

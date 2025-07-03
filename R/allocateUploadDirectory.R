@@ -1,7 +1,7 @@
 #' Allocate a directory for upload
 #'
 #' Create a new subdirectory in the staging directory to store files for an upload to the Gobbler registry.
-#' If the to-be-uploaded files are saved here, users can avoid an extra copying step in \code{\link{uploadDirectory}}. 
+#' If the to-be-uploaded files are saved here, users can avoid an extra copying step in \code{\link{uploadDirectory}}.
 #'
 #' @param staging String containing the path to the staging directory.
 #' @param create Logical scalar specifying whether to actually create the subdirectory.
@@ -17,7 +17,7 @@
 #' staging <- tempfile()
 #' dir.create(staging)
 #' allocateUploadDirectory(staging)
-#' 
+#'
 #' @export
 allocateUploadDirectory <- function(staging, create=TRUE) {
     sinfo <- Sys.info()

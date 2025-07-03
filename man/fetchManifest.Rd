@@ -45,7 +45,7 @@ The value of each element is another list with the following fields:
 \itemize{
 \item \code{size}, an integer specifying the size of the file in bytes.
 \item \code{md5sum}, a string containing the hex-encoded MD5 checksum of the file.
-\item \code{link} (optional): a list specifying the link destination for a file. 
+\item \code{link} (optional): a list specifying the link destination for a file.
 This contains the strings \code{project}, \code{asset}, \code{version} and \code{path}.
 If the link destination is itself a link, an \code{ancestor} list will be present that specifies the final location of the file after resolving all intermediate links.
 }
@@ -59,7 +59,7 @@ info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # start with a clean slate.
 createProject("test", info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))
@@ -71,11 +71,11 @@ fetchManifest("test", "simple", "v1", registry=info$registry, url=info$url)
 
 # Force remote access.
 fetchManifest(
-    "test", 
-    "simple", 
-    "v1", 
-    registry=info$registry, 
-    url=info$url, 
+    "test",
+    "simple",
+    "v1",
+    registry=info$registry,
+    url=info$url,
     forceRemote=TRUE
 )
 }

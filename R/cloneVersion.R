@@ -2,7 +2,7 @@
 #'
 #' Clone the directory structure for a versioned asset into a separate location.
 #' This is typically used to prepare a new version for a lightweight upload.
-#' 
+#'
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' @param version String containing the version name.
@@ -14,11 +14,11 @@
 #'
 #' @details
 #' Cloning involves creating a directory at \code{destination} that has the same structure as that of the specified project-asset-version.
-#' All files in the version are represented as symlinks from \code{destination} to the corresponding file in the \code{registry}. 
+#' All files in the version are represented as symlinks from \code{destination} to the corresponding file in the \code{registry}.
 #' The idea is that, when \code{destination} is used in \code{\link{uploadDirectory}}, the symlinks are converted into upload links.
 #' This allows users to create new versions very cheaply as duplicate files are not uploaded to/stored in the backend.
 #'
-#' Users can more-or-less do whatever they want inside the cloned \code{destination}, 
+#' Users can more-or-less do whatever they want inside the cloned \code{destination},
 #' but the symlink targets should be read-only as they refer to immutable files in the \code{registry}.
 #' If a file in \code{destination} needs to be modified, the symlink should be deleted and replaced with a new file.
 #'
@@ -26,15 +26,15 @@
 #'
 #' @seealso
 #' \code{\link{allocateUploadDirectory}}, to obtain a possible value for \code{destination}.
-#' 
+#'
 #' \code{\link{uploadDirectory}}, to prepare an upload based on the directory contents.
 #'
 #' @examples
 #' info <- startGobbler()
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #' createProject("test", info$staging, url=info$url)
-#' 
-#' # Mocking up an upload. 
+#'
+#' # Mocking up an upload.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)

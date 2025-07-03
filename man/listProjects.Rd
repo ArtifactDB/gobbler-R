@@ -27,7 +27,7 @@ info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # clean out any existing entries
 removeProject("more-test", info$staging, url=info$url)
 removeProject("even-more-test", info$staging, url=info$url)
-   
+
 # Now mocking up the creation of some projects.
 createProject("test", info$staging, url=info$url)
 createProject("more-test", info$staging, url=info$url)

@@ -57,7 +57,7 @@ uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 uploadDirectory("test", "simple", "v2", src, staging=info$staging, url=info$url)
 uploadDirectory("test", "simple", "v3", src, staging=info$staging, url=info$url)
 
-# Checking out how rerouting works when we delete the first version. 
+# Checking out how rerouting works when we delete the first version.
 rerouteLinks(
     list(list(project="test", asset="simple", version="v1")),
     staging=info$staging,

@@ -3,7 +3,7 @@
 #' Unpack a Gobbler path to its combination of project, asset, version, and (optionally) path,
 #' for easier use in the various \pkg{gobbler} functions.
 #'
-#' @param path String containing a relative path within the Gobbler registry. 
+#' @param path String containing a relative path within the Gobbler registry.
 #'
 #' @return List containing \code{project}, \code{asset}, \code{version} and \code{path}.
 #' All are strings, except for \code{path}, which may be \code{NULL}.

@@ -15,7 +15,7 @@
 #' Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to \code{staging}.
 #' @param ignore.. Logical scalar indicating whether to skip dotfiles in \code{directory} during upload.
 #' @param spoof String containing the name of a user on whose behalf this request is being made.
-#' This should only be used if the Gobbler service allows spoofing by the current user. 
+#' This should only be used if the Gobbler service allows spoofing by the current user.
 #' If \code{NULL}, no spoofing is performed.
 #' @param concurrent Integer specifying the number of concurrent downloads.
 #' Only used if files need to be copied from \code{directory} to \code{staging}.
@@ -24,7 +24,7 @@
 #' @details
 #' If \code{directory} is not inside \code{staging}, a new staging subdirectory is allocated by \code{\link{allocateUploadDirectory}}.
 #' The contents of \code{directory} are then copied to the new subdirectory, preserving all symbolic links, dotfiles and empty directories.
-#' If \code{consume=NULL}, it is set to \code{TRUE} as the copied contents will no longer be used. 
+#' If \code{consume=NULL}, it is set to \code{TRUE} as the copied contents will no longer be used.
 #'
 #' @return On success, \code{NULL} is invisibly returned.
 #'
@@ -38,10 +38,10 @@
 #' write(file=file.path(src, "foo"), "BAR")
 #'
 #' uploadDirectory(
-#'     project="test", 
-#'     asset="simple", 
-#'     version="v1", 
-#'     directory=src, 
+#'     project="test",
+#'     asset="simple",
+#'     version="v1",
+#'     directory=src,
 #'     staging=info$staging,
 #'     url=info$url
 #' )
@@ -70,7 +70,7 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
     })()
 
     if (!in.staging) {
-        new.dir <- allocateUploadDirectory(staging) 
+        new.dir <- allocateUploadDirectory(staging)
         on.exit(unlink(new.dir, recursive=TRUE), add=TRUE, after=FALSE) # cleaning up after the request is done.
         to.copy <- character(0)
 
@@ -115,7 +115,7 @@ uploadDirectory <- function(project, asset, version, directory, staging, url, pr
         version = version,
         on_probation = probation,
         consume = consume,
-        ignore_dot = ignore.. 
+        ignore_dot = ignore..
     )
 
     dump_request(staging, url, "upload", req, spoof=spoof)

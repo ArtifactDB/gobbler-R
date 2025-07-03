@@ -34,7 +34,7 @@ for (v in c("v1", "v2")) {
 }
 
 # Delete the ..latest file.
-unlink(file.path(info$registry, "test", "simple", "..latest")) 
+unlink(file.path(info$registry, "test", "simple", "..latest"))
 fetchLatest("test", "simple", registry=info$registry)
 
 # Recomputing it:

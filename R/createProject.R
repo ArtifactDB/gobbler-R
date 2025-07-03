@@ -1,4 +1,4 @@
-#' Create a project 
+#' Create a project
 #'
 #' Create a new project in the registry.
 #'
@@ -6,11 +6,11 @@
 #' @param owners Character vector containing the user IDs for owners of this project.
 #' This defaults to the current user.
 #' @param uploaders List specifying the authorized uploaders for this project.
-#' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
+#' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format.
 #' @param staging String containing the path to the staging directory.
 #' @param url String containing the URL of the gobbler REST API.
 #'
-#' @return \code{NULL} is invisibly returned if the project was successfully created. 
+#' @return \code{NULL} is invisibly returned if the project was successfully created.
 #'
 #' @author Aaron Lun
 #'

@@ -1,7 +1,7 @@
 #' Gobbler service information
 #'
 #' Get information about the Gobbler service, namely the locations of the staging directory and registry.
-#' 
+#'
 #' @inheritParams createProject
 #'
 #' @return List containing the location of the staging and registry directories.

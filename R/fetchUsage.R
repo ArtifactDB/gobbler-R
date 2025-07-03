@@ -1,7 +1,7 @@
 #' Fetch project usage details
 #'
 #' Fetch the quota usage for a project.
-#' 
+#'
 #' @param project String containing the project name.
 #' @inheritParams listProjects
 #'
@@ -14,7 +14,7 @@
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #' createProject("test", info$staging, url=info$url)
 #'
-#' # Mocking up an upload. 
+#' # Mocking up an upload.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' write(file=file.path(src, "whee"), "stuff")

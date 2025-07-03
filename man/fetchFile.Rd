@@ -45,7 +45,7 @@ info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # start with a clean slate.
 createProject("test", info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 dir.create(file.path(src, "whee"))

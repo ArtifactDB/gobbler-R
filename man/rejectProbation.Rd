@@ -29,7 +29,7 @@ rejectProbation(
 If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.}
 
 \item{spoof}{String containing the name of a user on whose behalf this request is being made.
-This should only be used if the Gobbler service allows spoofing by the current user. 
+This should only be used if the Gobbler service allows spoofing by the current user.
 If \code{NULL}, no spoofing is performed.}
 }
 \value{
@@ -44,10 +44,10 @@ info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # start with a clean slate.
 createProject("test", info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
-uploadDirectory("test", "probation", "v1", src, 
+uploadDirectory("test", "probation", "v1", src,
     staging=info$staging, url=info$url, probation=TRUE)
 listVersions("test", "probation", registry=info$registry)
 

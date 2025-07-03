@@ -1,4 +1,4 @@
-#' Remove a project 
+#' Remove a project
 #'
 #' Remove a project from the registry.
 #' This should only be performed by Gobbler instance administrators,
@@ -7,7 +7,7 @@
 #' @param project String containing the project to remove.
 #' @inheritParams createProject
 #'
-#' @return \code{NULL} is invisibly returned if the project was successfully removed. 
+#' @return \code{NULL} is invisibly returned if the project was successfully removed.
 #'
 #' @author Aaron Lun
 #'

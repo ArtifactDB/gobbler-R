@@ -7,7 +7,7 @@
 #' @param url String containing the URL to the Gobbler REST API.
 #' Only used for remote access.
 #' @param forceRemote Logical scalar indicating whether to force remote access via the API,
-#' even if \code{registry} is on the same filesystem as the caller. 
+#' even if \code{registry} is on the same filesystem as the caller.
 #'
 #' @author Aaron Lun
 #'
@@ -18,7 +18,7 @@
 #' removeProject("test", info$staging, url=info$url) # clean out any existing entries
 #' removeProject("more-test", info$staging, url=info$url)
 #' removeProject("even-more-test", info$staging, url=info$url)
-#'    
+#'
 #' # Now mocking up the creation of some projects.
 #' createProject("test", info$staging, url=info$url)
 #' createProject("more-test", info$staging, url=info$url)

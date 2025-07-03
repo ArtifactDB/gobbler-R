@@ -1,5 +1,5 @@
-#' Set project permissions 
-#' 
+#' Set project permissions
+#'
 #' Set the owner and uploader permissions for a project.
 #'
 #' @param project String containing the project name.
@@ -8,7 +8,7 @@
 #' @param owners Character vector containing the user IDs for owners of this project/asset.
 #' If \code{NULL}, no change is made to the existing owners of the project.
 #' @param uploaders List specifying the authorized uploaders for this project/asset.
-#' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format. 
+#' See the \code{uploaders} field in the \code{\link{fetchPermissions}} return value for the expected format.
 #' If \code{NULL}, no change is made to the existing uploaders of the project/asset.
 #' @param globalWrite Logical scalar indicating whether global writes should be enabled (see \code{\link{fetchPermissions}} for details).
 #' If \code{NULL}, no change is made to the global write status of the project.
@@ -17,7 +17,7 @@
 #' If \code{FALSE}, the \code{owners} and \code{uploaders} are used to replace the existing values.
 #' @param registry String containing a path to the registry.
 #' @param spoof String containing the name of a user on whose behalf this request is being made.
-#' This should only be used if the Gobbler service allows spoofing by the current user. 
+#' This should only be used if the Gobbler service allows spoofing by the current user.
 #' If \code{NULL}, no spoofing is performed.
 #' @param dryRun Logical scalar indicating whether to return the new permissions without actually modifying the registry.
 #' @inheritParams createProject
@@ -33,22 +33,22 @@
 #'
 #' If \code{dryRun=TRUE}, a named list is returned containing the new permissions for the project/asset.
 #' This contains zero, one or more of \code{owners}, \code{uploaders} and \code{global_write} (see \code{\link{fetchPermissions}} for descriptions).
-#' A missing field indicates that it will not be updated in the project/asset permissions. 
+#' A missing field indicates that it will not be updated in the project/asset permissions.
 #'
 #' @examples
 #' info <- startGobbler()
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #' createProject("test", info$staging, url=info$url)
 #'
-#' # Mocking up an upload. 
+#' # Mocking up an upload.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' uploadDirectory("test", "simple", "v1", src, staging=info$staging, url=info$url)
 #' fetchPermissions("test", registry=info$registry)
 #'
 #' # Setting them to something else.
-#' setPermissions("test", 
-#'     owners=c("mum", "dad"), 
+#' setPermissions("test",
+#'     owners=c("mum", "dad"),
 #'     uploaders=list(
 #'         list(id='brother1', asset='ps5', until=Sys.time() + 100000),
 #'         list(id='brother2', asset='harry_potter', version='goblet_of_fire')
@@ -77,7 +77,7 @@ setPermissions <- function(project, registry, staging, url, asset=NULL, owners=N
             perms$owners <- as.list(owners)
         }
         if (!is.null(uploaders)) {
-            perms$uploaders <- uploaders 
+            perms$uploaders <- uploaders
         }
     }
 

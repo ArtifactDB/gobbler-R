@@ -43,7 +43,7 @@ Defaults to \code{TRUE} if the contents of \code{directory} need to be copied to
 \item{ignore..}{Logical scalar indicating whether to skip dotfiles in \code{directory} during upload.}
 
 \item{spoof}{String containing the name of a user on whose behalf this request is being made.
-This should only be used if the Gobbler service allows spoofing by the current user. 
+This should only be used if the Gobbler service allows spoofing by the current user.
 If \code{NULL}, no spoofing is performed.}
 
 \item{concurrent}{Integer specifying the number of concurrent downloads.
@@ -69,10 +69,10 @@ src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 
 uploadDirectory(
-    project="test", 
-    asset="simple", 
-    version="v1", 
-    directory=src, 
+    project="test",
+    asset="simple",
+    version="v1",
+    directory=src,
     staging=info$staging,
     url=info$url
 )

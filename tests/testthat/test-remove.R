@@ -1,4 +1,4 @@
-# This tests the removal functions 
+# This tests the removal functions
 # library(testthat); library(gobbler); source("test-remove.R")
 
 info <- startGobbler()

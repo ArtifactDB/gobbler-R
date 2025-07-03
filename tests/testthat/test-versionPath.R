@@ -1,4 +1,4 @@
-# This tests the upload functions. 
+# This tests the upload functions.
 # library(testthat); library(gobbler); source("test-versionPath.R")
 
 info <- startGobbler()
@@ -12,11 +12,11 @@ dir.create(file.path(tmp, "foo"))
 write(file=file.path(tmp, "foo", "bar.txt"), 1:10, ncol=1)
 
 uploadDirectory(
-    project="test", 
-    asset="annarose", 
-    version="v1", 
+    project="test",
+    asset="annarose",
+    version="v1",
     directory=tmp,
-    staging=info$staging, 
+    staging=info$staging,
     url=info$url
 )
 

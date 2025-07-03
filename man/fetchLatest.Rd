@@ -20,7 +20,7 @@ Only used for remote access.}
 even if \code{registry} is on the same filesystem as the caller.}
 }
 \value{
-String containing the latest version of the asset. 
+String containing the latest version of the asset.
 This may also be \code{NULL} if the asset has no (non-probational) versions.
 }
 \description{
@@ -30,7 +30,7 @@ This will call the REST API if the caller is not on the same filesystem as the r
 \examples{
 info <- startGobbler()
 removeProject("test", info$staging, url=info$url) # start with a clean slate.
-createProject("test", info$staging, url=info$url) 
+createProject("test", info$staging, url=info$url)
 
 # Mocking up a few uploads.
 src <- allocateUploadDirectory(info$staging)

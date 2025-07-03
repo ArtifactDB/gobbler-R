@@ -1,4 +1,4 @@
-#' Remove an asset of a project 
+#' Remove an asset of a project
 #'
 #' Remove an asset of the project from the registry.
 #' This should only be performed by Gobbler instance administrators,
@@ -8,9 +8,9 @@
 #' @param asset String specifying the asset to remove.
 #' @param force Logical scalar indicating that the asset should be forcibly removed if it contains invalid files.
 #' If this needs to be set to \code{TRUE}, users may need to call \code{\link{refreshUsage}} afterwards to correct project-level usage statistics.
-#' @inheritParams createProject 
+#' @inheritParams createProject
 #'
-#' @return \code{NULL} is invisibly returned if the asset was successfully removed. 
+#' @return \code{NULL} is invisibly returned if the asset was successfully removed.
 #'
 #' @author Aaron Lun
 #'

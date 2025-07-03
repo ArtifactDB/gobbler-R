@@ -12,7 +12,7 @@
 #' Similarly, \code{\link{refreshLatest}} may also need to be called.
 #' @inheritParams createProject
 #'
-#' @return \code{NULL} is invisibly returned if the version was successfully removed. 
+#' @return \code{NULL} is invisibly returned if the version was successfully removed.
 #'
 #' @author Aaron Lun
 #'

@@ -2,7 +2,7 @@
 #'
 #' Recompute the quota usage of a project.
 #' This is useful on rare occasions where multiple simultaneous uploads cause the usage calculations to be out of sync.
-#' 
+#'
 #' @param project String containing the project name.
 #' @inheritParams createProject
 #'
@@ -17,7 +17,7 @@
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #' createProject("test", info$staging, url=info$url)
 #'
-#' # Mocking up an upload. 
+#' # Mocking up an upload.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' write(file=file.path(src, "whee"), "stuff")

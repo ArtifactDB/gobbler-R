@@ -1,4 +1,4 @@
-# This tests the creation functions. 
+# This tests the creation functions.
 # library(testthat); library(gobbler); source("test-create.R")
 
 info <- startGobbler()

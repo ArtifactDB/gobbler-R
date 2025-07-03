@@ -14,7 +14,7 @@
 #' @examples
 #' info <- startGobbler()
 #' removeProject("test", info$staging, url=info$url) # start from a clean slate.
-#' createProject("test", info$staging, url=info$url) 
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)
@@ -24,7 +24,7 @@
 #'
 #' # Listing the versions of the asset:
 #' listVersions("test", "simple", registry=info$registry, url=info$url)
-#' 
+#'
 #' # Force remote listing:
 #' listVersions("test", "simple", registry=info$registry, url=info$url, forceRemote=TRUE)
 #' @export

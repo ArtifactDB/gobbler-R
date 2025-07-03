@@ -1,16 +1,16 @@
-# This tests the probation approval functions. 
+# This tests the probation approval functions.
 # library(testthat); library(gobbler); source("test-probation.R")
 
 info <- startGobbler()
 removeProject("test", staging=info$staging, url=info$url)
 createProject("test", staging=info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 uploadDirectory("test", "probation", "good", src, staging=info$staging, url=info$url, probation=TRUE)
 uploadDirectory("test", "probation", "bad", src, staging=info$staging, url=info$url, probation=TRUE)
-                                                                                             
+
 test_that('probation approval works as expected', {
     expect_true(fetchSummary("test", "probation", "good", registry=info$registry)$on_probation)
     expect_null(fetchLatest("test", "probation", registry=info$registry))

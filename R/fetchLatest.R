@@ -2,12 +2,12 @@
 #'
 #' Fetch the latest version of a project's asset.
 #' This will call the REST API if the caller is not on the same filesystem as the registry.
-#' 
+#'
 #' @param project String containing the project name.
 #' @param asset String containing the asset name.
 #' @inheritParams listProjects
 #'
-#' @return String containing the latest version of the asset. 
+#' @return String containing the latest version of the asset.
 #' This may also be \code{NULL} if the asset has no (non-probational) versions.
 #'
 #' @author Aaron Lun
@@ -15,7 +15,7 @@
 #' @examples
 #' info <- startGobbler()
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
-#' createProject("test", info$staging, url=info$url) 
+#' createProject("test", info$staging, url=info$url)
 #'
 #' # Mocking up a few uploads.
 #' src <- allocateUploadDirectory(info$staging)

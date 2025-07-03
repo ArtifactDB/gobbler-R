@@ -24,13 +24,13 @@
 #' or a path to a local cache of the registry's contents otherwise.
 #'
 #' @author Aaron Lun
-#' 
+#'
 #' @examples
 #' info <- startGobbler()
 #' removeProject("test", info$staging, url=info$url) # start with a clean slate.
 #' createProject("test", info$staging, url=info$url)
 #'
-#' # Mocking up an upload. 
+#' # Mocking up an upload.
 #' src <- allocateUploadDirectory(info$staging)
 #' write(file=file.path(src, "foo"), "BAR")
 #' dir.create(file.path(src, "whee"))
@@ -42,13 +42,13 @@
 #' dir <- fetchDirectory("test/simple/v1", registry=info$registry, url=info$url)
 #' dir
 #' list.files(dir, recursive=TRUE)
-#' 
+#'
 #' # Or, forcing remote access:
 #' cache <- tempfile()
-#' dir1 <- fetchDirectory("test/simple/v1", 
-#'     registry=info$registry, 
-#'     url=info$url, 
-#'     cache=cache, 
+#' dir1 <- fetchDirectory("test/simple/v1",
+#'     registry=info$registry,
+#'     url=info$url,
+#'     cache=cache,
 #'     forceRemote=TRUE
 #' )
 #' dir1
@@ -94,7 +94,7 @@ fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, o
         parallel::parLapply(cl, listing, acquire_file, cache=cache, path=path, url=url, overwrite=overwrite)
     }
 
-    # We use a directory-level OK file to avoid having to scan through all 
+    # We use a directory-level OK file to avoid having to scan through all
     # the directory contents to indicate that it's complete.
     dir.create(dirname(ok), showWarnings=FALSE, recursive=TRUE)
     write(file=ok, character(0))

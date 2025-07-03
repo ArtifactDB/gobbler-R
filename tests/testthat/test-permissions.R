@@ -1,4 +1,4 @@
-# This tests the permission setter functions 
+# This tests the permission setter functions
 # library(testthat); library(gobbler); source("test-permissions.R")
 
 info <- startGobbler()
@@ -8,7 +8,7 @@ createProject("test-perms", staging=info$staging, url=info$url, owners="LTLA")
 test_that("project-level permission setting works as expected", {
     until <- round(Sys.time() + 1000000)
     setPermissions("test-perms",
-        owners="jkanche", 
+        owners="jkanche",
         uploaders=list(
            list(id="lawremi", until=until)
         ),
@@ -53,7 +53,7 @@ test_that("project-level permission setting works as expected", {
     expect_identical(perms$owners, list("LTLA"))
     expect_identical(length(perms$uploaders), 2L)
 
-    # Now resetting the uploaders. 
+    # Now resetting the uploaders.
     setPermissions("test-perms", uploaders=list(), append=FALSE, staging=info$staging, url=info$url, registry=info$registry)
     perms <- fetchPermissions("test-perms", registry=info$registry)
     expect_identical(perms$owners, list("LTLA"))
@@ -72,7 +72,7 @@ test_that("asset-level permission setting works as expected", {
     until <- round(Sys.time() + 1000000)
     setPermissions("test-perms",
         asset="foobar",
-        owners="jkanche", 
+        owners="jkanche",
         uploaders=list(
            list(id="lawremi", until=until)
         ),

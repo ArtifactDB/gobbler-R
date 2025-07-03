@@ -1,11 +1,11 @@
-# This tests the quota setter functions 
+# This tests the quota setter functions
 # library(testthat); library(gobbler); source("test-quota.R")
 
 info <- startGobbler()
 removeProject("test-usage", info$staging, url=info$url)
 createProject("test-usage", info$staging, url=info$url)
 
-# Mocking up an upload. 
+# Mocking up an upload.
 src <- allocateUploadDirectory(info$staging)
 write(file=file.path(src, "foo"), "BAR")
 write(file=file.path(src, "whee"), "stuff")
