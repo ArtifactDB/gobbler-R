@@ -147,7 +147,7 @@ several convenience methods for examining the Gobbler registry:</p>
 <pre><code><span><span class="co">## [1] "..manifest" "..summary"  "foo"        "whee/blah"  "whee2"</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/versionPath.html">versionPath</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpbjAQ29/file3df7ed4dde8/test/simple/v1"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/Rtmp8crZbP/file3df593b9e22/test/simple/v1"</span></span></code></pre>
 <p>We can fetch the summaries and manifests for each version of a
 project’s assets.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -180,10 +180,10 @@ project’s assets.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2025-07-03 00:01:17 UTC"</span></span>
+<span><span class="co">## [1] "2025-07-03 18:33:34 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2025-07-03 00:01:17 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2025-07-03 18:33:34 UTC"</span></span></code></pre>
 <p>We can get the latest version of an asset:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchLatest.html">fetchLatest</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
@@ -192,13 +192,13 @@ project’s assets.</p>
 subdirectory of that asset, or an individual file in the registry:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/versionPath.html">versionPath</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"simple"</span>, <span class="st">"v1"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpbjAQ29/file3df7ed4dde8/test/simple/v1"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/Rtmp8crZbP/file3df593b9e22/test/simple/v1"</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchDirectory.html">fetchDirectory</a></span><span class="op">(</span><span class="st">"test/simple/v1/whee"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpbjAQ29/file3df7ed4dde8/test/simple/v1/whee"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/Rtmp8crZbP/file3df593b9e22/test/simple/v1/whee"</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fetchFile.html">fetchFile</a></span><span class="op">(</span><span class="st">"test/simple/v1/whee/blah"</span>, registry<span class="op">=</span><span class="va">REGISTRY</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/tmp/RtmpbjAQ29/file3df7ed4dde8/test/simple/v1/whee/blah"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "/tmp/Rtmp8crZbP/file3df593b9e22/test/simple/v1/whee/blah"</span></span></code></pre>
 <p>The functions in this section of the vignette can also be executed
 remotely (i.e., outside of the shared filesystem) if the
 <code>url=</code> argument is supplied. This provides read-only access
@@ -368,7 +368,7 @@ each authorization:</p>
 <span><span class="co">## [1] "1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $uploaders[[1]]$until</span></span>
-<span><span class="co">## [1] "2025-07-04 00:01:18 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2025-07-04 18:33:35 UTC"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="probational-uploads">Probational uploads<a class="anchor" aria-label="anchor" href="#probational-uploads"></a>
@@ -399,10 +399,10 @@ immutability. To demonstrate, let’s perform a probational upload:</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2025-07-03 00:01:19 UTC"</span></span>
+<span><span class="co">## [1] "2025-07-03 18:33:35 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2025-07-03 00:01:19 UTC"</span></span>
+<span><span class="co">## [1] "2025-07-03 18:33:35 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $on_probation</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre>
@@ -418,10 +418,10 @@ from the registry.</p>
 <span><span class="co">## [1] "root"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_start</span></span>
-<span><span class="co">## [1] "2025-07-03 00:01:19 UTC"</span></span>
+<span><span class="co">## [1] "2025-07-03 18:33:35 UTC"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $upload_finish</span></span>
-<span><span class="co">## [1] "2025-07-03 00:01:19 UTC"</span></span></code></pre>
+<span><span class="co">## [1] "2025-07-03 18:33:35 UTC"</span></span></code></pre>
 <p>Unless specified otherwise, all <code>uploaders</code> in the
 permissions are considered to be “untrusted”, and any uploads from such
 untrusted users are considered probational. This allows project
