@@ -101,7 +101,7 @@ fetchDirectory <- function(path, registry, url, cache=NULL, forceRemote=FALSE, o
     final
 }
 
-#' @importFrom utils download.file
+#' @importFrom utils download.file URLencode
 acquire_file_raw <- function(cache, path, url, overwrite) {
     target <- file.path(cache, "REGISTRY", path)
 
@@ -111,7 +111,7 @@ acquire_file_raw <- function(cache, path, url, overwrite) {
         tempf <- tempfile(tmpdir=tempdir)
         on.exit(unlink(tempf), add=TRUE, after=FALSE)
 
-        if (download.file(paste0(url, "/fetch/", path), tempf)) {
+        if (download.file(paste0(url, "/fetch/", URLencode(path, reserved=TRUE)), tempf)) {
             stop("failed to download '", path, "' from the registry")
         }
         dir.create(dirname(target), recursive=TRUE, showWarnings=FALSE)
